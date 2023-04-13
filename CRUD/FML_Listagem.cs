@@ -12,15 +12,14 @@ namespace CRUD
 {
     public partial class FML_Listagem : Form
     {
-        public List<JogadorModelo> Jogadores = new();
+        public static List<JogadorModelo> Jogadores = new();
 
         private void PopularLista()
         {
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", "Grão Mestre", DateTime.Today));
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", "Grão Mestre", DateTime.Today));
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", "Grão Mestre", DateTime.Today));
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", "Grão Mestre", DateTime.Today));
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", "Grão Mestre", DateTime.Today));
+            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.GM, DateTime.Today));
+            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.Desafiante, DateTime.Today));
+            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.Desafiante, DateTime.Today));
+            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.Desafiante, DateTime.Today));
         }
 
         public FML_Listagem()
@@ -29,10 +28,14 @@ namespace CRUD
             PopularLista();
             FML_Listagem_Load();
         }
-
+      
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var F_Cadastro = new FML_Cadastro();
+            F_Cadastro.Show();
+            Close();
+            
 
         }
 
@@ -54,5 +57,6 @@ namespace CRUD
 
         }
 
+ 
     }
 }

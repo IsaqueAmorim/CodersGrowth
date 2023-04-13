@@ -61,7 +61,7 @@
             GRD_GridList.RowTemplate.Height = 25;
             GRD_GridList.Size = new Size(983, 465);
             GRD_GridList.TabIndex = 0;
-            
+          
             // 
             // idDataGridViewTextBoxColumn
             // 
