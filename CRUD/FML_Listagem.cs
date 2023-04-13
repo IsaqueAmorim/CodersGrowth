@@ -54,9 +54,5 @@ namespace CRUD
 
         }
 
-        private void GRD_GridList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }
