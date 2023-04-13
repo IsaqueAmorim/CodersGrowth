@@ -10,7 +10,7 @@ namespace CRUD
     {
         public int Id { get; private set; }
         public string Nome { get; set; }
-        public string LastName { get; set; }
+        public string Sobrenome { get; set; }
         public string Apelido { get; set; }
         public string Email { get; set; }
         public string Elo { get; set; }
@@ -19,7 +19,7 @@ namespace CRUD
         public JogadorModelo(string Nome,string Sobrenome,string NickName,string Email,string Elo,DateTime DataNascimento)
         {
             this.Nome = Nome;
-            this.LastName = Sobrenome;
+            this.Sobrenome = Sobrenome;
             this.Apelido = NickName;
             this.Email = Email;
             this.Elo = Elo;
