@@ -11,7 +11,7 @@ namespace CRUD
         public int Id { get; private set; }
         public string Nome { get; set; }
         public string LastName { get; set; }
-        public string NickName { get; set; }
+        public string Apelido { get; set; }
         public string Email { get; set; }
         public string Elo { get; set; }
         public DateTime DataNascimento { get; private set; }
@@ -20,7 +20,7 @@ namespace CRUD
         {
             this.Nome = Nome;
             this.LastName = Sobrenome;
-            this.NickName = NickName;
+            this.Apelido = NickName;
             this.Email = Email;
             this.Elo = Elo;
             this.DataNascimento = DataNascimento;
