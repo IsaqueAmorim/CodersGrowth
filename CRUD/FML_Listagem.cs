@@ -22,7 +22,7 @@ namespace CRUD
             Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", "Grão Mestre", DateTime.Today));
             Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", "Grão Mestre", DateTime.Today));
         }
-        
+
         public FML_Listagem()
         {
             InitializeComponent();
@@ -50,6 +50,11 @@ namespace CRUD
         }
 
         private void FML_Listagem_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GRD_GridList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
