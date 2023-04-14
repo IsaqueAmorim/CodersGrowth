@@ -5,10 +5,6 @@
 **/Properties/
 **/obj/
 
-#Arquivos
 
-CRUD/FML_Cadastro.cs
-CRUD/FML_Cadastro.resx
-CRUD/FML_Cadastro.Designer.cs
 
-CRUD/ListaJogador.cs
+
