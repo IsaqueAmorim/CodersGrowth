@@ -1,17 +1,20 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace CRUD
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
+        public static FML_Listagem listagem = new FML_Listagem();
         [STAThread]
         static void Main()
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FML_Listagem());
+            Application.Run(listagem);
         }
     }
 }

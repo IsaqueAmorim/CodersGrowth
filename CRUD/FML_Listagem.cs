@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,13 +29,15 @@ namespace CRUD
             PopularLista();
             FML_Listagem_Load();
         }
+
+      
       
 
         private void button1_Click(object sender, EventArgs e)
         {
             var F_Cadastro = new FML_Cadastro();
             F_Cadastro.Show();
-            Close();
+            
             
 
         }
