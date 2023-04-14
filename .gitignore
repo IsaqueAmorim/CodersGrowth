@@ -10,7 +10,5 @@
 CRUD/FML_Cadastro.cs
 CRUD/FML_Cadastro.resx
 CRUD/FML_Cadastro.Designer.cs
-CRUD/FML_Listagem.cs
-CRUD/FML_Listagem.Designer.cs
-CRUD/FML_Listagem.resx
+
 CRUD/ListaJogador.cs
