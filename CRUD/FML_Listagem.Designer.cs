@@ -30,6 +30,12 @@
         {
             components = new System.ComponentModel.Container();
             GRD_GridList = new DataGridView();
+            jogadorModeloBindingSource = new BindingSource(components);
+            listaJogadorBindingSource = new BindingSource(components);
+            listPlayersBindingSource = new BindingSource(components);
+            BTN_Novo = new Button();
+            BTN_Atualizar = new Button();
+            BTN_Deletar = new Button();
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             sobrenomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -37,12 +43,9 @@
             emailDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             eloDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             dataNascimentoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            listaJogadorBindingSource = new BindingSource(components);
-            listPlayersBindingSource = new BindingSource(components);
-            BTN_Novo = new Button();
-            BTN_Atualizar = new Button();
-            BTN_Deletar = new Button();
+            DataCriacao = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)GRD_GridList).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)jogadorModeloBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)listaJogadorBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)listPlayersBindingSource).BeginInit();
             SuspendLayout();
@@ -51,17 +54,51 @@
             // 
             GRD_GridList.AutoGenerateColumns = false;
             GRD_GridList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            GRD_GridList.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, sobrenomeDataGridViewTextBoxColumn, apelidoDataGridViewTextBoxColumn, emailDataGridViewTextBoxColumn, eloDataGridViewTextBoxColumn, dataNascimentoDataGridViewTextBoxColumn });
-            GRD_GridList.DataSource = listaJogadorBindingSource;
-            GRD_GridList.Location = new Point(14, 16);
-            GRD_GridList.Margin = new Padding(3, 4, 3, 4);
+            GRD_GridList.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, sobrenomeDataGridViewTextBoxColumn, apelidoDataGridViewTextBoxColumn, emailDataGridViewTextBoxColumn, eloDataGridViewTextBoxColumn, dataNascimentoDataGridViewTextBoxColumn, DataCriacao });
+            GRD_GridList.DataSource = jogadorModeloBindingSource;
+            GRD_GridList.Location = new Point(12, 12);
             GRD_GridList.Name = "GRD_GridList";
             GRD_GridList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             GRD_GridList.RowHeadersWidth = 51;
             GRD_GridList.RowTemplate.Height = 25;
-            GRD_GridList.Size = new Size(983, 465);
+            GRD_GridList.Size = new Size(1086, 349);
             GRD_GridList.TabIndex = 0;
-          
+            // 
+            // jogadorModeloBindingSource
+            // 
+            jogadorModeloBindingSource.DataSource = typeof(JogadorModelo);
+            // 
+            // listaJogadorBindingSource
+            // 
+            listaJogadorBindingSource.DataSource = typeof(JogadorModelo);
+            // 
+            // BTN_Novo
+            // 
+            BTN_Novo.Location = new Point(636, 370);
+            BTN_Novo.Name = "BTN_Novo";
+            BTN_Novo.Size = new Size(75, 23);
+            BTN_Novo.TabIndex = 1;
+            BTN_Novo.Text = "Novo";
+            BTN_Novo.UseVisualStyleBackColor = true;
+            BTN_Novo.Click += AoClicarNovo;
+            // 
+            // BTN_Atualizar
+            // 
+            BTN_Atualizar.Location = new Point(717, 370);
+            BTN_Atualizar.Name = "BTN_Atualizar";
+            BTN_Atualizar.Size = new Size(75, 23);
+            BTN_Atualizar.TabIndex = 2;
+            BTN_Atualizar.Text = "Atualizar";
+            BTN_Atualizar.UseVisualStyleBackColor = true;
+            // 
+            // BTN_Deletar
+            // 
+            BTN_Deletar.Location = new Point(797, 370);
+            BTN_Deletar.Name = "BTN_Deletar";
+            BTN_Deletar.Size = new Size(75, 23);
+            BTN_Deletar.TabIndex = 3;
+            BTN_Deletar.Text = "Deletar";
+            BTN_Deletar.UseVisualStyleBackColor = true;
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -119,58 +156,29 @@
             dataNascimentoDataGridViewTextBoxColumn.MinimumWidth = 6;
             dataNascimentoDataGridViewTextBoxColumn.Name = "dataNascimentoDataGridViewTextBoxColumn";
             dataNascimentoDataGridViewTextBoxColumn.ReadOnly = true;
-            dataNascimentoDataGridViewTextBoxColumn.Width = 180;
+            dataNascimentoDataGridViewTextBoxColumn.Width = 160;
             // 
-            // listaJogadorBindingSource
+            // DataCriacao
             // 
-            listaJogadorBindingSource.DataSource = typeof(JogadorModelo);
-            // 
-            // BTN_Novo
-            // 
-            BTN_Novo.Location = new Point(727, 494);
-            BTN_Novo.Margin = new Padding(3, 4, 3, 4);
-            BTN_Novo.Name = "BTN_Novo";
-            BTN_Novo.Size = new Size(86, 31);
-            BTN_Novo.TabIndex = 1;
-            BTN_Novo.Text = "Novo";
-            BTN_Novo.UseVisualStyleBackColor = true;
-            BTN_Novo.Click += button1_Click;
-            // 
-            // BTN_Atualizar
-            // 
-            BTN_Atualizar.Location = new Point(819, 494);
-            BTN_Atualizar.Margin = new Padding(3, 4, 3, 4);
-            BTN_Atualizar.Name = "BTN_Atualizar";
-            BTN_Atualizar.Size = new Size(86, 31);
-            BTN_Atualizar.TabIndex = 2;
-            BTN_Atualizar.Text = "Atualizar";
-            BTN_Atualizar.UseVisualStyleBackColor = true;
-            BTN_Atualizar.Click += BTN_Update_Click;
-            // 
-            // BTN_Deletar
-            // 
-            BTN_Deletar.Location = new Point(911, 494);
-            BTN_Deletar.Margin = new Padding(3, 4, 3, 4);
-            BTN_Deletar.Name = "BTN_Deletar";
-            BTN_Deletar.Size = new Size(86, 31);
-            BTN_Deletar.TabIndex = 3;
-            BTN_Deletar.Text = "Deletar";
-            BTN_Deletar.UseVisualStyleBackColor = true;
+            DataCriacao.DataPropertyName = "DataCriacao";
+            DataCriacao.HeaderText = "Data de Cadastro";
+            DataCriacao.Name = "DataCriacao";
+            DataCriacao.ReadOnly = true;
+            DataCriacao.Width = 140;
             // 
             // FML_Listagem
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1013, 536);
+            ClientSize = new Size(1110, 402);
             Controls.Add(BTN_Deletar);
             Controls.Add(BTN_Atualizar);
             Controls.Add(BTN_Novo);
             Controls.Add(GRD_GridList);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "FML_Listagem";
             Text = "Jogador";
-            Load += FML_Listagem_Load;
             ((System.ComponentModel.ISupportInitialize)GRD_GridList).EndInit();
+            ((System.ComponentModel.ISupportInitialize)jogadorModeloBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)listaJogadorBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)listPlayersBindingSource).EndInit();
             ResumeLayout(false);
@@ -184,6 +192,7 @@
         private Button BTN_Deletar;
         private BindingSource listPlayersBindingSource;
         private BindingSource listaJogadorBindingSource;
+        private BindingSource jogadorModeloBindingSource;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn sobrenomeDataGridViewTextBoxColumn;
@@ -191,5 +200,6 @@
         private DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn eloDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn dataNascimentoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn DataCriacao;
     }
 }

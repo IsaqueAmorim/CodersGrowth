@@ -15,51 +15,43 @@ namespace CRUD
     {
         public static List<JogadorModelo> Jogadores = new();
 
-        private void PopularLista()
-        {
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.GM, DateTime.Today));
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.Desafiante, DateTime.Today));
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.Desafiante, DateTime.Today));
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "teste@teste", Elo.Desafiante, DateTime.Today));
-        }
+
 
         public FML_Listagem()
         {
             InitializeComponent();
-            PopularLista();
             FML_Listagem_Load();
         }
 
-      
-      
 
-        private void button1_Click(object sender, EventArgs e)
+
+
+        private void AoClicarNovo(object sender, EventArgs e)
         {
             var F_Cadastro = new FML_Cadastro();
-            F_Cadastro.Show();
-            
-            
+
+
+            if (F_Cadastro.ShowDialog() == DialogResult.OK)
+            {
+                FML_Listagem_Load();
+
+            }
+
+
 
         }
 
 
-        private void BTN_Update_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void FML_Listagem_Load()
         {
 
-            GRD_GridList.DataSource = Jogadores;
+            GRD_GridList.DataSource = Jogadores.ToList();
 
         }
 
-        private void FML_Listagem_Load(object sender, EventArgs e)
-        {
 
-        }
 
- 
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -25,28 +26,37 @@ namespace CRUD
         private Elo StringToElo(string elo)
         {
             Elo result;
-            
+
             switch (elo)
             {
-                case "Ferro": result =  Elo.Ferro;
+                case "Ferro":
+                    result = Elo.Ferro;
                     break;
-                case "Bronze": result = Elo.Bronze;
+                case "Bronze":
+                    result = Elo.Bronze;
                     break;
-                case "Prata": result = Elo.Prata;
+                case "Prata":
+                    result = Elo.Prata;
                     break;
-                case "Ouro":result = Elo.Ouro;
+                case "Ouro":
+                    result = Elo.Ouro;
                     break;
-                case "Platina": result = Elo.Platina;
+                case "Platina":
+                    result = Elo.Platina;
                     break;
-                case "Diamante": result = Elo.Platina;
+                case "Diamante":
+                    result = Elo.Platina;
                     break;
-                case "Mestre": result = Elo.Platina;
+                case "Mestre":
+                    result = Elo.Platina;
                     break;
-                case "GM": result= Elo.Platina;
+                case "GM":
+                    result = Elo.Platina;
                     break;
-                default:result= Elo.Ferro;
+                default:
+                    result = Elo.Ferro;
                     break;
-                
+
             }
             return result;
 
@@ -84,7 +94,7 @@ namespace CRUD
 
         private void FML_Cadastro_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void LB_DataNascimento_Click(object sender, EventArgs e)
@@ -94,8 +104,8 @@ namespace CRUD
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
-         this.Close();
+
+            this.Close();
         }
 
         private void BTN_Cadastrar_Click(object sender, EventArgs e)
@@ -108,15 +118,18 @@ namespace CRUD
                 TXB_Email.Text,
                 StringToElo(CBX_Elo.Text),
                 new DateTime(date.Year, date.Month, date.Day)
-                ));
-            Program.listagem.Refresh();
-            this.Close();
+
+                )) ;
+
+            Close();
 
 
-           
-            
+
+
+
+
         }
 
-    
+
     }
 }

@@ -15,6 +15,7 @@ namespace CRUD
         public string Email { get; set; }
         public Elo Elo { get; set; }
         public DateTime DataNascimento { get; private set; }
+        public DateTime DataCriacao { get; private set; }
 
         public JogadorModelo(string Nome,string Sobrenome,string NickName,string Email,Elo Elo,DateTime DataNascimento)
         {
@@ -24,6 +25,8 @@ namespace CRUD
             this.Email = Email;
             this.Elo = Elo;
             this.DataNascimento = DataNascimento;
+            this.DataCriacao = DateTime.Now;
+            
         }
 
     }
