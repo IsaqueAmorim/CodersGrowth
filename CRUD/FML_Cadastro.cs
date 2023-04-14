@@ -16,14 +16,14 @@ namespace CRUD
         public FML_Cadastro()
         {
             InitializeComponent();
-            LoadEnums();
+            CarregarEnums();
         }
 
-        private void LoadEnums()
+        private void CarregarEnums()
         {
             CBX_Elo.DataSource = Enum.GetValues(typeof(Elo));
         }
-        private Elo StringToElo(string elo)
+        private Elo StringParaElo(string elo)
         {
             Elo result;
 
@@ -61,48 +61,11 @@ namespace CRUD
             return result;
 
         }
-        private void label1_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
+     
 
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_2(object sender, EventArgs e)
-        {
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void textBox2_TextChanged_1(object sender, EventArgs e)
-        {
-        }
-
-        private void FML_Cadastro_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LB_DataNascimento_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void AoClicarCancelar(object sender, EventArgs e)
         {
 
             this.Close();
@@ -116,7 +79,7 @@ namespace CRUD
                 TXB_Sobrenome.Text,
                 TXB_Apelido.Text,
                 TXB_Email.Text,
-                StringToElo(CBX_Elo.Text),
+                StringParaElo(CBX_Elo.Text),
                 new DateTime(date.Year, date.Month, date.Day)
 
                 )) ;

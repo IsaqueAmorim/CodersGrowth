@@ -20,7 +20,7 @@ namespace CRUD
         public FML_Listagem()
         {
             InitializeComponent();
-            FML_Listagem_Load();
+            FML_Listagem_CarregarPagina();
         }
 
 
@@ -33,7 +33,7 @@ namespace CRUD
 
             if (F_Cadastro.ShowDialog() == DialogResult.OK)
             {
-                FML_Listagem_Load();
+                FML_Listagem_CarregarPagina();
 
             }
 
@@ -43,7 +43,7 @@ namespace CRUD
 
 
 
-        private void FML_Listagem_Load()
+        private void FML_Listagem_CarregarPagina()
         {
 
             GRD_GridList.DataSource = Jogadores.ToList();

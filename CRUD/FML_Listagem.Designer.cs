@@ -30,12 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             GRD_GridList = new DataGridView();
-            jogadorModeloBindingSource = new BindingSource(components);
-            listaJogadorBindingSource = new BindingSource(components);
-            listPlayersBindingSource = new BindingSource(components);
-            BTN_Novo = new Button();
-            BTN_Atualizar = new Button();
-            BTN_Deletar = new Button();
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             sobrenomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -44,6 +38,12 @@
             eloDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             dataNascimentoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             DataCriacao = new DataGridViewTextBoxColumn();
+            jogadorModeloBindingSource = new BindingSource(components);
+            listaJogadorBindingSource = new BindingSource(components);
+            listPlayersBindingSource = new BindingSource(components);
+            BTN_Novo = new Button();
+            BTN_Atualizar = new Button();
+            BTN_Deletar = new Button();
             ((System.ComponentModel.ISupportInitialize)GRD_GridList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)jogadorModeloBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)listaJogadorBindingSource).BeginInit();
@@ -63,42 +63,6 @@
             GRD_GridList.RowTemplate.Height = 25;
             GRD_GridList.Size = new Size(1086, 349);
             GRD_GridList.TabIndex = 0;
-            // 
-            // jogadorModeloBindingSource
-            // 
-            jogadorModeloBindingSource.DataSource = typeof(JogadorModelo);
-            // 
-            // listaJogadorBindingSource
-            // 
-            listaJogadorBindingSource.DataSource = typeof(JogadorModelo);
-            // 
-            // BTN_Novo
-            // 
-            BTN_Novo.Location = new Point(636, 370);
-            BTN_Novo.Name = "BTN_Novo";
-            BTN_Novo.Size = new Size(75, 23);
-            BTN_Novo.TabIndex = 1;
-            BTN_Novo.Text = "Novo";
-            BTN_Novo.UseVisualStyleBackColor = true;
-            BTN_Novo.Click += AoClicarNovo;
-            // 
-            // BTN_Atualizar
-            // 
-            BTN_Atualizar.Location = new Point(717, 370);
-            BTN_Atualizar.Name = "BTN_Atualizar";
-            BTN_Atualizar.Size = new Size(75, 23);
-            BTN_Atualizar.TabIndex = 2;
-            BTN_Atualizar.Text = "Atualizar";
-            BTN_Atualizar.UseVisualStyleBackColor = true;
-            // 
-            // BTN_Deletar
-            // 
-            BTN_Deletar.Location = new Point(797, 370);
-            BTN_Deletar.Name = "BTN_Deletar";
-            BTN_Deletar.Size = new Size(75, 23);
-            BTN_Deletar.TabIndex = 3;
-            BTN_Deletar.Text = "Deletar";
-            BTN_Deletar.UseVisualStyleBackColor = true;
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -165,6 +129,42 @@
             DataCriacao.Name = "DataCriacao";
             DataCriacao.ReadOnly = true;
             DataCriacao.Width = 140;
+            // 
+            // jogadorModeloBindingSource
+            // 
+            jogadorModeloBindingSource.DataSource = typeof(JogadorModelo);
+            // 
+            // listaJogadorBindingSource
+            // 
+            listaJogadorBindingSource.DataSource = typeof(JogadorModelo);
+            // 
+            // BTN_Novo
+            // 
+            BTN_Novo.Location = new Point(636, 370);
+            BTN_Novo.Name = "BTN_Novo";
+            BTN_Novo.Size = new Size(75, 23);
+            BTN_Novo.TabIndex = 1;
+            BTN_Novo.Text = "Novo";
+            BTN_Novo.UseVisualStyleBackColor = true;
+            BTN_Novo.Click += AoClicarNovo;
+            // 
+            // BTN_Atualizar
+            // 
+            BTN_Atualizar.Location = new Point(717, 370);
+            BTN_Atualizar.Name = "BTN_Atualizar";
+            BTN_Atualizar.Size = new Size(75, 23);
+            BTN_Atualizar.TabIndex = 2;
+            BTN_Atualizar.Text = "Atualizar";
+            BTN_Atualizar.UseVisualStyleBackColor = true;
+            // 
+            // BTN_Deletar
+            // 
+            BTN_Deletar.Location = new Point(797, 370);
+            BTN_Deletar.Name = "BTN_Deletar";
+            BTN_Deletar.Size = new Size(75, 23);
+            BTN_Deletar.TabIndex = 3;
+            BTN_Deletar.Text = "Deletar";
+            BTN_Deletar.UseVisualStyleBackColor = true;
             // 
             // FML_Listagem
             // 

@@ -177,7 +177,7 @@
             BTN_Cancelar.TabIndex = 13;
             BTN_Cancelar.Text = "Cancelar";
             BTN_Cancelar.UseVisualStyleBackColor = true;
-            BTN_Cancelar.Click += button2_Click;
+            BTN_Cancelar.Click += AoClicarCancelar;
             // 
             // FML_Cadastro
             // 
