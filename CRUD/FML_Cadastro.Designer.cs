@@ -52,7 +52,6 @@
             LB_Nome.Size = new Size(40, 15);
             LB_Nome.TabIndex = 0;
             LB_Nome.Text = "Nome";
-            LB_Nome.Click += label1_Click;
             // 
             // TXB_Nome
             // 
@@ -86,7 +85,6 @@
             TXB_Email.Name = "TXB_Email";
             TXB_Email.Size = new Size(290, 23);
             TXB_Email.TabIndex = 5;
-            TXB_Email.TextChanged += textBox2_TextChanged;
             // 
             // LB_Email
             // 
@@ -96,7 +94,6 @@
             LB_Email.Size = new Size(41, 15);
             LB_Email.TabIndex = 4;
             LB_Email.Text = "E-mail";
-            LB_Email.Click += label1_Click_1;
             // 
             // LB_Elo
             // 
@@ -106,7 +103,6 @@
             LB_Elo.Size = new Size(23, 15);
             LB_Elo.TabIndex = 8;
             LB_Elo.Text = "Elo";
-            LB_Elo.Click += label1_Click_2;
             // 
             // TXB_Apelido
             // 
@@ -115,7 +111,6 @@
             TXB_Apelido.Name = "TXB_Apelido";
             TXB_Apelido.Size = new Size(141, 23);
             TXB_Apelido.TabIndex = 7;
-            TXB_Apelido.TextChanged += textBox3_TextChanged;
             // 
             // LB_Apelido
             // 
@@ -125,7 +120,6 @@
             LB_Apelido.Size = new Size(48, 15);
             LB_Apelido.TabIndex = 6;
             LB_Apelido.Text = "Apelido";
-            LB_Apelido.Click += label2_Click;
             // 
             // CBX_Elo
             // 
@@ -144,7 +138,6 @@
             LB_DataNascimento.Size = new Size(114, 15);
             LB_DataNascimento.TabIndex = 10;
             LB_DataNascimento.Text = "Data de Nascimento";
-            LB_DataNascimento.Click += LB_DataNascimento_Click;
             // 
             // DTM_DataNascimento
             // 
@@ -157,7 +150,6 @@
             // 
             // BTN_Cadastrar
             // 
-            BTN_Cadastrar.DialogResult = DialogResult.OK;
             BTN_Cadastrar.Location = new Point(35, 299);
             BTN_Cadastrar.Margin = new Padding(3, 2, 3, 2);
             BTN_Cadastrar.Name = "BTN_Cadastrar";
@@ -169,7 +161,6 @@
             // 
             // BTN_Cancelar
             // 
-            BTN_Cancelar.DialogResult = DialogResult.Cancel;
             BTN_Cancelar.Location = new Point(208, 299);
             BTN_Cancelar.Margin = new Padding(3, 2, 3, 2);
             BTN_Cancelar.Name = "BTN_Cancelar";
@@ -201,7 +192,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "FML_Cadastro";
             Text = "FML_Cadastro";
-            Load += FML_Cadastro_Load;
+       
             ResumeLayout(false);
             PerformLayout();
         }

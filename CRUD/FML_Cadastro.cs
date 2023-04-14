@@ -23,47 +23,10 @@ namespace CRUD
         {
             CBX_Elo.DataSource = Enum.GetValues(typeof(Elo));
         }
-        private Elo StringParaElo(string elo)
-        {
-            Elo result;
-
-            switch (elo)
-            {
-                case "Ferro":
-                    result = Elo.Ferro;
-                    break;
-                case "Bronze":
-                    result = Elo.Bronze;
-                    break;
-                case "Prata":
-                    result = Elo.Prata;
-                    break;
-                case "Ouro":
-                    result = Elo.Ouro;
-                    break;
-                case "Platina":
-                    result = Elo.Platina;
-                    break;
-                case "Diamante":
-                    result = Elo.Platina;
-                    break;
-                case "Mestre":
-                    result = Elo.Platina;
-                    break;
-                case "GM":
-                    result = Elo.Platina;
-                    break;
-                default:
-                    result = Elo.Ferro;
-                    break;
-
-            }
-            return result;
-
-        }
+   
 
 
-     
+
 
         private void AoClicarCancelar(object sender, EventArgs e)
         {
@@ -74,17 +37,28 @@ namespace CRUD
         private void BTN_Cadastrar_Click(object sender, EventArgs e)
         {
             var date = DTM_DataNascimento.Value;
-            FML_Listagem.Jogadores.Add(new JogadorModelo(
+            var jogador = new JogadorModelo(
+           
                 TXB_Nome.Text,
                 TXB_Sobrenome.Text,
                 TXB_Apelido.Text,
                 TXB_Email.Text,
-                StringParaElo(CBX_Elo.Text),
-                new DateTime(date.Year, date.Month, date.Day)
+                Servicos.StringParaElo(CBX_Elo.Text),
+                new DateTime(date.Year, date.Month, date.Day));
 
-                )) ;
+            try
+            {
+                Servicos.Validacao(jogador);
+                FML_Listagem.Jogadores.Add(jogador);
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
 
-            Close();
+            }
+
 
 
 
