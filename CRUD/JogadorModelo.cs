@@ -13,10 +13,11 @@ namespace CRUD
         public string Sobrenome { get; set; }
         public string Apelido { get; set; }
         public string Email { get; set; }
-        public string Elo { get; set; }
+        public Elo Elo { get; set; }
         public DateTime DataNascimento { get; private set; }
+        public DateTime DataCriacao { get; private set; }
 
-        public JogadorModelo(string Nome,string Sobrenome,string NickName,string Email,string Elo,DateTime DataNascimento)
+        public JogadorModelo(string Nome,string Sobrenome,string NickName,string Email,Elo Elo,DateTime DataNascimento)
         {
             this.Nome = Nome;
             this.Sobrenome = Sobrenome;
@@ -24,6 +25,8 @@ namespace CRUD
             this.Email = Email;
             this.Elo = Elo;
             this.DataNascimento = DataNascimento;
+            this.DataCriacao = DateTime.Now;
+            
         }
 
     }
