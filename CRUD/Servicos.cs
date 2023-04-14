@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,7 +29,7 @@ namespace CRUD
             }else if (ValidaId(jogador.Id))
             {
                 throw new Exception("Um Id não pode ser repetido.");
-            }else if (ValidaApelido(jogador.Apelido))
+            }else if (ValidaApelido(jogador.Apelido) == false)
             {
                 throw new Exception("Já exite um jogador com esse apelido.");
             }
@@ -116,13 +117,27 @@ namespace CRUD
         }
         private static bool ValidaApelido(string apelido)
         {
-            ValidaString(apelido);
-            foreach(JogadorModelo jogador in FML_Listagem.Jogadores)
+            if (apelido != null && apelido.Length >= 1)
             {
-                if (jogador.Apelido == apelido) return false; 
                 
+                if(FML_Listagem.Jogadores.Count == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    foreach (JogadorModelo jogador in FML_Listagem.Jogadores)
+                    {
+                        if (jogador.Apelido == apelido) return false;
+
+                    }
+                }
             }
-            return true;
+            else
+            {
+                return false;
+            }            
+            return true;      
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CRUD
         {
             CBX_Elo.DataSource = Enum.GetValues(typeof(Elo));
         }
-   
+
 
 
 
@@ -38,7 +38,7 @@ namespace CRUD
         {
             var date = DTM_DataNascimento.Value;
             var jogador = new JogadorModelo(
-           
+
                 TXB_Nome.Text,
                 TXB_Sobrenome.Text,
                 TXB_Apelido.Text,
@@ -66,7 +66,5 @@ namespace CRUD
 
 
         }
-
-
     }
 }
