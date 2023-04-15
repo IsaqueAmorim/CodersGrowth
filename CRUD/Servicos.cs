@@ -56,7 +56,14 @@ namespace CRUD
         {
             Regex rg = new Regex(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
             if (rg.IsMatch(email)){
-                return true;
+                if(FML_Listagem.Jogadores.Exists(X => X.Email == email))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -100,44 +107,24 @@ namespace CRUD
         }
         private static bool ValidaId(long id)
         {
-            foreach(JogadorModelo jogador in FML_Listagem.Jogadores)
+           if(FML_Listagem.Jogadores.Exists(x => x.Id == id || JogadorModelo.Count == id))
             {
-                if(JogadorModelo.Count == id || jogador.Id == id)
-                {
-                    return false;
-                    
-                }
-                else
-                {
-                    JogadorModelo.Count++;
-                    return true;
-                }
-            }
                 return false;
+            }
+            JogadorModelo.Count++;
+                return true;
         }
         private static bool ValidaApelido(string apelido)
         {
             if (apelido != null && apelido.Length >= 1)
             {
-                
-                if(FML_Listagem.Jogadores.Count == 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    foreach (JogadorModelo jogador in FML_Listagem.Jogadores)
-                    {
-                        if (jogador.Apelido == apelido) return false;
+               if(FML_Listagem.Jogadores.Exists(x => x.Apelido == apelido)) return false;
 
-                    }
-                }
             }
-            else
-            {
-                return false;
-            }            
-            return true;      
+            return true;
+
         }
+          
+        
     }
 }
