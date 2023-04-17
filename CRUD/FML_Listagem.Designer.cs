@@ -140,7 +140,7 @@
             // 
             // BTN_Novo
             // 
-            BTN_Novo.Location = new Point(636, 370);
+            BTN_Novo.Location = new Point(859, 370);
             BTN_Novo.Name = "BTN_Novo";
             BTN_Novo.Size = new Size(75, 23);
             BTN_Novo.TabIndex = 1;
@@ -150,16 +150,17 @@
             // 
             // BTN_Atualizar
             // 
-            BTN_Atualizar.Location = new Point(717, 370);
+            BTN_Atualizar.Location = new Point(940, 370);
             BTN_Atualizar.Name = "BTN_Atualizar";
             BTN_Atualizar.Size = new Size(75, 23);
             BTN_Atualizar.TabIndex = 2;
             BTN_Atualizar.Text = "Atualizar";
             BTN_Atualizar.UseVisualStyleBackColor = true;
+            BTN_Atualizar.Click += BTN_Atualizar_Click;
             // 
             // BTN_Deletar
             // 
-            BTN_Deletar.Location = new Point(797, 370);
+            BTN_Deletar.Location = new Point(1020, 370);
             BTN_Deletar.Name = "BTN_Deletar";
             BTN_Deletar.Size = new Size(75, 23);
             BTN_Deletar.TabIndex = 3;
@@ -176,7 +177,7 @@
             Controls.Add(BTN_Novo);
             Controls.Add(GRD_GridList);
             Name = "FML_Listagem";
-            Text = "Jogador";
+            Text = "jogador";
             ((System.ComponentModel.ISupportInitialize)GRD_GridList).EndInit();
             ((System.ComponentModel.ISupportInitialize)jogadorModeloBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)listaJogadorBindingSource).EndInit();

@@ -13,10 +13,28 @@ namespace CRUD
 {
     public partial class FML_Cadastro : Form
     {
-        public FML_Cadastro()
+        private List<JogadorModelo> Jogadores;
+        private JogadorModelo? Jogador;
+       
+        public FML_Cadastro(List<JogadorModelo> lista)
         {
             InitializeComponent();
             CarregarEnums();
+            Jogadores = lista;
+
+        }
+        public FML_Cadastro(JogadorModelo jogador)
+        {
+            InitializeComponent();
+            TXB_Nome.Text =  jogador.Nome;
+            TXB_Sobrenome.Text = jogador.Sobrenome;
+            TXB_Apelido.Text = jogador.Apelido;
+            TXB_Email.Text = jogador.Email;
+            CBX_Elo.Text = jogador.Elo.ToString();
+            DTM_DataNascimento.Value = jogador.DataNascimento;
+            Jogador = jogador;
+
+  
         }
 
         private void CarregarEnums()
@@ -34,37 +52,63 @@ namespace CRUD
             this.Close();
         }
 
-        private void BTN_Cadastrar_Click(object sender, EventArgs e)
+        private void BTN_Cadastrar_AoClicar(object sender, EventArgs e)
         {
             var date = DTM_DataNascimento.Value;
-            var jogador = new JogadorModelo(
+            
+           
+                var jogador = new JogadorModelo
+                {
 
-                TXB_Nome.Text,
-                TXB_Sobrenome.Text,
-                TXB_Apelido.Text,
-                TXB_Email.Text,
-                Servicos.StringParaElo(CBX_Elo.Text),
-                new DateTime(date.Year, date.Month, date.Day));
-
-            try
+                    Nome = TXB_Nome.Text,
+                    Sobrenome = TXB_Sobrenome.Text,
+                    Apelido = TXB_Apelido.Text,
+                    Email = TXB_Email.Text,
+                    Elo = Servicos.StringParaElo(CBX_Elo.Text),
+                    DataNascimento = new DateTime(date.Year, date.Month, date.Day)
+                };
+            if(Jogador == null) 
             {
-                Servicos.Validacao(jogador);
-                FML_Listagem.Jogadores.Add(jogador);
-                this.DialogResult = DialogResult.OK;
-                Close();
+                try
+                {
+                    Servicos.Validacao(jogador);
+                    Jogadores.Add(jogador);
+                    this.DialogResult = DialogResult.OK;
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                try 
+                { 
+                    Jogador.Nome = jogador.Nome;
+                    Jogador.Sobrenome = jogador.Sobrenome;
+                    Jogador.Apelido = jogador.Apelido;
+                    Jogador.Email = jogador.Email;
+                    Jogador.Elo = jogador.Elo;
+                    Jogador.DataNascimento = jogador.DataNascimento;
+                    Servicos.Validacao(jogador);
+                    Jogador = null;
+                    this.DialogResult = DialogResult.OK;
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+
 
             }
-
-
-
-
-
-
+                
 
         }
+
+
     }
 }

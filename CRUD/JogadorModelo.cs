@@ -16,22 +16,27 @@ namespace CRUD
         public string Apelido { get; set; }
         public string Email { get; set; }
         public Elo Elo { get; set; }
-        public DateTime DataNascimento { get; private set; }
+        public DateTime DataNascimento { get; set; }
         public DateTime DataCriacao { get; private set; }
 
-        public JogadorModelo(string Nome,string Sobrenome,string Apelido,string Email,Elo Elo,DateTime DataNascimento)
+        public JogadorModelo(string nome,string sobrenome,string apelido,string email,Elo elo,DateTime dataNascimento)
         {
             this.Id = Count;
-            this.Nome = Nome;
-            this.Sobrenome = Sobrenome;
-            this.Apelido = Apelido;
-            this.Email = Email;
-            this.Elo = Elo;
-            this.DataNascimento = DataNascimento;
+            this.Nome = nome;
+            this.Sobrenome = sobrenome;
+            this.Apelido = apelido;
+            this.Email = email;
+            this.Elo = elo;
+            this.DataNascimento = dataNascimento;
             this.DataCriacao = DateTime.Now;
            
             
         }
+        public JogadorModelo()
+        {
+
+        }
+    
 
     }
 }

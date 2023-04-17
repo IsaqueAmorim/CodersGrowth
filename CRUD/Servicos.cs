@@ -11,8 +11,16 @@ namespace CRUD
 {
     public class Servicos
     {
+        private static List<JogadorModelo> Jogadores;
+
+
+        public Servicos(List<JogadorModelo> jogadores)
+        {
+            Jogadores = jogadores;
+        }
         public static bool Validacao(JogadorModelo jogador)
         {
+            
             if (ValidaString(jogador.Nome) == false)
             {
                 throw new Exception("ERR: O Campo Nome não pode ser vazio ou conter espaços.");
@@ -56,7 +64,7 @@ namespace CRUD
         {
             Regex rg = new Regex(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
             if (rg.IsMatch(email)){
-                if(FML_Listagem.Jogadores.Exists(X => X.Email == email))
+                if(Jogadores.Exists(X => X.Email == email))
                 {
                     return false;
                 }
@@ -100,14 +108,12 @@ namespace CRUD
                 default:
                     result = Elo.Ferro;
                     break;
-
             }
             return result;
-
         }
         private static bool ValidaId(long id)
         {
-           if(FML_Listagem.Jogadores.Exists(x => x.Id == id || JogadorModelo.Count == id))
+           if(Jogadores.Exists(x => x.Id == id || JogadorModelo.Count == id))
             {
                 return false;
             }
@@ -118,13 +124,20 @@ namespace CRUD
         {
             if (apelido != null && apelido.Length >= 1)
             {
-               if(FML_Listagem.Jogadores.Exists(x => x.Apelido == apelido)) return false;
-
+               if(Jogadores.Exists(x => x.Apelido == apelido)) return false;
             }
             return true;
-
         }
-          
-        
+        public static void ValidaQuantidadeDeLinhasSelecionadas(int numeroDeLinhas)
+        {
+            if (numeroDeLinhas == 0)
+            {
+                throw new Exception("ERR: Você deve selecionar uma linha para editar!");
+            }
+            else if (numeroDeLinhas > 1)
+            {
+                throw new Exception("ERR: Você deve selecionar apenas um linha para editar");
+            }
+        }
     }
 }
