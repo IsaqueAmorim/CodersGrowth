@@ -56,11 +56,14 @@
             GRD_GridList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             GRD_GridList.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, sobrenomeDataGridViewTextBoxColumn, apelidoDataGridViewTextBoxColumn, emailDataGridViewTextBoxColumn, eloDataGridViewTextBoxColumn, dataNascimentoDataGridViewTextBoxColumn, DataCriacao });
             GRD_GridList.DataSource = jogadorModeloBindingSource;
+            GRD_GridList.EditMode = DataGridViewEditMode.EditProgrammatically;
             GRD_GridList.Location = new Point(12, 12);
+            GRD_GridList.MultiSelect = false;
             GRD_GridList.Name = "GRD_GridList";
             GRD_GridList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             GRD_GridList.RowHeadersWidth = 51;
             GRD_GridList.RowTemplate.Height = 25;
+            GRD_GridList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             GRD_GridList.Size = new Size(1086, 349);
             GRD_GridList.TabIndex = 0;
             // 
@@ -156,7 +159,7 @@
             BTN_Atualizar.TabIndex = 2;
             BTN_Atualizar.Text = "Atualizar";
             BTN_Atualizar.UseVisualStyleBackColor = true;
-            BTN_Atualizar.Click += BTN_Atualizar_Click;
+            BTN_Atualizar.Click += BTN_Atualizar_AoClicar;
             // 
             // BTN_Deletar
             // 
@@ -166,6 +169,7 @@
             BTN_Deletar.TabIndex = 3;
             BTN_Deletar.Text = "Deletar";
             BTN_Deletar.UseVisualStyleBackColor = true;
+            BTN_Deletar.Click += BTN_Deletar_AoClicar;
             // 
             // FML_Listagem
             // 

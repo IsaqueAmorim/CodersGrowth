@@ -204,7 +204,6 @@
         private Label LB_Sobrenome;
         private TextBox TXB_Email;
         private Label LB_Email;
-        private TextBox textBox2;
         private Label LB_Elo;
         private TextBox TXB_Apelido;
         private Label LB_Apelido;

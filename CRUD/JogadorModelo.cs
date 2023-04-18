@@ -10,14 +10,14 @@ namespace CRUD
 
     {
         public static long Count = 1;
-        public long Id { get;private set; }
+        public long Id { get;set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Apelido { get; set; }
         public string Email { get; set; }
         public Elo Elo { get; set; }
         public DateTime DataNascimento { get; set; }
-        public DateTime DataCriacao { get; private set; }
+        public DateTime DataCriacao { get; set; }
 
         public JogadorModelo(string nome,string sobrenome,string apelido,string email,Elo elo,DateTime dataNascimento)
         {
@@ -28,14 +28,15 @@ namespace CRUD
             this.Email = email;
             this.Elo = elo;
             this.DataNascimento = dataNascimento;
-            this.DataCriacao = DateTime.Now;
+           
            
             
         }
-        public JogadorModelo()
+        public JogadorModelo() 
         {
-
+            Id = Count;
         }
+       
     
 
     }

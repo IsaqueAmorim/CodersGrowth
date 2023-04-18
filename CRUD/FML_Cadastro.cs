@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CRUD
 {
@@ -15,87 +16,113 @@ namespace CRUD
     {
         private List<JogadorModelo> Jogadores;
         private JogadorModelo? Jogador;
-       
-        public FML_Cadastro(List<JogadorModelo> lista)
+
+        public FML_Cadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
         {
+            Jogadores = lista;
             InitializeComponent();
+            if (jogador != null)
+
+                PreencherFormulario(jogador);
+
             CarregarEnums();
             Jogadores = lista;
-
-        }
-        public FML_Cadastro(JogadorModelo jogador)
-        {
-            InitializeComponent();
-            TXB_Nome.Text =  jogador.Nome;
-            TXB_Sobrenome.Text = jogador.Sobrenome;
-            TXB_Apelido.Text = jogador.Apelido;
-            TXB_Email.Text = jogador.Email;
-            CBX_Elo.Text = jogador.Elo.ToString();
-            DTM_DataNascimento.Value = jogador.DataNascimento;
             Jogador = jogador;
 
-  
         }
+        private void CriarJogador()
+        {
+            var date = DTM_DataNascimento.Value;
 
+
+            var jogador = new JogadorModelo
+            {
+               
+                Nome = TXB_Nome.Text,
+                Sobrenome = TXB_Sobrenome.Text,
+                Apelido = TXB_Apelido.Text,
+                Email = TXB_Email.Text,
+                Elo = Servicos.StringParaElo(CBX_Elo.Text),
+                DataNascimento = new DateTime(date.Year, date.Month, date.Day),
+                DataCriacao = DateTime.Now
+            };
+            try
+            {
+                Servicos.ValidaCriacaoJogadorModelo(jogador);
+                Jogadores.Add(jogador);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+        private void AtualizaJogador(JogadorModelo jogador)
+        {
+            var date = DTM_DataNascimento.Value;
+
+            var jogadorAtualizado = new JogadorModelo 
+            {
+                Nome = TXB_Nome.Text,
+                Sobrenome = TXB_Sobrenome.Text,
+                Apelido = Servicos.ValidaUnicidadeApelido(Jogador, TXB_Apelido.Text),
+                Email = Servicos.ValidaUnicidadeEmail(Jogador, TXB_Email.Text),
+                Elo = Servicos.StringParaElo(CBX_Elo.Text),
+                DataNascimento = new DateTime(date.Year, date.Month, date.Day),
+            };
+
+
+
+            jogadorAtualizado.Id = Jogador.Id;
+            jogadorAtualizado.DataCriacao = Jogador.DataCriacao;
+            Jogadores[Jogadores.IndexOf(Jogador)] = jogadorAtualizado;
+            DialogResult = DialogResult.OK;
+
+
+        }
+        public void PreencherFormulario(JogadorModelo? jogador = null)
+        {
+
+            TXB_Nome.Text = jogador?.Nome;
+            TXB_Sobrenome.Text = jogador?.Sobrenome;
+            TXB_Apelido.Text = jogador?.Apelido;
+            TXB_Email.Text = jogador?.Email;
+            CBX_Elo.Text = jogador?.Elo.ToString();
+            DTM_DataNascimento.Value = jogador == null ? DateTime.Now : jogador.DataNascimento;
+
+
+        }
         private void CarregarEnums()
         {
             CBX_Elo.DataSource = Enum.GetValues(typeof(Elo));
         }
-
-
-
-
-
         private void AoClicarCancelar(object sender, EventArgs e)
         {
 
             this.Close();
         }
-
         private void BTN_Cadastrar_AoClicar(object sender, EventArgs e)
         {
-            var date = DTM_DataNascimento.Value;
-            
-           
-                var jogador = new JogadorModelo
-                {
 
-                    Nome = TXB_Nome.Text,
-                    Sobrenome = TXB_Sobrenome.Text,
-                    Apelido = TXB_Apelido.Text,
-                    Email = TXB_Email.Text,
-                    Elo = Servicos.StringParaElo(CBX_Elo.Text),
-                    DataNascimento = new DateTime(date.Year, date.Month, date.Day)
-                };
-            if(Jogador == null) 
+            if (Jogador == null)
             {
                 try
                 {
-                    Servicos.Validacao(jogador);
-                    Jogadores.Add(jogador);
-                    this.DialogResult = DialogResult.OK;
-                    Close();
+                    CriarJogador();
+
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-
                 }
             }
             else
             {
-                try 
-                { 
-                    Jogador.Nome = jogador.Nome;
-                    Jogador.Sobrenome = jogador.Sobrenome;
-                    Jogador.Apelido = jogador.Apelido;
-                    Jogador.Email = jogador.Email;
-                    Jogador.Elo = jogador.Elo;
-                    Jogador.DataNascimento = jogador.DataNascimento;
-                    Servicos.Validacao(jogador);
-                    Jogador = null;
-                    this.DialogResult = DialogResult.OK;
-                    Close();
+                try
+                {
+                    AtualizaJogador(Jogador); ;
                 }
                 catch (Exception ex)
                 {
@@ -105,7 +132,7 @@ namespace CRUD
 
 
             }
-                
+
 
         }
 

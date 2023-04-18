@@ -16,10 +16,12 @@ namespace CRUD
         public List<JogadorModelo> Jogadores = new();
 
 
+        private Servicos servicos;
 
         public FML_Listagem()
         {
             InitializeComponent();
+            servicos = new Servicos(Jogadores);
             PopulandoLista();
             FML_Listagem_CarregarPagina();
         }
@@ -59,24 +61,58 @@ namespace CRUD
 
         }
 
-        private void BTN_Atualizar_Click(object sender, EventArgs e)
+        private void BTN_Atualizar_AoClicar(object sender, EventArgs e)
         {
             var rows = GRD_GridList.SelectedRows.Count;
             try
             {
                 Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows);
                 var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception("Linha não Encontrada"));
-                
                 var jogador = Jogadores.Find(x => x.Id == id);
 
-                FML_Cadastro formulario = new FML_Cadastro(jogador);
-                formulario.ShowDialog();
-                
-            }catch(Exception ex)
+
+                var atualiza = new FML_Cadastro(Jogadores, jogador);
+                if (atualiza.ShowDialog() == DialogResult.OK)
+                {
+                    FML_Listagem_CarregarPagina();
+                }
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-           
+
+        }
+
+        private void BTN_Deletar_AoClicar(object sender, EventArgs e)
+        {
+            var rows = GRD_GridList.SelectedRows.Count;
+            try
+            {
+                Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows);
+                var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception("Linha não Encontrada"));
+                var jogador = Jogadores.Find(x => x.Id == id);
+
+                var dialogResult = MessageBox.Show("Tem certeza que deseja excluir permanentemente este item ?", "", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+
+                    Jogadores.Remove(jogador);
+                    FML_Listagem_CarregarPagina();
+                }
+                else if (dialogResult == DialogResult.No)
+
+
+                {
+                    FML_Listagem_CarregarPagina();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

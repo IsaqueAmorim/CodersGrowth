@@ -18,7 +18,7 @@ namespace CRUD
         {
             Jogadores = jogadores;
         }
-        public static bool Validacao(JogadorModelo jogador)
+        public static bool ValidaCriacaoJogadorModelo(JogadorModelo jogador)
         {
             
             if (ValidaString(jogador.Nome) == false)
@@ -34,7 +34,7 @@ namespace CRUD
             }else if (ValidaString(jogador.Apelido) == false)
             {
                 throw new Exception("O Campo Apelido não pode ser vazio ou conter espaços.");
-            }else if (ValidaId(jogador.Id))
+            }else if (ValidaId(jogador.Id) == false)
             {
                 throw new Exception("Um Id não pode ser repetido.");
             }else if (ValidaApelido(jogador.Apelido) == false)
@@ -43,6 +43,7 @@ namespace CRUD
             }
             return true;
         }
+      
 
         private static bool ValidaString(string data)
         {
@@ -60,7 +61,7 @@ namespace CRUD
             }
             return true;
         }
-        private static bool ValidaEmail(string email)
+        public static bool ValidaEmail(string email)
         {
             Regex rg = new Regex(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
             if (rg.IsMatch(email)){
@@ -113,12 +114,12 @@ namespace CRUD
         }
         private static bool ValidaId(long id)
         {
-           if(Jogadores.Exists(x => x.Id == id || JogadorModelo.Count == id))
+           if(Jogadores.Exists(x => x.Id == id))
             {
                 return false;
             }
             JogadorModelo.Count++;
-                return true;
+            return true;
         }
         private static bool ValidaApelido(string apelido)
         {
@@ -139,5 +140,49 @@ namespace CRUD
                 throw new Exception("ERR: Você deve selecionar apenas um linha para editar");
             }
         }
+        public static string ValidaUnicidadeEmail(JogadorModelo jogador, string email)
+        {
+            if(jogador.Email != email)
+            {
+                if (ValidaEmail(email))
+                {
+                    return email;
+                }
+                else
+                {
+                    MessageBox.Show("ERR: Este endereço de e-mail já existe");
+                    return jogador.Email;
+                }
+
+            }
+            else
+            {
+                return jogador.Email;
+            }
+            
+        }
+        public static string ValidaUnicidadeApelido(JogadorModelo jogador, string apelido)
+        {
+            if (jogador.Apelido != apelido)
+            {
+                if (ValidaApelido(apelido))
+                {
+                    return apelido;
+                }
+                else
+                {
+                    MessageBox.Show("ERR: Este apelido já existe");
+                    return jogador.Apelido;
+                }
+
+            }
+            else
+            {
+                return jogador.Apelido;
+            }
+
+        }
+
+
     }
 }
