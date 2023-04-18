@@ -19,33 +19,15 @@ namespace CRUD
 
         public FML_Cadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
         {
-            Jogadores = lista;
             InitializeComponent();
-            if (jogador != null)
-
-                PreencherFormulario(jogador);
-
+            if (jogador != null) PreencherFormulario(jogador);
             CarregarEnums();
             Jogadores = lista;
             Jogador = jogador;
-
         }
         private void CriarJogador()
         {
-            var date = DTM_DataNascimento.Value;
-
-
-            var jogador = new JogadorModelo
-            {
-               
-                Nome = TXB_Nome.Text,
-                Sobrenome = TXB_Sobrenome.Text,
-                Apelido = TXB_Apelido.Text,
-                Email = TXB_Email.Text,
-                Elo = Servicos.StringParaElo(CBX_Elo.Text),
-                DataNascimento = new DateTime(date.Year, date.Month, date.Day),
-                DataCriacao = DateTime.Now
-            };
+            var jogador = ObterDadosDoFormulario();
             try
             {
                 Servicos.ValidaCriacaoJogadorModelo(jogador);
@@ -56,27 +38,14 @@ namespace CRUD
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
         }
         private void AtualizaJogador(JogadorModelo jogador)
         {
-            var date = DTM_DataNascimento.Value;
-
-            var jogadorAtualizado = new JogadorModelo 
-            {
-                Nome = TXB_Nome.Text,
-                Sobrenome = TXB_Sobrenome.Text,
-                Apelido = Servicos.ValidaUnicidadeApelido(Jogador, TXB_Apelido.Text),
-                Email = Servicos.ValidaUnicidadeEmail(Jogador, TXB_Email.Text),
-                Elo = Servicos.StringParaElo(CBX_Elo.Text),
-                DataNascimento = new DateTime(date.Year, date.Month, date.Day),
-            };
-
-
-
+            var jogadorAtualizado = ObterDadosDoFormulario();
             jogadorAtualizado.Id = Jogador.Id;
             jogadorAtualizado.DataCriacao = Jogador.DataCriacao;
+
             Jogadores[Jogadores.IndexOf(Jogador)] = jogadorAtualizado;
             DialogResult = DialogResult.OK;
 
@@ -105,37 +74,37 @@ namespace CRUD
         }
         private void BTN_Cadastrar_AoClicar(object sender, EventArgs e)
         {
-
-            if (Jogador == null)
+            try
             {
-                try
+                if (Jogador == null)
                 {
                     CriarJogador();
-
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    AtualizaJogador(Jogador);
                 }
             }
-            else
+            catch(Exception ex)
             {
-                try
-                {
-                    AtualizaJogador(Jogador); ;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
-
-
+                MessageBox.Show(ex.Message);
             }
-
-
         }
-
+        private JogadorModelo ObterDadosDoFormulario()
+        {
+            var date = DTM_DataNascimento.Value;
+            var jogador = new JogadorModelo
+            {
+                Nome = TXB_Nome.Text,
+                Sobrenome = TXB_Sobrenome.Text,
+                Apelido = TXB_Apelido.Text,
+                Email = TXB_Email.Text,
+                Elo = Servicos.StringParaElo(CBX_Elo.Text),
+                DataNascimento = new DateTime(date.Year, date.Month, date.Day),
+                DataCriacao = DateTime.Now
+            };
+            return jogador;
+        }
 
     }
 }
