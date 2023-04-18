@@ -83,8 +83,8 @@ namespace CRUD
                 MessageBox.Show(ex.Message);
             }
 
-        }
 
+        }
         private void BTN_Deletar_AoClicar(object sender, EventArgs e)
         {
             var rows = GRD_GridList.SelectedRows.Count;
@@ -114,5 +114,6 @@ namespace CRUD
                 MessageBox.Show(ex.Message);
             }
         }
+
     }
 }
