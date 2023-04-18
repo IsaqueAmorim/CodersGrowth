@@ -47,121 +47,106 @@
             // LB_Nome
             // 
             LB_Nome.AutoSize = true;
-            LB_Nome.Location = new Point(22, 20);
+            LB_Nome.Location = new Point(25, 27);
             LB_Nome.Name = "LB_Nome";
-            LB_Nome.Size = new Size(40, 15);
+            LB_Nome.Size = new Size(50, 20);
             LB_Nome.TabIndex = 0;
             LB_Nome.Text = "Nome";
-            LB_Nome.Click += label1_Click;
             // 
             // TXB_Nome
             // 
-            TXB_Nome.Location = new Point(22, 37);
-            TXB_Nome.Margin = new Padding(3, 2, 3, 2);
+            TXB_Nome.Location = new Point(25, 49);
             TXB_Nome.Name = "TXB_Nome";
-            TXB_Nome.Size = new Size(141, 23);
+            TXB_Nome.Size = new Size(161, 27);
             TXB_Nome.TabIndex = 1;
             // 
             // TXB_Sobrenome
             // 
-            TXB_Sobrenome.Location = new Point(171, 37);
-            TXB_Sobrenome.Margin = new Padding(3, 2, 3, 2);
+            TXB_Sobrenome.Location = new Point(195, 49);
             TXB_Sobrenome.Name = "TXB_Sobrenome";
-            TXB_Sobrenome.Size = new Size(141, 23);
+            TXB_Sobrenome.Size = new Size(161, 27);
             TXB_Sobrenome.TabIndex = 3;
             // 
             // LB_Sobrenome
             // 
             LB_Sobrenome.AutoSize = true;
-            LB_Sobrenome.Location = new Point(171, 20);
+            LB_Sobrenome.Location = new Point(195, 27);
             LB_Sobrenome.Name = "LB_Sobrenome";
-            LB_Sobrenome.Size = new Size(68, 15);
+            LB_Sobrenome.Size = new Size(86, 20);
             LB_Sobrenome.TabIndex = 2;
             LB_Sobrenome.Text = "Sobrenome";
             // 
             // TXB_Email
             // 
-            TXB_Email.Location = new Point(22, 82);
-            TXB_Email.Margin = new Padding(3, 2, 3, 2);
+            TXB_Email.Location = new Point(25, 109);
             TXB_Email.Name = "TXB_Email";
-            TXB_Email.Size = new Size(290, 23);
+            TXB_Email.Size = new Size(331, 27);
             TXB_Email.TabIndex = 5;
-            TXB_Email.TextChanged += textBox2_TextChanged;
             // 
             // LB_Email
             // 
             LB_Email.AutoSize = true;
-            LB_Email.Location = new Point(22, 64);
+            LB_Email.Location = new Point(25, 85);
             LB_Email.Name = "LB_Email";
-            LB_Email.Size = new Size(41, 15);
+            LB_Email.Size = new Size(52, 20);
             LB_Email.TabIndex = 4;
             LB_Email.Text = "E-mail";
-            LB_Email.Click += label1_Click_1;
             // 
             // LB_Elo
             // 
             LB_Elo.AutoSize = true;
-            LB_Elo.Location = new Point(171, 116);
+            LB_Elo.Location = new Point(195, 155);
             LB_Elo.Name = "LB_Elo";
-            LB_Elo.Size = new Size(23, 15);
+            LB_Elo.Size = new Size(30, 20);
             LB_Elo.TabIndex = 8;
             LB_Elo.Text = "Elo";
-            LB_Elo.Click += label1_Click_2;
             // 
             // TXB_Apelido
             // 
-            TXB_Apelido.Location = new Point(22, 134);
-            TXB_Apelido.Margin = new Padding(3, 2, 3, 2);
+            TXB_Apelido.Location = new Point(25, 179);
             TXB_Apelido.Name = "TXB_Apelido";
-            TXB_Apelido.Size = new Size(141, 23);
+            TXB_Apelido.Size = new Size(161, 27);
             TXB_Apelido.TabIndex = 7;
-            TXB_Apelido.TextChanged += textBox3_TextChanged;
             // 
             // LB_Apelido
             // 
             LB_Apelido.AutoSize = true;
-            LB_Apelido.Location = new Point(22, 116);
+            LB_Apelido.Location = new Point(25, 155);
             LB_Apelido.Name = "LB_Apelido";
-            LB_Apelido.Size = new Size(48, 15);
+            LB_Apelido.Size = new Size(62, 20);
             LB_Apelido.TabIndex = 6;
             LB_Apelido.Text = "Apelido";
-            LB_Apelido.Click += label2_Click;
             // 
             // CBX_Elo
             // 
             CBX_Elo.FormattingEnabled = true;
-            CBX_Elo.Location = new Point(171, 134);
-            CBX_Elo.Margin = new Padding(3, 2, 3, 2);
+            CBX_Elo.Location = new Point(195, 179);
             CBX_Elo.Name = "CBX_Elo";
-            CBX_Elo.Size = new Size(141, 23);
+            CBX_Elo.Size = new Size(161, 28);
             CBX_Elo.TabIndex = 9;
             // 
             // LB_DataNascimento
             // 
             LB_DataNascimento.AutoSize = true;
-            LB_DataNascimento.Location = new Point(22, 172);
+            LB_DataNascimento.Location = new Point(25, 229);
             LB_DataNascimento.Name = "LB_DataNascimento";
-            LB_DataNascimento.Size = new Size(114, 15);
+            LB_DataNascimento.Size = new Size(145, 20);
             LB_DataNascimento.TabIndex = 10;
             LB_DataNascimento.Text = "Data de Nascimento";
-            LB_DataNascimento.Click += LB_DataNascimento_Click;
             // 
             // DTM_DataNascimento
             // 
             DTM_DataNascimento.Format = DateTimePickerFormat.Short;
-            DTM_DataNascimento.Location = new Point(22, 190);
-            DTM_DataNascimento.Margin = new Padding(3, 2, 3, 2);
+            DTM_DataNascimento.Location = new Point(25, 253);
             DTM_DataNascimento.Name = "DTM_DataNascimento";
-            DTM_DataNascimento.Size = new Size(141, 23);
+            DTM_DataNascimento.Size = new Size(161, 27);
             DTM_DataNascimento.TabIndex = 11;
             // 
             // BTN_Cadastrar
             // 
-            BTN_Cadastrar.DialogResult = DialogResult.OK;
-            BTN_Cadastrar.Location = new Point(35, 299);
-            BTN_Cadastrar.Margin = new Padding(3, 2, 3, 2);
+            BTN_Cadastrar.Location = new Point(40, 399);
             BTN_Cadastrar.Name = "BTN_Cadastrar";
-            BTN_Cadastrar.Size = new Size(82, 22);
+            BTN_Cadastrar.Size = new Size(94, 29);
             BTN_Cadastrar.TabIndex = 12;
             BTN_Cadastrar.Text = "Cadastrar";
             BTN_Cadastrar.UseVisualStyleBackColor = true;
@@ -169,11 +154,9 @@
             // 
             // BTN_Cancelar
             // 
-            BTN_Cancelar.DialogResult = DialogResult.Cancel;
-            BTN_Cancelar.Location = new Point(208, 299);
-            BTN_Cancelar.Margin = new Padding(3, 2, 3, 2);
+            BTN_Cancelar.Location = new Point(238, 399);
             BTN_Cancelar.Name = "BTN_Cancelar";
-            BTN_Cancelar.Size = new Size(82, 22);
+            BTN_Cancelar.Size = new Size(94, 29);
             BTN_Cancelar.TabIndex = 13;
             BTN_Cancelar.Text = "Cancelar";
             BTN_Cancelar.UseVisualStyleBackColor = true;
@@ -181,9 +164,9 @@
             // 
             // FML_Cadastro
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(337, 338);
+            ClientSize = new Size(385, 451);
             Controls.Add(BTN_Cancelar);
             Controls.Add(BTN_Cadastrar);
             Controls.Add(DTM_DataNascimento);
@@ -198,10 +181,8 @@
             Controls.Add(LB_Sobrenome);
             Controls.Add(TXB_Nome);
             Controls.Add(LB_Nome);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "FML_Cadastro";
             Text = "FML_Cadastro";
-            Load += FML_Cadastro_Load;
             ResumeLayout(false);
             PerformLayout();
         }
