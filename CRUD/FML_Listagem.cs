@@ -3,8 +3,6 @@
     public partial class FML_Listagem : Form
     {
         public List<JogadorModelo> Jogadores = new();
-
-
         private Servicos servicos;
 
         public FML_Listagem()
@@ -14,6 +12,7 @@
             PopulandoLista();
             FML_Listagem_CarregarPagina();
         }
+
         private void PopulandoLista()
         {
             Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "isaque.amorim@invetsoftware", Elo.Desafiante, new DateTime(2003, 08, 13)));
@@ -23,10 +22,6 @@
             Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "isaque.amorim@invetsoftware", Elo.Desafiante, new DateTime(2003, 08, 13)));
             JogadorModelo.Count++;
         }
-
-
-
-
         private void AoClicarNovo(object sender, EventArgs e)
         {
             var F_Cadastro = new FML_Cadastro(Jogadores);
@@ -41,13 +36,9 @@
 
         }
 
-
-
         private void FML_Listagem_CarregarPagina()
         {
-
             GRD_GridList.DataSource = Jogadores.ToList();
-
         }
 
         private void BTN_Atualizar_AoClicar(object sender, EventArgs e)
