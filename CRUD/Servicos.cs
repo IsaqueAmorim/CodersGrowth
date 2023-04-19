@@ -6,7 +6,6 @@ namespace CRUD
     {
         private static List<JogadorModelo> Jogadores;
 
-
         public Servicos(List<JogadorModelo> jogadores)
         {
             Jogadores = jogadores;
@@ -35,7 +34,6 @@ namespace CRUD
             }
             return true;
         }
-      
 
         private static bool ValidaString(string data)
         {
@@ -45,6 +43,7 @@ namespace CRUD
             return true;
 
         }
+
         private static bool ValidaDataNascimento(DateTime criacao,DateTime nascimento)
         {
             if (criacao <= nascimento)
@@ -53,6 +52,7 @@ namespace CRUD
             }
             return true;
         }
+
         public static bool ValidaEmail(string email)
         {
             Regex rg = new Regex(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
@@ -68,6 +68,7 @@ namespace CRUD
             }
             return false;
         }
+
         public static Elo StringParaElo(string elo)
         {
             Elo result;
@@ -104,15 +105,18 @@ namespace CRUD
             }
             return result;
         }
+
         private static bool ValidaId(long id)
         {
-           if(Jogadores.Exists(x => x.Id == id))
+            if(Jogadores.Exists(x => x.Id == id))
             {
                 return false;
             }
+
             JogadorModelo.Count++;
             return true;
         }
+
         private static bool ValidaApelido(string apelido)
         {
             if (apelido != null && apelido.Length >= 1)
@@ -121,6 +125,7 @@ namespace CRUD
             }
             return true;
         }
+
         public static void ValidaQuantidadeDeLinhasSelecionadas(int numeroDeLinhas)
         {
             if (numeroDeLinhas == 0)
@@ -132,6 +137,7 @@ namespace CRUD
                 throw new Exception("ERR: Você deve selecionar apenas um linha para editar");
             }
         }
+
         public static string ValidaUnicidadeEmail(JogadorModelo jogador, string email)
         {
             if(jogador.Email != email)
@@ -145,13 +151,11 @@ namespace CRUD
                     MessageBox.Show("ERR: Este endereço de e-mail já existe");
                     return jogador.Email;
                 }
-
             }
             else
             {
                 return jogador.Email;
             }
-            
         }
         public static string ValidaUnicidadeApelido(JogadorModelo jogador, string apelido)
         {
@@ -166,15 +170,11 @@ namespace CRUD
                     MessageBox.Show("ERR: Este apelido já existe");
                     return jogador.Apelido;
                 }
-
             }
             else
             {
                 return jogador.Apelido;
             }
-
         }
-
-
     }
 }
