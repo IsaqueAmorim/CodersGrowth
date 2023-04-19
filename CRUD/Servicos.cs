@@ -13,7 +13,6 @@ namespace CRUD
         }
         public static bool ValidaCriacaoJogadorModelo(JogadorModelo jogador)
         {
-            
             if (ValidaString(jogador.Nome) == false)
             {
                 throw new Exception("ERR: O Campo Nome não pode ser vazio ou conter espaços.");
