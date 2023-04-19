@@ -28,7 +28,7 @@
         }
         public JogadorModelo() 
         {
-            Id = Count;
+         
         }
        
     

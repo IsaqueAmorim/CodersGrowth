@@ -113,7 +113,6 @@ namespace CRUD
                 return false;
             }
 
-            JogadorModelo.Count++;
             return true;
         }
 
@@ -157,6 +156,7 @@ namespace CRUD
                 return jogador.Email;
             }
         }
+
         public static string ValidaUnicidadeApelido(JogadorModelo jogador, string apelido)
         {
             if (jogador.Apelido != apelido)

@@ -2,7 +2,7 @@
 {
     public partial class FML_Listagem : Form
     {
-        public List<JogadorModelo> Jogadores = new();
+        public List<JogadorModelo> Jogadores = ListaSingleton.PegarInstancia();
 
 
         private Servicos servicos;
@@ -24,24 +24,15 @@
             JogadorModelo.Count++;
         }
 
-
-
-
         private void AoClicarNovo(object sender, EventArgs e)
         {
-            var F_Cadastro = new FML_Cadastro(Jogadores);
+            var Form_Cadastro = new FML_Cadastro(Jogadores);
 
-
-            if (F_Cadastro.ShowDialog() == DialogResult.OK)
+            if (Form_Cadastro.ShowDialog() == DialogResult.OK)
             {
                 FML_Listagem_CarregarPagina();
             }
-
-
-
         }
-
-
 
         private void FML_Listagem_CarregarPagina()
         {
@@ -86,17 +77,13 @@
                 var dialogResult = MessageBox.Show("Tem certeza que deseja excluir permanentemente este item ?", "", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-
                     Jogadores.Remove(jogador);
                     FML_Listagem_CarregarPagina();
                 }
                 else if (dialogResult == DialogResult.No)
-
-
                 {
                     FML_Listagem_CarregarPagina();
                 }
-
             }
             catch (Exception ex)
             {
