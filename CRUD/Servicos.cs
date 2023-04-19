@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace CRUD
 {
     public class Servicos
     {
-        public static bool Validacao(JogadorModelo jogador)
+        private static List<JogadorModelo> Jogadores;
+
+
+        public Servicos(List<JogadorModelo> jogadores)
         {
+            Jogadores = jogadores;
+        }
+        public static bool ValidaCriacaoJogadorModelo(JogadorModelo jogador)
+        {
+            
             if (ValidaString(jogador.Nome) == false)
             {
                 throw new Exception("ERR: O Campo Nome não pode ser vazio ou conter espaços.");
@@ -26,7 +27,7 @@ namespace CRUD
             }else if (ValidaString(jogador.Apelido) == false)
             {
                 throw new Exception("O Campo Apelido não pode ser vazio ou conter espaços.");
-            }else if (ValidaId(jogador.Id))
+            }else if (ValidaId(jogador.Id) == false)
             {
                 throw new Exception("Um Id não pode ser repetido.");
             }else if (ValidaApelido(jogador.Apelido) == false)
@@ -35,6 +36,7 @@ namespace CRUD
             }
             return true;
         }
+      
 
         private static bool ValidaString(string data)
         {
@@ -52,11 +54,11 @@ namespace CRUD
             }
             return true;
         }
-        private static bool ValidaEmail(string email)
+        public static bool ValidaEmail(string email)
         {
             Regex rg = new Regex(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
             if (rg.IsMatch(email)){
-                if(FML_Listagem.Jogadores.Exists(X => X.Email == email))
+                if(Jogadores.Exists(X => X.Email == email))
                 {
                     return false;
                 }
@@ -100,31 +102,80 @@ namespace CRUD
                 default:
                     result = Elo.Ferro;
                     break;
-
             }
             return result;
-
         }
         private static bool ValidaId(long id)
         {
-           if(FML_Listagem.Jogadores.Exists(x => x.Id == id || JogadorModelo.Count == id))
+           if(Jogadores.Exists(x => x.Id == id))
             {
                 return false;
             }
             JogadorModelo.Count++;
-                return true;
+            return true;
         }
         private static bool ValidaApelido(string apelido)
         {
             if (apelido != null && apelido.Length >= 1)
             {
-               if(FML_Listagem.Jogadores.Exists(x => x.Apelido == apelido)) return false;
-
+               if(Jogadores.Exists(x => x.Apelido == apelido)) return false;
             }
             return true;
+        }
+        public static void ValidaQuantidadeDeLinhasSelecionadas(int numeroDeLinhas)
+        {
+            if (numeroDeLinhas == 0)
+            {
+                throw new Exception("ERR: Você deve selecionar uma linha para editar!");
+            }
+            else if (numeroDeLinhas > 1)
+            {
+                throw new Exception("ERR: Você deve selecionar apenas um linha para editar");
+            }
+        }
+        public static string ValidaUnicidadeEmail(JogadorModelo jogador, string email)
+        {
+            if(jogador.Email != email)
+            {
+                if (ValidaEmail(email))
+                {
+                    return email;
+                }
+                else
+                {
+                    MessageBox.Show("ERR: Este endereço de e-mail já existe");
+                    return jogador.Email;
+                }
+
+            }
+            else
+            {
+                return jogador.Email;
+            }
+            
+        }
+        public static string ValidaUnicidadeApelido(JogadorModelo jogador, string apelido)
+        {
+            if (jogador.Apelido != apelido)
+            {
+                if (ValidaApelido(apelido))
+                {
+                    return apelido;
+                }
+                else
+                {
+                    MessageBox.Show("ERR: Este apelido já existe");
+                    return jogador.Apelido;
+                }
+
+            }
+            else
+            {
+                return jogador.Apelido;
+            }
 
         }
-          
-        
+
+
     }
 }

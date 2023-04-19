@@ -56,11 +56,14 @@
             GRD_GridList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             GRD_GridList.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, sobrenomeDataGridViewTextBoxColumn, apelidoDataGridViewTextBoxColumn, emailDataGridViewTextBoxColumn, eloDataGridViewTextBoxColumn, dataNascimentoDataGridViewTextBoxColumn, DataCriacao });
             GRD_GridList.DataSource = jogadorModeloBindingSource;
+            GRD_GridList.EditMode = DataGridViewEditMode.EditProgrammatically;
             GRD_GridList.Location = new Point(12, 12);
+            GRD_GridList.MultiSelect = false;
             GRD_GridList.Name = "GRD_GridList";
             GRD_GridList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             GRD_GridList.RowHeadersWidth = 51;
             GRD_GridList.RowTemplate.Height = 25;
+            GRD_GridList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             GRD_GridList.Size = new Size(1086, 349);
             GRD_GridList.TabIndex = 0;
             // 
@@ -140,7 +143,7 @@
             // 
             // BTN_Novo
             // 
-            BTN_Novo.Location = new Point(636, 370);
+            BTN_Novo.Location = new Point(859, 370);
             BTN_Novo.Name = "BTN_Novo";
             BTN_Novo.Size = new Size(75, 23);
             BTN_Novo.TabIndex = 1;
@@ -150,21 +153,23 @@
             // 
             // BTN_Atualizar
             // 
-            BTN_Atualizar.Location = new Point(717, 370);
+            BTN_Atualizar.Location = new Point(940, 370);
             BTN_Atualizar.Name = "BTN_Atualizar";
             BTN_Atualizar.Size = new Size(75, 23);
             BTN_Atualizar.TabIndex = 2;
             BTN_Atualizar.Text = "Atualizar";
             BTN_Atualizar.UseVisualStyleBackColor = true;
+            BTN_Atualizar.Click += BTN_Atualizar_AoClicar;
             // 
             // BTN_Deletar
             // 
-            BTN_Deletar.Location = new Point(797, 370);
+            BTN_Deletar.Location = new Point(1020, 370);
             BTN_Deletar.Name = "BTN_Deletar";
             BTN_Deletar.Size = new Size(75, 23);
             BTN_Deletar.TabIndex = 3;
             BTN_Deletar.Text = "Deletar";
             BTN_Deletar.UseVisualStyleBackColor = true;
+            BTN_Deletar.Click += BTN_Deletar_AoClicar;
             // 
             // FML_Listagem
             // 
@@ -176,7 +181,7 @@
             Controls.Add(BTN_Novo);
             Controls.Add(GRD_GridList);
             Name = "FML_Listagem";
-            Text = "Jogador";
+            Text = "jogador";
             ((System.ComponentModel.ISupportInitialize)GRD_GridList).EndInit();
             ((System.ComponentModel.ISupportInitialize)jogadorModeloBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)listaJogadorBindingSource).EndInit();
