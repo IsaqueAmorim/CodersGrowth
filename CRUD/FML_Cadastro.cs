@@ -3,7 +3,8 @@
     public partial class FML_Cadastro : Form
     {
         private List<JogadorModelo> Jogadores;
-        private JogadorModelo? Jogador;
+        private JogadorModelo JogadorParaAtualizar;
+        private static JogadorModelo NovoJogador;
 
         public FML_Cadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
         {
@@ -19,7 +20,8 @@
             try
             {
                 Servicos.ValidaCriacaoJogadorModelo(jogador);
-                Jogadores.Add(jogador);
+
+                NovoJogador = jogador;
                 DialogResult = DialogResult.OK;
                 Close();
             }
@@ -92,6 +94,10 @@
                 DataCriacao = DateTime.Now
             };
             return jogador;
+        }
+        public static JogadorModelo PegarJogadorCriado( )
+        {
+            return NovoJogador;
         }
 
     }

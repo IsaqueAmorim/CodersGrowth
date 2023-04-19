@@ -30,15 +30,16 @@
 
             if (Form_Cadastro.ShowDialog() == DialogResult.OK)
             {
+                var JogadorParaAdicionarNaLista = FML_Cadastro.PegarJogadorCriado();
+                JogadorParaAdicionarNaLista.Id = ListaSingleton.ObterProximoId();
+
                 FML_Listagem_CarregarPagina();
             }
         }
 
         private void FML_Listagem_CarregarPagina()
         {
-
             GRD_GridList.DataSource = Jogadores.ToList();
-
         }
 
         private void BTN_Atualizar_AoClicar(object sender, EventArgs e)
@@ -46,8 +47,11 @@
             var rows = GRD_GridList.SelectedRows.Count;
             try
             {
-                Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows);
-                var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception("Linha não Encontrada"));
+                Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows); 
+
+                var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() 
+                    ?? throw new Exception("Linha não Encontrada"));
+
                 var jogador = Jogadores.Find(x => x.Id == id);
 
 
