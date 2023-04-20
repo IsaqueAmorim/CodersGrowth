@@ -1,17 +1,18 @@
 ﻿namespace CRUD
 {
-    public partial class FML_Cadastro : Form
+    public partial class FormularioCadastro : Form
     {
         private List<JogadorModelo> Jogadores;
-        private JogadorModelo? Jogador;
+        private JogadorModelo JogadorParaAtualizar;
+        private static JogadorModelo NovoJogador;
 
-        public FML_Cadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
+        public FormularioCadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
         {
             InitializeComponent();
             if (jogador != null) PreencherFormulario(jogador);
             CarregarEnums();
             Jogadores = lista;
-            Jogador = jogador;
+            JogadorParaAtualizar = jogador;
         }
         private void CriarJogador()
         {
@@ -19,7 +20,8 @@
             try
             {
                 Servicos.ValidaCriacaoJogadorModelo(jogador);
-                Jogadores.Add(jogador);
+
+                NovoJogador = jogador;
                 DialogResult = DialogResult.OK;
                 Close();
             }
@@ -31,10 +33,10 @@
         private void AtualizaJogador(JogadorModelo jogador)
         {
             var jogadorAtualizado = ObterDadosDoFormulario();
-            jogadorAtualizado.Id = Jogador.Id;
-            jogadorAtualizado.DataCriacao = Jogador.DataCriacao;
+            jogadorAtualizado.Id = JogadorParaAtualizar.Id;
+            jogadorAtualizado.DataCriacao = JogadorParaAtualizar.DataCriacao;
 
-            Jogadores[Jogadores.IndexOf(Jogador)] = jogadorAtualizado;
+            Jogadores[Jogadores.IndexOf(JogadorParaAtualizar)] = jogadorAtualizado;
             DialogResult = DialogResult.OK;
 
 
@@ -60,17 +62,17 @@
 
             this.Close();
         }
-        private void BTN_Cadastrar_AoClicar(object sender, EventArgs e)
+        private void AoClicarCadastrar(object sender, EventArgs e)
         {
             try
             {
-                if (Jogador == null)
+                if (JogadorParaAtualizar == null)
                 {
                     CriarJogador();
                 }
                 else
                 {
-                    AtualizaJogador(Jogador);
+                    AtualizaJogador(JogadorParaAtualizar);
                 }
             }
             catch(Exception ex)
@@ -92,6 +94,10 @@
                 DataCriacao = DateTime.Now
             };
             return jogador;
+        }
+        public static JogadorModelo PegarJogadorCriado( )
+        {
+            return NovoJogador;
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace CRUD
 {
-    partial class FML_Cadastro
+    partial class FormularioCadastro
     {
         /// <summary>
         /// Required designer variable.
@@ -157,7 +157,7 @@
             BTN_Cadastrar.TabIndex = 12;
             BTN_Cadastrar.Text = "Cadastrar";
             BTN_Cadastrar.UseVisualStyleBackColor = true;
-            BTN_Cadastrar.Click += BTN_Cadastrar_AoClicar;
+            BTN_Cadastrar.Click += AoClicarCadastrar;
             // 
             // BTN_Cancelar
             // 
