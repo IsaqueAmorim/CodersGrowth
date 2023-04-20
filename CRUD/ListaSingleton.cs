@@ -8,7 +8,7 @@ namespace CRUD
         private static int Id;
 
         private ListaSingleton() { }
-        public static List<JogadorModelo> PegarInstancia()
+        public static List<JogadorModelo> ObterInstancia()
         {
             if (instancia == null)
             {

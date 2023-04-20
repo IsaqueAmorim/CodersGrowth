@@ -2,37 +2,26 @@
 {
     public partial class FormularioListagem : Form
     {
-        public List<JogadorModelo> Jogadores = ListaSingleton.PegarInstancia();
-
-
+        private JogadorRepository repository = new JogadorRepository();
         private Servicos servicos;
 
         public FormularioListagem()
         {
             InitializeComponent();
-            servicos = new Servicos(Jogadores);
-            PopulandoLista();
+            servicos = new Servicos(repository.ObterTodosJogadores());
             CarregarPagina();
         }
-        private void PopulandoLista()
-        {
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "isaque.amorim@invetsoftware", Elo.Desafiante, new DateTime(2003, 08, 13)));
-            JogadorModelo.Count++;
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "isaque.amorim@invetsoftware", Elo.Desafiante, new DateTime(2003, 08, 13)));
-            JogadorModelo.Count++;
-            Jogadores.Add(new JogadorModelo("Isaque", "Amorim", "Kayfen", "isaque.amorim@invetsoftware", Elo.Desafiante, new DateTime(2003, 08, 13)));
-            JogadorModelo.Count++;
-        }
+     
 
         private void AoClicarNovo(object sender, EventArgs e)
         {
-            var FormularioCadastro = new FormularioCadastro(Jogadores);
+            var formularioCadastro = new FormularioCadastro();
 
-            if (FormularioCadastro.ShowDialog() == DialogResult.OK)
+            if (formularioCadastro.ShowDialog() == DialogResult.OK)
             {
-                var JogadorParaAdicionarNaLista = FormularioCadastro.PegarJogadorCriado();
-                JogadorParaAdicionarNaLista.Id = ListaSingleton.ObterProximoId();
-                Jogadores.Add(JogadorParaAdicionarNaLista);
+                var jogadorParaAdicionarNaLista = FormularioCadastro.ObterJogadorCriado();
+                jogadorParaAdicionarNaLista.Id = ListaSingleton.ObterProximoId();
+                repository.CriarJogador(jogadorParaAdicionarNaLista);
 
                 CarregarPagina();
             }
@@ -40,7 +29,7 @@
 
         private void CarregarPagina()
         {
-            GRD_GridList.DataSource = Jogadores.ToList();
+            GRD_GridList.DataSource = repository.ObterTodosJogadores().ToList();
         }
 
         private void AoClicarAtualizar(object sender, EventArgs e)
@@ -49,16 +38,17 @@
             try
             {
                 Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows); 
-
                 var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() 
                     ?? throw new Exception("Linha não Encontrada"));
 
-                var jogador = Jogadores.Find(x => x.Id == id);
+                var jogadorAtual = repository.ObterJogadorPorId(id);
+                var jogadorParaAdicinarNaLista = FormularioCadastro.ObterJogadorCriado();
+                var formularioCadastro = new FormularioCadastro(jogadorAtual);
+                
 
-
-                var atualiza = new FormularioCadastro(Jogadores, jogador);
-                if (atualiza.ShowDialog() == DialogResult.OK)
+                if (formularioCadastro.ShowDialog() == DialogResult.OK)
                 {
+                    repository.AtualizarJogador(jogadorParaAdicinarNaLista, jogadorAtual);
                     CarregarPagina();
                 }
 
@@ -77,12 +67,12 @@
             {
                 Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows);
                 var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception("Linha não Encontrada"));
-                var jogador = Jogadores.Find(x => x.Id == id);
+                var jogador = repository.ObterJogadorPorId(id);
 
                 var dialogResult = MessageBox.Show("Tem certeza que deseja excluir permanentemente este item ?", "", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Jogadores.Remove(jogador);
+                    repository.DeletarJogador(jogador);
                     CarregarPagina();
                 }
                 else if (dialogResult == DialogResult.No)
