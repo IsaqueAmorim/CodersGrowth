@@ -2,16 +2,15 @@
 {
     public partial class FormularioCadastro : Form
     {
-        private List<JogadorModelo> Jogadores;
-        private JogadorModelo JogadorParaAtualizar;
-        private static JogadorModelo NovoJogador;
+        
+        private JogadorModelo? JogadorParaAtualizar;
+        private static JogadorModelo? NovoJogador;
 
-        public FormularioCadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
+        public FormularioCadastro( JogadorModelo? jogador = null)
         {
             InitializeComponent();
             if (jogador != null) PreencherFormulario(jogador);
             CarregarEnums();
-            Jogadores = lista;
             JogadorParaAtualizar = jogador;
         }
         private void CriarJogador()
@@ -36,7 +35,7 @@
             jogadorAtualizado.Id = JogadorParaAtualizar.Id;
             jogadorAtualizado.DataCriacao = JogadorParaAtualizar.DataCriacao;
 
-            Jogadores[Jogadores.IndexOf(JogadorParaAtualizar)] = jogadorAtualizado;
+            NovoJogador = jogadorAtualizado;
             DialogResult = DialogResult.OK;
 
 
@@ -95,7 +94,7 @@
             };
             return jogador;
         }
-        public static JogadorModelo PegarJogadorCriado( )
+        public static JogadorModelo ObterJogadorCriado( )
         {
             return NovoJogador;
         }

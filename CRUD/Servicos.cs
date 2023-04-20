@@ -10,7 +10,7 @@ namespace CRUD
         {
             Jogadores = jogadores;
         }
-        public static bool ValidaCriacaoJogadorModelo(JogadorModelo jogador)
+        public static void ValidaCriacaoJogadorModelo(JogadorModelo jogador)
         {
             if (ValidaString(jogador.Nome) == false)
             {
@@ -32,7 +32,6 @@ namespace CRUD
             {
                 throw new Exception("Já exite um jogador com esse apelido.");
             }
-            return true;
         }
 
         private static bool ValidaString(string data)
