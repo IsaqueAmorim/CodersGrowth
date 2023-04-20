@@ -90,13 +90,16 @@ namespace CRUD
                     result = Elo.Platina;
                     break;
                 case "Diamante":
-                    result = Elo.Platina;
+                    result = Elo.Diamante;
                     break;
                 case "Mestre":
-                    result = Elo.Platina;
+                    result = Elo.Mestre;
                     break;
                 case "GM":
-                    result = Elo.Platina;
+                    result = Elo.GM;
+                    break;
+                case "Desafiante":
+                    result = Elo.Desafiante;
                     break;
                 default:
                     result = Elo.Ferro;
