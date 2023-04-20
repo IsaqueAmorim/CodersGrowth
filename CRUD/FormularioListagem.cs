@@ -26,9 +26,9 @@
 
         private void AoClicarNovo(object sender, EventArgs e)
         {
-            var Form_Cadastro = new FormularioCadastro(Jogadores);
+            var FormularioCadastro = new FormularioCadastro(Jogadores);
 
-            if (Form_Cadastro.ShowDialog() == DialogResult.OK)
+            if (FormularioCadastro.ShowDialog() == DialogResult.OK)
             {
                 var JogadorParaAdicionarNaLista = FormularioCadastro.PegarJogadorCriado();
                 JogadorParaAdicionarNaLista.Id = ListaSingleton.ObterProximoId();
