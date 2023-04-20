@@ -32,6 +32,7 @@
             {
                 var JogadorParaAdicionarNaLista = FML_Cadastro.PegarJogadorCriado();
                 JogadorParaAdicionarNaLista.Id = ListaSingleton.ObterProximoId();
+                Jogadores.Add(JogadorParaAdicionarNaLista);
 
                 FML_Listagem_CarregarPagina();
             }

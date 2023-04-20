@@ -12,7 +12,7 @@
             if (jogador != null) PreencherFormulario(jogador);
             CarregarEnums();
             Jogadores = lista;
-            Jogador = jogador;
+            JogadorParaAtualizar = jogador;
         }
         private void CriarJogador()
         {
@@ -33,10 +33,10 @@
         private void AtualizaJogador(JogadorModelo jogador)
         {
             var jogadorAtualizado = ObterDadosDoFormulario();
-            jogadorAtualizado.Id = Jogador.Id;
-            jogadorAtualizado.DataCriacao = Jogador.DataCriacao;
+            jogadorAtualizado.Id = JogadorParaAtualizar.Id;
+            jogadorAtualizado.DataCriacao = JogadorParaAtualizar.DataCriacao;
 
-            Jogadores[Jogadores.IndexOf(Jogador)] = jogadorAtualizado;
+            Jogadores[Jogadores.IndexOf(JogadorParaAtualizar)] = jogadorAtualizado;
             DialogResult = DialogResult.OK;
 
 
@@ -66,13 +66,13 @@
         {
             try
             {
-                if (Jogador == null)
+                if (JogadorParaAtualizar == null)
                 {
                     CriarJogador();
                 }
                 else
                 {
-                    AtualizaJogador(Jogador);
+                    AtualizaJogador(JogadorParaAtualizar);
                 }
             }
             catch(Exception ex)
