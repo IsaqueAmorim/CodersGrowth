@@ -1,18 +1,18 @@
 ﻿namespace CRUD
 {
-    public partial class FML_Listagem : Form
+    public partial class FormularioListagem : Form
     {
         public List<JogadorModelo> Jogadores = ListaSingleton.PegarInstancia();
 
 
         private Servicos servicos;
 
-        public FML_Listagem()
+        public FormularioListagem()
         {
             InitializeComponent();
             servicos = new Servicos(Jogadores);
             PopulandoLista();
-            FML_Listagem_CarregarPagina();
+            CarregarPagina();
         }
         private void PopulandoLista()
         {
@@ -26,24 +26,24 @@
 
         private void AoClicarNovo(object sender, EventArgs e)
         {
-            var Form_Cadastro = new FML_Cadastro(Jogadores);
+            var Form_Cadastro = new FormularioCadastro(Jogadores);
 
             if (Form_Cadastro.ShowDialog() == DialogResult.OK)
             {
-                var JogadorParaAdicionarNaLista = FML_Cadastro.PegarJogadorCriado();
+                var JogadorParaAdicionarNaLista = FormularioCadastro.PegarJogadorCriado();
                 JogadorParaAdicionarNaLista.Id = ListaSingleton.ObterProximoId();
                 Jogadores.Add(JogadorParaAdicionarNaLista);
 
-                FML_Listagem_CarregarPagina();
+                CarregarPagina();
             }
         }
 
-        private void FML_Listagem_CarregarPagina()
+        private void CarregarPagina()
         {
             GRD_GridList.DataSource = Jogadores.ToList();
         }
 
-        private void BTN_Atualizar_AoClicar(object sender, EventArgs e)
+        private void AoClicarAtualizar(object sender, EventArgs e)
         {
             var rows = GRD_GridList.SelectedRows.Count;
             try
@@ -56,10 +56,10 @@
                 var jogador = Jogadores.Find(x => x.Id == id);
 
 
-                var atualiza = new FML_Cadastro(Jogadores, jogador);
+                var atualiza = new FormularioCadastro(Jogadores, jogador);
                 if (atualiza.ShowDialog() == DialogResult.OK)
                 {
-                    FML_Listagem_CarregarPagina();
+                    CarregarPagina();
                 }
 
             }
@@ -70,7 +70,7 @@
 
 
         }
-        private void BTN_Deletar_AoClicar(object sender, EventArgs e)
+        private void AoClicarDeletar(object sender, EventArgs e)
         {
             var rows = GRD_GridList.SelectedRows.Count;
             try
@@ -83,11 +83,11 @@
                 if (dialogResult == DialogResult.Yes)
                 {
                     Jogadores.Remove(jogador);
-                    FML_Listagem_CarregarPagina();
+                    CarregarPagina();
                 }
                 else if (dialogResult == DialogResult.No)
                 {
-                    FML_Listagem_CarregarPagina();
+                    CarregarPagina();
                 }
             }
             catch (Exception ex)

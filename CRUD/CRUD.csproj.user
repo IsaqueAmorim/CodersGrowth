@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="FML_Cadastro.cs">
+    <Compile Update="FormularioCadastro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FML_Listagem.cs">
+    <Compile Update="FormularioListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormularioCadastro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormularioListagem.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

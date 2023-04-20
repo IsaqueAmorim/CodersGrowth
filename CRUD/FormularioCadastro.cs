@@ -1,12 +1,12 @@
 ﻿namespace CRUD
 {
-    public partial class FML_Cadastro : Form
+    public partial class FormularioCadastro : Form
     {
         private List<JogadorModelo> Jogadores;
         private JogadorModelo JogadorParaAtualizar;
         private static JogadorModelo NovoJogador;
 
-        public FML_Cadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
+        public FormularioCadastro(List<JogadorModelo> lista, JogadorModelo? jogador = null)
         {
             InitializeComponent();
             if (jogador != null) PreencherFormulario(jogador);
@@ -62,7 +62,7 @@
 
             this.Close();
         }
-        private void BTN_Cadastrar_AoClicar(object sender, EventArgs e)
+        private void AoClicarCadastrar(object sender, EventArgs e)
         {
             try
             {

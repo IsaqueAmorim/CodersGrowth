@@ -7,7 +7,7 @@ namespace CRUD
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-        public static FML_Listagem listagem = new FML_Listagem();
+        public static FormularioListagem listagem = new FormularioListagem();
         [STAThread]
         static void Main()
         {

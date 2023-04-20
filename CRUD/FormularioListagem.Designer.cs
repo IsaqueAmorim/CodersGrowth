@@ -1,6 +1,6 @@
 ﻿namespace CRUD
 {
-    partial class FML_Listagem
+    partial class FormularioListagem
     {
         /// <summary>
         /// Required designer variable.
@@ -159,7 +159,7 @@
             BTN_Atualizar.TabIndex = 2;
             BTN_Atualizar.Text = "Atualizar";
             BTN_Atualizar.UseVisualStyleBackColor = true;
-            BTN_Atualizar.Click += BTN_Atualizar_AoClicar;
+            BTN_Atualizar.Click += AoClicarAtualizar;
             // 
             // BTN_Deletar
             // 
@@ -169,7 +169,7 @@
             BTN_Deletar.TabIndex = 3;
             BTN_Deletar.Text = "Deletar";
             BTN_Deletar.UseVisualStyleBackColor = true;
-            BTN_Deletar.Click += BTN_Deletar_AoClicar;
+            BTN_Deletar.Click += AoClicarDeletar;
             // 
             // FML_Listagem
             // 
