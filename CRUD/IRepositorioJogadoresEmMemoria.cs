@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRUD
 {
-    public interface IJogadorRepository
+    public interface IRepositorioJogadoresEmMemoria
     {
         public void CriarJogador(JogadorModelo jogador);
         public JogadorModelo ObterJogadorPorId(long id);

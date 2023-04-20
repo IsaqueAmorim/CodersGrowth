@@ -2,7 +2,7 @@
 {
     public partial class FormularioListagem : Form
     {
-        private JogadorRepository repository = new JogadorRepository();
+        private RepositorioJogadoresEmMemoria repository = new RepositorioJogadoresEmMemoria();
         private Servicos servicos;
 
         public FormularioListagem()

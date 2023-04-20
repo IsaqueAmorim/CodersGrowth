@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRUD
 {
-    public class JogadorRepository : IJogadorRepository
+    public class RepositorioJogadoresEmMemoria : IRepositorioJogadoresEmMemoria
     {
         private List<JogadorModelo> listaJogadores = ListaSingleton.ObterInstancia();
         public void AtualizarJogador(JogadorModelo jogadorAtualizado,JogadorModelo jogadorAtual)
