@@ -1,4 +1,6 @@
-﻿namespace CRUD
+﻿using CRUD.Modelos;
+
+namespace CRUD
 {
     partial class FormularioListagem
     {

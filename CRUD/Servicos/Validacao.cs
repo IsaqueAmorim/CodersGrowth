@@ -1,12 +1,13 @@
 ﻿using System.Text.RegularExpressions;
+using CRUD.Modelos;
 
-namespace CRUD
+namespace CRUD.Servicos
 {
-    public class Servicos
+    public class Validacao
     {
         private static List<JogadorModelo> Jogadores;
 
-        public Servicos(List<JogadorModelo> jogadores)
+        public Validacao(List<JogadorModelo> jogadores)
         {
             Jogadores = jogadores;
         }
@@ -15,20 +16,26 @@ namespace CRUD
             if (ValidaString(jogador.Nome) == false)
             {
                 throw new Exception("ERR: O Campo Nome não pode ser vazio ou conter espaços.");
-               
-            }else if (ValidaDataNascimento(jogador.DataCriacao,jogador.DataNascimento) == false) {
+
+            }
+            else if (ValidaDataNascimento(jogador.DataCriacao, jogador.DataNascimento) == false)
+            {
 
                 throw new Exception("ERR: A Data de nascimento não pode ser maior ou igual a data de hoje. ");
-            }else if (ValidaEmail(jogador.Email) == false)
+            }
+            else if (ValidaEmail(jogador.Email) == false)
             {
                 throw new Exception("ERR: Email inválido.");
-            }else if (ValidaString(jogador.Apelido) == false)
+            }
+            else if (ValidaString(jogador.Apelido) == false)
             {
                 throw new Exception("O Campo Apelido não pode ser vazio ou conter espaços.");
-            }else if (ValidaId(jogador.Id) == false)
+            }
+            else if (ValidaId(jogador.Id) == false)
             {
                 throw new Exception("Um Id não pode ser repetido.");
-            }else if (ValidaApelido(jogador.Apelido) == false)
+            }
+            else if (ValidaApelido(jogador.Apelido) == false)
             {
                 throw new Exception("Já exite um jogador com esse apelido.");
             }
@@ -36,14 +43,14 @@ namespace CRUD
 
         private static bool ValidaString(string data)
         {
-            if(data.Length == 0) return false;
+            if (data.Length == 0) return false;
             if (data.Contains(" ")) return false;
 
             return true;
 
         }
 
-        private static bool ValidaDataNascimento(DateTime criacao,DateTime nascimento)
+        private static bool ValidaDataNascimento(DateTime criacao, DateTime nascimento)
         {
             if (criacao <= nascimento)
             {
@@ -55,8 +62,9 @@ namespace CRUD
         public static bool ValidaEmail(string email)
         {
             Regex rg = new Regex(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
-            if (rg.IsMatch(email)){
-                if(Jogadores.Exists(X => X.Email == email))
+            if (rg.IsMatch(email))
+            {
+                if (Jogadores.Exists(X => X.Email == email))
                 {
                     return false;
                 }
@@ -90,16 +98,13 @@ namespace CRUD
                     result = Elo.Platina;
                     break;
                 case "Diamante":
-                    result = Elo.Diamante;
+                    result = Elo.Platina;
                     break;
                 case "Mestre":
-                    result = Elo.Mestre;
+                    result = Elo.Platina;
                     break;
                 case "GM":
-                    result = Elo.GM;
-                    break;
-                case "Desafiante":
-                    result = Elo.Desafiante;
+                    result = Elo.Platina;
                     break;
                 default:
                     result = Elo.Ferro;
@@ -110,7 +115,7 @@ namespace CRUD
 
         private static bool ValidaId(long id)
         {
-            if(Jogadores.Exists(x => x.Id == id))
+            if (Jogadores.Exists(x => x.Id == id))
             {
                 return false;
             }
@@ -122,7 +127,7 @@ namespace CRUD
         {
             if (apelido != null && apelido.Length >= 1)
             {
-               if(Jogadores.Exists(x => x.Apelido == apelido)) return false;
+                if (Jogadores.Exists(x => x.Apelido == apelido)) return false;
             }
             return true;
         }
@@ -141,7 +146,7 @@ namespace CRUD
 
         public static string ValidaUnicidadeEmail(JogadorModelo jogador, string email)
         {
-            if(jogador.Email != email)
+            if (jogador.Email != email)
             {
                 if (ValidaEmail(email))
                 {
