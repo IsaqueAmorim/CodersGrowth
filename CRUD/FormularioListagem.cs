@@ -3,7 +3,7 @@
     public partial class FormularioListagem : Form
     {
         private RepositorioJogadoresEmMemoria repository = new RepositorioJogadoresEmMemoria();
-        private Servicos servicos;
+        
 
         public FormularioListagem()
         {
@@ -60,6 +60,7 @@
 
 
         }
+
         private void AoClicarDeletar(object sender, EventArgs e)
         {
             var rows = GRD_GridList.SelectedRows.Count;
