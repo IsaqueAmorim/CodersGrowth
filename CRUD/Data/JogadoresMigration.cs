@@ -2,7 +2,7 @@
 
 namespace CRUD
 {
-    [Migration(20180430121800)]
+    [Migration(20230424145100)]
     public class JogadoresMigration : Migration
     {
         public override void Up()
