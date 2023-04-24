@@ -1,5 +1,7 @@
 ﻿
 
+using CRUD.Modelos;
+
 namespace CRUD
 {
     public sealed class ListaSingleton
