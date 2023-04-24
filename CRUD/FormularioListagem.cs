@@ -1,4 +1,6 @@
-﻿namespace CRUD
+﻿using CRUD.Repositorios;
+
+namespace CRUD
 {
     public partial class FormularioListagem : Form
     {
@@ -12,7 +14,6 @@
             CarregarPagina();
         }
      
-
         private void AoClicarNovo(object sender, EventArgs e)
         {
             var formularioCadastro = new FormularioCadastro();
@@ -60,6 +61,7 @@
 
 
         }
+
         private void AoClicarDeletar(object sender, EventArgs e)
         {
             var rows = GRD_GridList.SelectedRows.Count;
