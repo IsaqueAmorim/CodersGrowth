@@ -1,4 +1,5 @@
 ﻿using CRUD.Modelos;
+using CRUD.Servicos;
 
 namespace CRUD
 {
@@ -20,7 +21,7 @@ namespace CRUD
             var jogador = ObterDadosDoFormulario();
             try
             {
-                Servicos.ValidaCriacaoJogadorModelo(jogador);
+                Validacao.ValidaCriacaoJogadorModelo(jogador);
 
                 NovoJogador = jogador;
                 DialogResult = DialogResult.OK;
@@ -90,7 +91,7 @@ namespace CRUD
                 Sobrenome = TXB_Sobrenome.Text,
                 Apelido = TXB_Apelido.Text,
                 Email = TXB_Email.Text,
-                Elo = Servicos.StringParaElo(CBX_Elo.Text),
+                Elo = Validacao.StringParaElo(CBX_Elo.Text),
                 DataNascimento = new DateTime(date.Year, date.Month, date.Day),
                 DataCriacao = DateTime.Now
             };

@@ -1,16 +1,17 @@
 ﻿using CRUD.Repositorios;
+using CRUD.Servicos;
 
 namespace CRUD
 {
     public partial class FormularioListagem : Form
     {
         private RepositorioJogadoresEmMemoria repository = new RepositorioJogadoresEmMemoria();
-        
+        private Validacao validacao;
 
         public FormularioListagem()
         {
             InitializeComponent();
-            servicos = new Servicos(repository.ObterTodosJogadores());
+            validacao = new Validacao(repository.ObterTodosJogadores());
             CarregarPagina();
         }
      
@@ -38,7 +39,7 @@ namespace CRUD
             var rows = GRD_GridList.SelectedRows.Count;
             try
             {
-                Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows); 
+                Validacao.ValidaQuantidadeDeLinhasSelecionadas(rows); 
                 var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() 
                     ?? throw new Exception("Linha não Encontrada"));
 
@@ -67,7 +68,7 @@ namespace CRUD
             var rows = GRD_GridList.SelectedRows.Count;
             try
             {
-                Servicos.ValidaQuantidadeDeLinhasSelecionadas(rows);
+                Validacao.ValidaQuantidadeDeLinhasSelecionadas(rows);
                 var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception("Linha não Encontrada"));
                 var jogador = repository.ObterJogadorPorId(id);
 
