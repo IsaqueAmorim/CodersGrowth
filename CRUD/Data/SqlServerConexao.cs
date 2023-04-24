@@ -17,7 +17,7 @@ namespace CRUD.Data
 
         public void AtualizarJogador(JogadorModelo jogadorAtualizado, JogadorModelo jogadorAtual)
         {
-            
+       
             
         }
 
