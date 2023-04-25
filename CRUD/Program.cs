@@ -9,7 +9,7 @@ namespace CRUD
 {
     public static class Program
     {
-        private static string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoMeuPC"].ConnectionString;
+        private static string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString;
         public static FormularioListagem listagem = new FormularioListagem();
 
         [STAThread]

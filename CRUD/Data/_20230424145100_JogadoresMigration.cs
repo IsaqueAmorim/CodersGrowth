@@ -7,22 +7,22 @@ namespace CRUD
     {
         public override void Up()
         {
-            Create.Table("TB_Jogadores")
+            Create.Table("tb_jogadores")
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity().Unique()
                 .WithColumn("Nome").AsString().NotNullable()
                 .WithColumn("Sobrenome").AsString().NotNullable()
-                .WithColumn("E-mail").AsString().NotNullable()
+                .WithColumn("Email").AsString().NotNullable()
                 .WithColumn("Apelido").AsString().Unique().NotNullable()
                 .WithColumn("Elo").AsString().NotNullable()
-                .WithColumn("Data de Nascimento").AsDateTime().NotNullable()
-                .WithColumn("Data de Criação").AsDateTime().NotNullable();
+                .WithColumn("Data_de_Nascimento").AsDateTime().NotNullable()
+                .WithColumn("Data_de_Criacao").AsDateTime().NotNullable();
                 
 
         }
 
         public override void Down()
         {
-            Delete.Table("TB_Jogadores");
+            Delete.Table("tb_jogadores");
         }
     }
 }

@@ -62,6 +62,7 @@ namespace CRUD
             GRD_GridList.Location = new Point(12, 12);
             GRD_GridList.MultiSelect = false;
             GRD_GridList.Name = "GRD_GridList";
+            GRD_GridList.ReadOnly = true;
             GRD_GridList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             GRD_GridList.RowHeadersWidth = 51;
             GRD_GridList.RowTemplate.Height = 25;
@@ -76,7 +77,7 @@ namespace CRUD
             idDataGridViewTextBoxColumn.MinimumWidth = 6;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             idDataGridViewTextBoxColumn.ReadOnly = true;
-            idDataGridViewTextBoxColumn.Width = 125;
+            idDataGridViewTextBoxColumn.Width = 129;
             // 
             // nomeDataGridViewTextBoxColumn
             // 
@@ -84,7 +85,8 @@ namespace CRUD
             nomeDataGridViewTextBoxColumn.HeaderText = "Nome";
             nomeDataGridViewTextBoxColumn.MinimumWidth = 6;
             nomeDataGridViewTextBoxColumn.Name = "nomeDataGridViewTextBoxColumn";
-            nomeDataGridViewTextBoxColumn.Width = 125;
+            nomeDataGridViewTextBoxColumn.ReadOnly = true;
+            nomeDataGridViewTextBoxColumn.Width = 129;
             // 
             // sobrenomeDataGridViewTextBoxColumn
             // 
@@ -92,7 +94,8 @@ namespace CRUD
             sobrenomeDataGridViewTextBoxColumn.HeaderText = "Sobrenome";
             sobrenomeDataGridViewTextBoxColumn.MinimumWidth = 6;
             sobrenomeDataGridViewTextBoxColumn.Name = "sobrenomeDataGridViewTextBoxColumn";
-            sobrenomeDataGridViewTextBoxColumn.Width = 125;
+            sobrenomeDataGridViewTextBoxColumn.ReadOnly = true;
+            sobrenomeDataGridViewTextBoxColumn.Width = 129;
             // 
             // apelidoDataGridViewTextBoxColumn
             // 
@@ -100,7 +103,8 @@ namespace CRUD
             apelidoDataGridViewTextBoxColumn.HeaderText = "Apelido";
             apelidoDataGridViewTextBoxColumn.MinimumWidth = 6;
             apelidoDataGridViewTextBoxColumn.Name = "apelidoDataGridViewTextBoxColumn";
-            apelidoDataGridViewTextBoxColumn.Width = 125;
+            apelidoDataGridViewTextBoxColumn.ReadOnly = true;
+            apelidoDataGridViewTextBoxColumn.Width = 130;
             // 
             // emailDataGridViewTextBoxColumn
             // 
@@ -108,7 +112,8 @@ namespace CRUD
             emailDataGridViewTextBoxColumn.HeaderText = "E-mail";
             emailDataGridViewTextBoxColumn.MinimumWidth = 6;
             emailDataGridViewTextBoxColumn.Name = "emailDataGridViewTextBoxColumn";
-            emailDataGridViewTextBoxColumn.Width = 125;
+            emailDataGridViewTextBoxColumn.ReadOnly = true;
+            emailDataGridViewTextBoxColumn.Width = 129;
             // 
             // eloDataGridViewTextBoxColumn
             // 
@@ -116,7 +121,8 @@ namespace CRUD
             eloDataGridViewTextBoxColumn.HeaderText = "Elo";
             eloDataGridViewTextBoxColumn.MinimumWidth = 6;
             eloDataGridViewTextBoxColumn.Name = "eloDataGridViewTextBoxColumn";
-            eloDataGridViewTextBoxColumn.Width = 125;
+            eloDataGridViewTextBoxColumn.ReadOnly = true;
+            eloDataGridViewTextBoxColumn.Width = 129;
             // 
             // dataNascimentoDataGridViewTextBoxColumn
             // 
@@ -125,7 +131,7 @@ namespace CRUD
             dataNascimentoDataGridViewTextBoxColumn.MinimumWidth = 6;
             dataNascimentoDataGridViewTextBoxColumn.Name = "dataNascimentoDataGridViewTextBoxColumn";
             dataNascimentoDataGridViewTextBoxColumn.ReadOnly = true;
-            dataNascimentoDataGridViewTextBoxColumn.Width = 160;
+            dataNascimentoDataGridViewTextBoxColumn.Width = 129;
             // 
             // DataCriacao
             // 
@@ -133,7 +139,7 @@ namespace CRUD
             DataCriacao.HeaderText = "Data de Cadastro";
             DataCriacao.Name = "DataCriacao";
             DataCriacao.ReadOnly = true;
-            DataCriacao.Width = 140;
+            DataCriacao.Width = 129;
             // 
             // jogadorModeloBindingSource
             // 
@@ -173,7 +179,7 @@ namespace CRUD
             BTN_Deletar.UseVisualStyleBackColor = true;
             BTN_Deletar.Click += AoClicarDeletar;
             // 
-            // FML_Listagem
+            // FormularioListagem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -182,7 +188,7 @@ namespace CRUD
             Controls.Add(BTN_Atualizar);
             Controls.Add(BTN_Novo);
             Controls.Add(GRD_GridList);
-            Name = "FML_Listagem";
+            Name = "FormularioListagem";
             Text = "jogador";
             ((System.ComponentModel.ISupportInitialize)GRD_GridList).EndInit();
             ((System.ComponentModel.ISupportInitialize)jogadorModeloBindingSource).EndInit();

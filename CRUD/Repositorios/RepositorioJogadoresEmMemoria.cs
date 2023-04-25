@@ -7,7 +7,7 @@ using CRUD.Modelos;
 
 namespace CRUD.Repositorios
 {
-    public class RepositorioJogadoresEmMemoria : IRepositorioJogadores
+    public class RepositorioJogadoresEmMemoria
     {
         private List<JogadorModelo> listaJogadores = ListaSingleton.ObterInstancia();
         public void AtualizarJogador(JogadorModelo jogadorAtualizado, JogadorModelo jogadorAtual)
