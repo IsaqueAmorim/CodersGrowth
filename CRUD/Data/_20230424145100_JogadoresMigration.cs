@@ -3,7 +3,7 @@
 namespace CRUD
 {
     [Migration(20230424145100)]
-    public class JogadoresMigration : Migration
+    public class _20230424145100_JogadoresMigration : Migration
     {
         public override void Up()
         {
