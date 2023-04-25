@@ -7,16 +7,11 @@ namespace CRUD.Repositorios
 {
     public class RepositorioJogadoresBD : IRepositorioJogadores
     {
-        private SqlConnection _conexao;
-
-        private SqlConnection AbrirConexao()
-        {
-
-            _conexao = new SqlConnection(ConfigurationManager
+        private SqlConnection _conexao = new SqlConnection(
+            ConfigurationManager
             .ConnectionStrings["ConexaoBD"]
             .ConnectionString);
-            return _conexao;
-        }
+
         
         public void AtualizarJogador(JogadorModelo jogador)
         {

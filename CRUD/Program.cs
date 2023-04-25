@@ -10,11 +10,18 @@ namespace CRUD
 {
     public static class Program
     {
+        private static string stringConexao = 
+            System.Configuration
+            .ConfigurationManager
+            .ConnectionStrings["ConexaoBD"]
+            .ConnectionString;
+        
+        
 
         [STAThread]
         static void Main()
         {
-           
+          
             var repositorio = new RepositorioJogadoresBD();
             Application.Run(new FormularioListagem(repositorio));
             using (var serviceProvider = CreateServices())
