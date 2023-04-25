@@ -1,7 +1,8 @@
 using System.Security.Cryptography.X509Certificates;
+using CRUD.Repositorios;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Initialization;
-
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -9,13 +10,13 @@ namespace CRUD
 {
     public static class Program
     {
-        private static string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString;
-        public static FormularioListagem listagem = new FormularioListagem();
 
         [STAThread]
         static void Main()
         {
-            Application.Run(listagem);
+           
+            var repositorio = new RepositorioJogadoresBD();
+            Application.Run(new FormularioListagem(repositorio));
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
             {

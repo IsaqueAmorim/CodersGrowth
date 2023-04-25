@@ -7,12 +7,13 @@ using CRUD.Modelos;
 
 namespace CRUD.Repositorios
 {
-    public class RepositorioJogadoresEmMemoria
+    public class RepositorioJogadoresEmMemoria:IRepositorioJogadores
     {
         private List<JogadorModelo> listaJogadores = ListaSingleton.ObterInstancia();
-        public void AtualizarJogador(JogadorModelo jogadorAtualizado, JogadorModelo jogadorAtual)
+        public void AtualizarJogador(JogadorModelo jogadorAtualizado)
         {
-            listaJogadores[listaJogadores.IndexOf(jogadorAtual)] = jogadorAtualizado;
+            var jogador = listaJogadores.Find(x => x.Id == jogadorAtualizado.Id);
+            listaJogadores[listaJogadores.IndexOf(jogador)] = jogadorAtualizado;
         }
 
         public void CriarJogador(JogadorModelo jogador)
@@ -20,8 +21,9 @@ namespace CRUD.Repositorios
             listaJogadores.Add(jogador);
         }
 
-        public void DeletarJogador(JogadorModelo jogador)
+        public void DeletarJogador(long id)
         {
+           var jogador = listaJogadores.FirstOrDefault(x => x.Id == id);
             listaJogadores.Remove(jogador);
         }
 
