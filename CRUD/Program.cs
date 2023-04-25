@@ -10,14 +10,7 @@ namespace CRUD
 {
     public static class Program
     {
-        private static string stringConexao = 
-            System.Configuration
-            .ConfigurationManager
-            .ConnectionStrings["ConexaoBD"]
-            .ConnectionString;
-        
-        
-
+       
         [STAThread]
         static void Main()
         {
@@ -38,7 +31,7 @@ namespace CRUD
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
                     .AddSqlServer()
-                    .WithGlobalConnectionString(stringConexao)
+                    .WithGlobalConnectionString("ConexaoDB")
                     .ScanIn(typeof(_20230424145100_JogadoresMigration).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);
