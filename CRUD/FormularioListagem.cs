@@ -5,16 +5,19 @@ namespace CRUD
 {
     public partial class FormularioListagem : Form
     {
-        private RepositorioJogadoresEmMemoria repository = new RepositorioJogadoresEmMemoria();
+
         private Validacao validacao;
+        private RepositorioJogadoresBD _repositorio = new();
 
         public FormularioListagem()
         {
             InitializeComponent();
-            validacao = new Validacao(repository.ObterTodosJogadores());
+            validacao = new Validacao(_repositorio.ObterTodosJogadores());
             CarregarPagina();
+
+
         }
-     
+
         private void AoClicarNovo(object sender, EventArgs e)
         {
             var formularioCadastro = new FormularioCadastro();
@@ -22,8 +25,8 @@ namespace CRUD
             if (formularioCadastro.ShowDialog() == DialogResult.OK)
             {
                 var jogadorParaAdicionarNaLista = FormularioCadastro.ObterJogadorCriado();
-                jogadorParaAdicionarNaLista.Id = ListaSingleton.ObterProximoId();
-                repository.CriarJogador(jogadorParaAdicionarNaLista);
+
+                _repositorio.CriarJogador(jogadorParaAdicionarNaLista);
 
                 CarregarPagina();
             }
@@ -31,7 +34,8 @@ namespace CRUD
 
         private void CarregarPagina()
         {
-            GRD_GridList.DataSource = repository.ObterTodosJogadores().ToList();
+            GRD_GridList.DataSource = _repositorio.ObterTodosJogadores().ToList();
+            GRD_GridList.ClearSelection();
         }
 
         private void AoClicarAtualizar(object sender, EventArgs e)
@@ -39,18 +43,18 @@ namespace CRUD
             var rows = GRD_GridList.SelectedRows.Count;
             try
             {
-                Validacao.ValidaQuantidadeDeLinhasSelecionadas(rows); 
-                var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() 
+                Validacao.ValidaQuantidadeDeLinhasSelecionadas(rows);
+                var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString()
                     ?? throw new Exception("Linha não Encontrada"));
 
-                var jogadorAtual = repository.ObterJogadorPorId(id);
-                var jogadorParaAdicinarNaLista = FormularioCadastro.ObterJogadorCriado();
+                var jogadorAtual = _repositorio.ObterJogadorPorId(id);
                 var formularioCadastro = new FormularioCadastro(jogadorAtual);
-                
+
 
                 if (formularioCadastro.ShowDialog() == DialogResult.OK)
                 {
-                    repository.AtualizarJogador(jogadorParaAdicinarNaLista, jogadorAtual);
+                    var jogadorParaAdicinarNaLista = FormularioCadastro.ObterJogadorCriado();
+                    _repositorio.AtualizarJogador(jogadorParaAdicinarNaLista);
                     CarregarPagina();
                 }
 
@@ -70,12 +74,12 @@ namespace CRUD
             {
                 Validacao.ValidaQuantidadeDeLinhasSelecionadas(rows);
                 var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception("Linha não Encontrada"));
-                var jogador = repository.ObterJogadorPorId(id);
+
 
                 var dialogResult = MessageBox.Show("Tem certeza que deseja excluir permanentemente este item ?", "", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    repository.DeletarJogador(jogador);
+                    _repositorio.DeletarJogador(id);
                     CarregarPagina();
                 }
                 else if (dialogResult == DialogResult.No)
