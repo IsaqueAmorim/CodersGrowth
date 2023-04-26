@@ -1,4 +1,5 @@
 ﻿using CRUD.Modelos;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 
@@ -6,16 +7,12 @@ namespace CRUD.Repositorios
 {
     public class RepositorioJogadoresBD : IRepositorioJogadores
     {
-        private static string stringConexao = 
-            System.Configuration
-            .ConfigurationManager
+        private SqlConnection _conexao = new SqlConnection(
+            ConfigurationManager
             .ConnectionStrings["ConexaoBD"]
-            .ConnectionString;
+            .ConnectionString);
 
-        private SqlConnection _conexao = new SqlConnection(stringConexao);
         
-        
-
         public void AtualizarJogador(JogadorModelo jogador)
         {
             var atualizarSQL = "UPDATE tb_jogadores SET " +

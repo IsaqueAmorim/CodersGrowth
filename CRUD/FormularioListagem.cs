@@ -7,12 +7,12 @@ namespace CRUD
     {
 
         private Validacao validacao;
-        private RepositorioJogadoresBD _repositorio = new();
+        private IRepositorioJogadores _repositorio;
 
-        public FormularioListagem()
+        public FormularioListagem(IRepositorioJogadores repositorio)
         {
             InitializeComponent();
-            validacao = new Validacao(_repositorio.ObterTodosJogadores());
+            _repositorio = repositorio;
             CarregarPagina();
 
 
