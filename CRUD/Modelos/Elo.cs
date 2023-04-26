@@ -1,4 +1,4 @@
-﻿namespace CRUD
+﻿namespace CRUD.Modelos
 {
     public enum Elo
     {

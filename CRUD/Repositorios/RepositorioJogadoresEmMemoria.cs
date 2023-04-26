@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CRUD.Modelos;
 
-namespace CRUD
+namespace CRUD.Repositorios
 {
-    public class RepositorioJogadoresEmMemoria : IRepositorioJogadoresEmMemoria
+    public class RepositorioJogadoresEmMemoria:IRepositorioJogadores
     {
         private List<JogadorModelo> listaJogadores = ListaSingleton.ObterInstancia();
-        public void AtualizarJogador(JogadorModelo jogadorAtualizado,JogadorModelo jogadorAtual)
+        public void AtualizarJogador(JogadorModelo jogadorAtualizado)
         {
-            listaJogadores[listaJogadores.IndexOf(jogadorAtual)] = jogadorAtualizado;
+            var jogador = listaJogadores.Find(x => x.Id == jogadorAtualizado.Id);
+            listaJogadores[listaJogadores.IndexOf(jogador)] = jogadorAtualizado;
         }
 
         public void CriarJogador(JogadorModelo jogador)
@@ -19,14 +21,15 @@ namespace CRUD
             listaJogadores.Add(jogador);
         }
 
-        public void DeletarJogador(JogadorModelo jogador)
+        public void DeletarJogador(long id)
         {
+           var jogador = listaJogadores.FirstOrDefault(x => x.Id == id);
             listaJogadores.Remove(jogador);
         }
 
         public JogadorModelo ObterJogadorPorId(long id)
         {
-            var jogador = listaJogadores.Find(x => x.Id == id) 
+            var jogador = listaJogadores.Find(x => x.Id == id)
                 ?? throw new Exception("Jogador não Encontrado");
 
             return jogador;
