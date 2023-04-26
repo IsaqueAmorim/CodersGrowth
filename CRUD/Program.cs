@@ -54,7 +54,7 @@ namespace CRUD
                 .ConfigureServices((_context, services) =>
                 {
                     services.AddScoped<IRepositorioJogadores, RepositorioJogadoresBD>();
-                    services.AddScoped<Validacao>();
+                    
                 });
         }
 
