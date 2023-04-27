@@ -1,7 +1,6 @@
 ﻿using CRUD.Modelos;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Drawing;
+using System.Configuration;
 
 namespace CRUD.Repositorios
 {
@@ -12,7 +11,6 @@ namespace CRUD.Repositorios
             .ConnectionStrings["ConexaoBD"]
             .ConnectionString);
 
-        
         public void AtualizarJogador(JogadorModelo jogador)
         {
             var atualizarSQL = "UPDATE tb_jogadores SET " +
@@ -42,7 +40,7 @@ namespace CRUD.Repositorios
 
             }catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -73,7 +71,7 @@ namespace CRUD.Repositorios
                 command.ExecuteNonQuery();
             }catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -95,13 +93,15 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
             finally
             {
                 _conexao.Close();
             }
         }
+
+       
 
         public JogadorModelo ObterJogadorPorId(long id)
         {
@@ -123,7 +123,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERR: Jogador não encontrado.");
+                //MessageBox.Show("ERR: Jogador não encontrado.");
             }
             finally
             {
@@ -151,7 +151,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
             finally
             {

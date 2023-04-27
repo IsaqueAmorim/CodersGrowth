@@ -8,13 +8,15 @@ namespace CRUD
         
         private JogadorModelo? JogadorParaAtualizar;
         private static JogadorModelo? NovoJogador;
+        private readonly Validacao Validacao;
 
-        public FormularioCadastro( JogadorModelo? jogador = null)
+        public FormularioCadastro(Validacao validacao, JogadorModelo? jogador = null)
         {
             InitializeComponent();
             if (jogador != null) PreencherFormulario(jogador);
             CarregarEnums();
             JogadorParaAtualizar = jogador;
+            Validacao = validacao;
         }
         private void CriarJogador()
         {

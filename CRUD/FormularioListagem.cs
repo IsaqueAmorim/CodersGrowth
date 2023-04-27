@@ -6,13 +6,14 @@ namespace CRUD
     public partial class FormularioListagem : Form
     {
 
-        private Validacao validacao;
         private IRepositorioJogadores _repositorio;
 
+        private Validacao _validacao;
         public FormularioListagem(IRepositorioJogadores repositorio)
         {
             InitializeComponent();
             _repositorio = repositorio;
+            _validacao = new(repositorio);
             CarregarPagina();
 
 
@@ -20,11 +21,14 @@ namespace CRUD
 
         private void AoClicarNovo(object sender, EventArgs e)
         {
-            var formularioCadastro = new FormularioCadastro();
+            var formularioCadastro = new FormularioCadastro(_validacao);
 
             if (formularioCadastro.ShowDialog() == DialogResult.OK)
             {
                 var jogadorParaAdicionarNaLista = FormularioCadastro.ObterJogadorCriado();
+
+                //eu so posso criar se a validação der ok
+
 
                 _repositorio.CriarJogador(jogadorParaAdicionarNaLista);
 
@@ -48,7 +52,7 @@ namespace CRUD
                     ?? throw new Exception("Linha não Encontrada"));
 
                 var jogadorAtual = _repositorio.ObterJogadorPorId(id);
-                var formularioCadastro = new FormularioCadastro(jogadorAtual);
+                var formularioCadastro = new FormularioCadastro(_validacao,jogadorAtual);
 
 
                 if (formularioCadastro.ShowDialog() == DialogResult.OK)

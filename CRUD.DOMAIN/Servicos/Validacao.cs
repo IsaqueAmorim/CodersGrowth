@@ -1,5 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 using CRUD.Modelos;
+using CRUD.Repositorios;
 
 namespace CRUD.Servicos
 {
@@ -7,38 +9,50 @@ namespace CRUD.Servicos
     {
         private static List<JogadorModelo> Jogadores;
 
-        public Validacao(List<JogadorModelo> jogadores)
+        private readonly IRepositorioJogadores _repositorio;
+
+        public Validacao(IRepositorioJogadores repositorioJogadores)
         {
-            Jogadores = jogadores;
+            _repositorio = repositorioJogadores;
+            Jogadores = repositorioJogadores.ObterTodosJogadores();
+            
         }
-        public static void ValidaCriacaoJogadorModelo(JogadorModelo jogador)
+
+        public void ValidaCriacaoJogadorModelo(JogadorModelo jogador)
         {
+            string stringBuilder ="";
             if (ValidaString(jogador.Nome) == false)
             {
-                throw new Exception("ERR: O Campo Nome não pode ser vazio ou conter espaços.");
+                stringBuilder +="ERR: O Campo Nome não pode ser vazio ou conter espaços.\n";
 
             }
-            else if (ValidaDataNascimento(jogador.DataCriacao, jogador.DataNascimento) == false)
+            if (ValidaDataNascimento(jogador.DataCriacao, jogador.DataNascimento) == false)
             {
 
-                throw new Exception("ERR: A Data de nascimento não pode ser maior ou igual a data de hoje. ");
+                stringBuilder += "ERR: A Data de nascimento não pode ser maior ou igual a data de hoje.\n ";
             }
-            else if (ValidaEmail(jogador.Email) == false)
+            if (ValidaEmail(jogador.Email) == false)
             {
-                throw new Exception("ERR: Email inválido.");
+                stringBuilder += "ERR: Email inválido.\n";     
             }
-            else if (ValidaString(jogador.Apelido) == false)
+            if (ValidaString(jogador.Apelido) == false)
             {
-                throw new Exception("O Campo Apelido não pode ser vazio ou conter espaços.");
+                stringBuilder += "ERR: O Campo Apelido não pode ser vazio ou conter espaços.\n";
             }
-            else if (ValidaId(jogador.Id) == false)
+            if (ValidaId(jogador.Id) == false)
             {
-                throw new Exception("Um Id não pode ser repetido.");
+                stringBuilder += "ERR: Um Id não pode ser repetido.\n";
             }
-            else if (ValidaApelido(jogador.Apelido) == false)
+            if (ValidaApelido(jogador.Apelido) == false)
             {
-                throw new Exception("Já exite um jogador com esse apelido.");
+                stringBuilder += "ERR: Já exite um jogador com esse apelido.\n";
             }
+
+            if(stringBuilder.Length > 0)
+            {
+                throw new Exception(stringBuilder);
+            }
+            
         }
 
         private static bool ValidaString(string data)
@@ -118,6 +132,7 @@ namespace CRUD.Servicos
 
         private static bool ValidaId(long id)
         {
+            
             if (Jogadores.Exists(x => x.Id == id))
             {
                 return false;
@@ -157,8 +172,7 @@ namespace CRUD.Servicos
                 }
                 else
                 {
-                    MessageBox.Show("ERR: Este endereço de e-mail já existe");
-                    return jogador.Email;
+                    throw new Exception("ERR: Este email já está em uso. \n");
                 }
             }
             else
@@ -177,8 +191,8 @@ namespace CRUD.Servicos
                 }
                 else
                 {
-                    MessageBox.Show("ERR: Este apelido já existe");
-                    return jogador.Apelido;
+                    throw new Exception("ERR: Este email já está em uso. \n");
+                   
                 }
             }
             else
@@ -186,5 +200,7 @@ namespace CRUD.Servicos
                 return jogador.Apelido;
             }
         }
+
+      
     }
 }

@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace CRUD
+namespace CRUD.Infra.Data.Migrations
 {
     [Migration(20230424145100)]
     public class _20230424145100_JogadoresMigration : Migration
@@ -16,7 +16,7 @@ namespace CRUD
                 .WithColumn("Elo").AsString().NotNullable()
                 .WithColumn("Data_de_Nascimento").AsDateTime().NotNullable()
                 .WithColumn("Data_de_Criacao").AsDateTime().NotNullable();
-                
+
 
         }
 
