@@ -16,9 +16,6 @@ namespace CRUD
             var repositorio = provedorServicos.GetService<IRepositorioJogadores>();
             Application.Run(new FormularioListagem(repositorio));
 
-            var stringConexao = ConfigurationManager
-                 .ConnectionStrings["ConexaoBD"]
-                 .ConnectionString;
         }
 
      
