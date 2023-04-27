@@ -13,7 +13,9 @@ namespace CRUD.Repositorios
         public JogadorModelo ObterJogadorPorId(long id);
         public List<JogadorModelo> ObterTodosJogadores();
         public void DeletarJogador(long id);
-        public void AtualizarJogador(JogadorModelo jogadorl);
+        public void AtualizarJogador(JogadorModelo jogador);
+
+    
 
     }
 }
