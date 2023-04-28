@@ -40,7 +40,7 @@ namespace CRUD.Repositorios
 
             }catch(Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {
@@ -71,7 +71,7 @@ namespace CRUD.Repositorios
                 command.ExecuteNonQuery();
             }catch(Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {
@@ -93,7 +93,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception("Jogador não encontrado!");
             }
             finally
             {
@@ -123,7 +123,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("ERR: Jogador não encontrado.");
+                throw new Exception("ERR: Jogador não encontrado.");
             }
             finally
             {
@@ -151,7 +151,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {

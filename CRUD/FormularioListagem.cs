@@ -26,10 +26,18 @@ namespace CRUD
             if (formularioCadastro.ShowDialog() == DialogResult.OK)
             {
                 var jogadorParaAdicionarNaLista = FormularioCadastro.ObterJogadorCriado();
+                try
+                {
 
                 _repositorio.CriarJogador(jogadorParaAdicionarNaLista);
+                }
+                catch (Exception ex)
+                {
 
+                   MessageBox.Show(ex.Message);
+                }
                 CarregarPagina();
+
             }
         }
 
@@ -50,7 +58,6 @@ namespace CRUD
 
                 var jogadorAtual = _repositorio.ObterJogadorPorId(id);
                 var formularioCadastro = new FormularioCadastro(_validacao,jogadorAtual);
-
 
                 if (formularioCadastro.ShowDialog() == DialogResult.OK)
                 {
