@@ -1,4 +1,5 @@
-﻿using CRUD.DOMAIN.MensagensDeErro;
+﻿using CRUD.DOMAIN.Constantes;
+using CRUD.DOMAIN.MensagensDeErro;
 using CRUD.Modelos;
 using CRUD.Repositorios;
 using LinqToDB;
@@ -10,7 +11,7 @@ namespace CRUD.Infra.Repositorios
     public class Link2DBRepositorio : IRepositorioJogadores
     {
         static string connectionString = ConfigurationManager
-               .ConnectionStrings["ConexaoBD"]
+               .ConnectionStrings[ConstantesConfig.BANCO_PADRAO]
                .ConnectionString;
 
         DataConnection _conexao = SqlServerTools.CreateDataConnection(connectionString);

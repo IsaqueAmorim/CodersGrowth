@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Configuration;
 using CRUD.DOMAIN.MensagensDeErro;
+using CRUD.DOMAIN.Constantes;
 
 namespace CRUD.Repositorios
 {
@@ -9,7 +10,7 @@ namespace CRUD.Repositorios
     {
         private SqlConnection _conexao = new SqlConnection(
             ConfigurationManager
-            .ConnectionStrings["ConexaoMeuPC"]
+            .ConnectionStrings[ConstantesConfig.BANCO_PADRAO]
             .ConnectionString);
 
         public void AtualizarJogador(JogadorModelo jogador)
@@ -94,7 +95,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                throw new Exception("Jogador não encontrado!");
+                throw new Exception(MensagensDeErro.FALHA_JOGADOR_NAO_ENCONTRADO);
             }
             finally
             {
