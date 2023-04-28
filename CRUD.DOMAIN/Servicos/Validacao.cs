@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using CRUD.DOMAIN.MensagensDeErro;
 using CRUD.Modelos;
 using CRUD.Repositorios;
 
@@ -23,21 +24,21 @@ namespace CRUD.Servicos
             string stringBuilder ="";
             if (ValidaString(jogador.Nome) == false)
             {
-                stringBuilder +="ERR: O Campo Nome não pode ser vazio ou conter espaços.\n";
+                stringBuilder +=MensagensDeErro.FALHA_NOME_TAMANHO;
 
             }
             if (ValidaDataNascimento(jogador.DataCriacao, jogador.DataNascimento) == false)
             {
 
-                stringBuilder += "ERR: A Data de nascimento não pode ser maior ou igual a data de hoje.\n ";
+                stringBuilder += MensagensDeErro.FALHA_DATA_DE_NASCIMENTO_MAIOR_QUE_ATUAL;
             }
             if (ValidaEmail(jogador.Email) == false)
             {
-                stringBuilder += "ERR: Email inválido.\n";     
+                stringBuilder += MensagensDeErro.FALHA_EMAIL_INVALIDO;     
             }
             if (ValidaString(jogador.Apelido) == false)
             {
-                stringBuilder += "ERR: O Campo Apelido não pode ser vazio ou conter espaços.\n";
+                stringBuilder +=MensagensDeErro.FALHA_APELIDO_TAMANHO;
             }
             if (ValidaId(jogador.Id) == false)
             {
@@ -45,7 +46,7 @@ namespace CRUD.Servicos
             }
             if (ValidaApelido(jogador.Apelido) == false)
             {
-                stringBuilder += "ERR: Já exite um jogador com esse apelido.\n";
+                stringBuilder += MensagensDeErro.FALHA_APELIDO_EXISTENTE;
             }
 
             if(stringBuilder.Length > 0)
@@ -172,7 +173,7 @@ namespace CRUD.Servicos
                 }
                 else
                 {
-                    throw new Exception("ERR: Este email já está em uso. \n");
+                    throw new Exception(MensagensDeErro.FALHA_EMAIL_EXISTENTE);
                 }
             }
             else
@@ -191,7 +192,7 @@ namespace CRUD.Servicos
                 }
                 else
                 {
-                    throw new Exception("ERR: Este email já está em uso. \n");
+                    throw new Exception(MensagensDeErro.FALHA_APELIDO_EXISTENTE);
                    
                 }
             }

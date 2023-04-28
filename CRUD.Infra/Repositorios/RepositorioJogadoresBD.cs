@@ -1,6 +1,7 @@
 ﻿using CRUD.Modelos;
 using System.Data.SqlClient;
 using System.Configuration;
+using CRUD.DOMAIN.MensagensDeErro;
 
 namespace CRUD.Repositorios
 {
@@ -123,7 +124,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                throw new Exception("ERR: Jogador não encontrado.");
+                throw new Exception(MensagensDeErro.FALHA_JOGADOR_NAO_ENCONTRADO);
             }
             finally
             {

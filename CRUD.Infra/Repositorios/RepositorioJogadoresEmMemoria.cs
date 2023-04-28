@@ -1,4 +1,5 @@
-﻿using CRUD.Modelos;
+﻿using CRUD.DOMAIN.MensagensDeErro;
+using CRUD.Modelos;
 
 namespace CRUD.Repositorios
 {
@@ -25,7 +26,7 @@ namespace CRUD.Repositorios
         public JogadorModelo ObterJogadorPorId(long id)
         {
             var jogador = listaJogadores.Find(x => x.Id == id)
-                ?? throw new Exception("Jogador não Encontrado");
+                ?? throw new Exception(MensagensDeErro.FALHA_JOGADOR_NAO_ENCONTRADO);
 
             return jogador;
         }

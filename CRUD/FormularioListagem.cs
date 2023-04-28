@@ -1,4 +1,5 @@
-﻿using CRUD.Repositorios;
+﻿using CRUD.DOMAIN.MensagensDeErro;
+using CRUD.Repositorios;
 using CRUD.Servicos;
 
 namespace CRUD
@@ -54,7 +55,7 @@ namespace CRUD
             {
                 Validacao.ValidaQuantidadeDeLinhasSelecionadas(rows);
                 var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString()
-                    ?? throw new Exception("Linha não Encontrada"));
+                    ?? throw new Exception(MensagensDeErro.FALHA_LINHA_NAO_ENCONTRADA));
 
                 var jogadorAtual = _repositorio.ObterJogadorPorId(id);
                 var formularioCadastro = new FormularioCadastro(_validacao,jogadorAtual);
@@ -81,7 +82,7 @@ namespace CRUD
             try
             {
                 Validacao.ValidaQuantidadeDeLinhasSelecionadas(rows);
-                var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception("Linha não Encontrada"));
+                var id = Int32.Parse(GRD_GridList.SelectedRows[0].Cells[0].Value.ToString() ?? throw new Exception(MensagensDeErro.FALHA_LINHA_NAO_ENCONTRADA));
 
 
                 var dialogResult = MessageBox.Show("Tem certeza que deseja excluir permanentemente este item ?", "", MessageBoxButtons.YesNo);

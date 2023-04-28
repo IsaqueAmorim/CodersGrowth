@@ -1,4 +1,5 @@
-﻿using LinqToDB.Mapping;
+﻿using CRUD.DOMAIN.MensagensDeErro;
+using LinqToDB.Mapping;
 using System.ComponentModel.DataAnnotations;
 
 namespace CRUD.Modelos
@@ -9,30 +10,30 @@ namespace CRUD.Modelos
         [PrimaryKey, Identity]
         public long Id { get; set; }
 
-        [NotNull("O Nome não pode ser nulo!")]
-        [MaxLength(50, ErrorMessage = "O Nome pode conter no máximo 50 caracteres")]
-        [MinLength(2, ErrorMessage = "O Nome deve ter no mínimo 2 caracteres!")]
+        [NotNull(MensagensDeErro.FALHA_NOME_NAO_PODE_SER_NULO)]
+        [MaxLength(50,ErrorMessage = MensagensDeErro.FALHA_NOME_TAMANHO)]
+        [MinLength(2, ErrorMessage = MensagensDeErro.FALHA_NOME_TAMANHO)]
         [Column("Nome")]
         public string Nome { get; set; }
 
 
-        [NotNull("O Sobrenome não pode ser nulo!")]
-        [MaxLength(50, ErrorMessage = "O Sobrenome pode conter no máximo 50 caracteres")]
-        [MinLength(2, ErrorMessage = "O Sobrenome deve ter no mínimo 2 caracteres!")]
+        [NotNull(MensagensDeErro.FALHA_SOBRENOME_NAO_PODE_SER_NULO)]
+        [MaxLength(50, ErrorMessage = MensagensDeErro.FALHA_SOBRENOME_TAMANHO)]
+        [MinLength(2, ErrorMessage = MensagensDeErro.FALHA_SOBRENOME_TAMANHO)]
         [Column("Sobrenome")]
         public string Sobrenome { get; set; }
 
 
-        [NotNull("O Apelido não pode ser nulo!")]
-        [MaxLength(50, ErrorMessage = "O Apelido pode conter no máximo 50 caracteres")]
-        [MinLength(2, ErrorMessage = "O Apelido deve ter no mínimo 2 caracteres!")]
+        [NotNull(MensagensDeErro.FALHA_APELIDO_NAO_PODE_SER_NULO)]
+        [MaxLength(50, ErrorMessage = MensagensDeErro.FALHA_APELIDO_TAMANHO)]
+        [MinLength(2, ErrorMessage = MensagensDeErro.FALHA_APELIDO_TAMANHO)]
         [Column("Apelido")]
         public string Apelido { get; set; }
 
 
-        [NotNull("O Email não pode ser nulo!")]
-        [MaxLength(70, ErrorMessage = "O Email pode conter no máximo 70 caracteres")]
-        [MinLength(2, ErrorMessage = "O Eamil deve ter no mínimo 2 caracteres!")]
+        [NotNull(MensagensDeErro.FALHA_EMAIL_NAO_PODE_SER_NULO)]
+        [MaxLength(70, ErrorMessage = MensagensDeErro.FALHA_EMAIL_TAMANHO)]
+        [MinLength(2, ErrorMessage = MensagensDeErro.FALHA_EMAIL_TAMANHO)]
         [Column("Email")]
         public string Email { get; set; }
 

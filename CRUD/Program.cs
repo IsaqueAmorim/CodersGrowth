@@ -14,7 +14,6 @@ namespace CRUD
         static void Main()
         {
 
-            FabricaMigration.CriarMigration();
             var builder = CriarHostBuilder();
             var provedorServicos = builder.Build().Services;
             var repositorio = provedorServicos.GetService<IRepositorioJogadores>();
