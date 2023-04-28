@@ -8,7 +8,7 @@ namespace CRUD.Repositorios
     {
         private SqlConnection _conexao = new SqlConnection(
             ConfigurationManager
-            .ConnectionStrings["ConexaoBD"]
+            .ConnectionStrings["ConexaoMeuPC"]
             .ConnectionString);
 
         public void AtualizarJogador(JogadorModelo jogador)

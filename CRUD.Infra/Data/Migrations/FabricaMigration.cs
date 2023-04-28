@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -11,8 +12,9 @@ namespace CRUD.Infra.Data.Migrations
 {
     public class FabricaMigration
     {
+       
 
-        public void CriarMigration()
+        public static void CriarMigration()
         {
 
             using (var serviceProvider = CreateServices())
@@ -23,12 +25,15 @@ namespace CRUD.Infra.Data.Migrations
         }
         static ServiceProvider CreateServices()
         {
-            
+            string connectionString = ConfigurationManager
+           .ConnectionStrings["ConexaoMeuPC"]
+           .ConnectionString;
+
             return new ServiceCollection()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
                     .AddSqlServer()
-                    .WithGlobalConnectionString("ConexaoDB")
+                    .WithGlobalConnectionString(connectionString)
                     .ScanIn(typeof(_20230424145100_JogadoresMigration).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);

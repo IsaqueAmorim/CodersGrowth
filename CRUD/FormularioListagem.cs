@@ -27,9 +27,6 @@ namespace CRUD
             {
                 var jogadorParaAdicionarNaLista = FormularioCadastro.ObterJogadorCriado();
 
-                //eu so posso criar se a validação der ok
-
-
                 _repositorio.CriarJogador(jogadorParaAdicionarNaLista);
 
                 CarregarPagina();

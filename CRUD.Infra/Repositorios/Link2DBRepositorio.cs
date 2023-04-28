@@ -2,14 +2,18 @@
 using CRUD.Repositorios;
 using LinqToDB;
 using LinqToDB.Data;
-using System.Net.Http.Headers;
-
+using LinqToDB.DataProvider.SqlServer;
+using System.Configuration;
 namespace CRUD.Infra.Repositorios
 {
     public class Link2DBRepositorio : IRepositorioJogadores
     {
+        static string connectionString = ConfigurationManager
+               .ConnectionStrings["ConexaoMeuPC"]
+               .ConnectionString;
 
-        private DataConnection _conexao;
+        DataConnection _conexao = SqlServerTools.CreateDataConnection(connectionString);
+        
         public void AtualizarJogador(JogadorModelo jogador)
         {
             _conexao.Update<JogadorModelo>(jogador);
@@ -35,7 +39,10 @@ namespace CRUD.Infra.Repositorios
 
         public List<JogadorModelo> ObterTodosJogadores()
         {
-            return _conexao.GetTable<JogadorModelo>().ToList();
+            var jogadores = _conexao.GetTable<JogadorModelo>().ToList();
+
+            return jogadores;
         }
+
     }
 }
