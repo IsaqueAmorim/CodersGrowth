@@ -1,6 +1,8 @@
 ﻿using CRUD.Modelos;
 using System.Data.SqlClient;
 using System.Configuration;
+using CRUD.DOMAIN.MensagensDeErro;
+using CRUD.DOMAIN.Constantes;
 
 namespace CRUD.Repositorios
 {
@@ -8,7 +10,7 @@ namespace CRUD.Repositorios
     {
         private SqlConnection _conexao = new SqlConnection(
             ConfigurationManager
-            .ConnectionStrings["ConexaoBD"]
+            .ConnectionStrings[ConstantesConfig.BANCO_PADRAO]
             .ConnectionString);
 
         public void AtualizarJogador(JogadorModelo jogador)
@@ -40,7 +42,7 @@ namespace CRUD.Repositorios
 
             }catch(Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {
@@ -71,7 +73,7 @@ namespace CRUD.Repositorios
                 command.ExecuteNonQuery();
             }catch(Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {
@@ -93,7 +95,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception(MensagensDeErro.FALHA_JOGADOR_NAO_ENCONTRADO);
             }
             finally
             {
@@ -123,7 +125,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("ERR: Jogador não encontrado.");
+                throw new Exception(MensagensDeErro.FALHA_JOGADOR_NAO_ENCONTRADO);
             }
             finally
             {
@@ -151,7 +153,7 @@ namespace CRUD.Repositorios
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {
