@@ -37,7 +37,17 @@ namespace CRUD.API.Controllers
         [HttpGet("{id}")]
         public IActionResult ObterJogadorPorId(long id)
         {
-           var jogador =  _repositorio.ObterJogadorPorId(id);
+            JogadorModelo jogador;
+            try
+            {
+                jogador =  _repositorio.ObterJogadorPorId(id);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return NotFound();
+            }
 
             return Ok(jogador);
         }
@@ -59,23 +69,26 @@ namespace CRUD.API.Controllers
                 Console.WriteLine(ex.Message);
                 return BadRequest();
             }
-            return Created($"https://localhost/v1/jogadores/{id}", jogadorCriado);
+            return Created($"/v1/jogadores/{id}", jogadorCriado);
         }
-        [HttpPut("{id}")]
 
+        [HttpPut("{id}")]
         public IActionResult AtualizarJogador([FromBody] JogadorModelo jogador, long id)
         {
             try
             {
-            _validacao.ValidaCriacaoJogadorModelo(jogador);
-            jogador.Id = id;
-             _repositorio.AtualizarJogador(jogador);
+                throw new Exception("lçkasjdf");
+                _validacao.ValidaCriacaoJogadorModelo(jogador);
+                jogador.Id = id;
+                 _repositorio.AtualizarJogador(jogador);
 
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
                 Console.WriteLine(ex);
             }
+
             return Ok();
         }
 
