@@ -1,7 +1,6 @@
 ﻿using CRUD.Modelos;
 using CRUD.Repositorios;
 using CRUD.Servicos;
-using LinqToDB.Tools;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD.API.Controllers
@@ -34,6 +33,7 @@ namespace CRUD.API.Controllers
 
             return Ok(listaJogadores);
         }
+
         [HttpGet("{id}")]
         public IActionResult ObterJogadorPorId(long id)
         {
@@ -42,26 +42,43 @@ namespace CRUD.API.Controllers
             return Ok(jogador);
         }
         [HttpPost]
+
         public IActionResult CriarJogador([FromBody] JogadorModelo jogador)
         {
-            var jogadorCriado = new JogadorModelo(jogador);
-            _validacao.ValidaCriacaoJogadorModelo(jogador);
-            
-            var id = _repositorio.CriarJogador(jogadorCriado);
-            jogadorCriado.Id = id;
-
-            
-            
-
+            JogadorModelo jogadorCriado;
+            long id;
+            try
+            {
+                jogadorCriado = new JogadorModelo(jogador);
+                _validacao.ValidaCriacaoJogadorModelo(jogador);
+                id = _repositorio.CriarJogador(jogadorCriado);
+                jogadorCriado.Id = id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest();
+            }
             return Created($"https://localhost/v1/jogadores/{id}", jogadorCriado);
         }
-        [HttpPut]
-        public IActionResult AtualizarJogador([FromBody] JogadorModelo jogador)
-        {
-            _repositorio.AtualizarJogador(jogador);
+        [HttpPut("{id}")]
 
+        public IActionResult AtualizarJogador([FromBody] JogadorModelo jogador, long id)
+        {
+            try
+            {
+            _validacao.ValidaCriacaoJogadorModelo(jogador);
+            jogador.Id = id;
+             _repositorio.AtualizarJogador(jogador);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             return Ok();
         }
+
         [HttpDelete("{id}")]
         public IActionResult DeletarJogador(long id)
         {
