@@ -51,7 +51,7 @@ namespace CRUD.Repositorios
          
         }
 
-        public void CriarJogador(JogadorModelo jogador)
+        public long CriarJogador(JogadorModelo jogador)
         {
             string insert =
                $"INSERT INTO TB_Jogadores (Nome,Sobrenome,Apelido,Email,Elo,Data_de_Nascimento,Data_de_Criacao) " +
@@ -79,6 +79,7 @@ namespace CRUD.Repositorios
             {
             _conexao.Close();
             }
+            return jogador.Id;
         }
     
         public void DeletarJogador(long id)

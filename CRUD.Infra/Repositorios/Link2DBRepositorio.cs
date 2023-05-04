@@ -21,9 +21,11 @@ namespace CRUD.Infra.Repositorios
             _conexao.Update<JogadorModelo>(jogador);
         }
 
-        public void CriarJogador(JogadorModelo jogador)
+        public long CriarJogador(JogadorModelo jogador)
         {
-            _conexao.Insert<JogadorModelo>(jogador);
+            var id =_conexao.InsertWithInt32Identity<JogadorModelo>(jogador);
+
+            return id;
         }
 
         public void DeletarJogador(long id)

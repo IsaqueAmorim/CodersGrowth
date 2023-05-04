@@ -40,10 +40,7 @@ namespace CRUD.Servicos
             {
                 stringBuilder +=MensagensDeErro.FALHA_APELIDO_TAMANHO;
             }
-            if (ValidaId(jogador.Id) == false)
-            {
-                stringBuilder += "ERR: Um Id não pode ser repetido.\n";
-            }
+            
             if (ValidaApelido(jogador.Apelido) == false)
             {
                 stringBuilder += MensagensDeErro.FALHA_APELIDO_EXISTENTE;

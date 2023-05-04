@@ -12,9 +12,10 @@ namespace CRUD.Repositorios
             listaJogadores[listaJogadores.IndexOf(jogador)] = jogadorAtualizado;
         }
 
-        public void CriarJogador(JogadorModelo jogador)
+        public long CriarJogador(JogadorModelo jogador)
         {
             listaJogadores.Add(jogador);
+            return jogador.Id;
         }
 
         public void DeletarJogador(long id)
