@@ -77,7 +77,7 @@ namespace CRUD.API.Controllers
         {
             try
             {
-                throw new Exception("lçkasjdf");
+               
                 _validacao.ValidaCriacaoJogadorModelo(jogador);
                 jogador.Id = id;
                  _repositorio.AtualizarJogador(jogador);
@@ -85,8 +85,9 @@ namespace CRUD.API.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                
                 Console.WriteLine(ex);
+                return BadRequest();
             }
 
             return Ok();
