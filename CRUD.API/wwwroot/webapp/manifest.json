@@ -1,7 +1,7 @@
 {
 	"_version": "1.21.0",
 	"sap.app": {
-		"id": "sap.ui.demo.walkthrough",
+		"id": "sap.ui.api.jogadores",
 		"type": "application",
 		"i18n": {
 			"bundleUrl": "i18n/i18n.properties",
@@ -26,7 +26,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "sap.ui.demo.walkthrough.view.App",
+			"viewName": "sap.ui.api.jogadores.view.App",
 			"type": "XML",
 			"id": "app"
 		},
@@ -41,7 +41,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "sap.ui.demo.walkthrough.i18n.i18n",
+					"bundleName": "sap.ui.api.jogadores.i18n.i18n",
 					"supportedLocales": [
 						""
 					],
