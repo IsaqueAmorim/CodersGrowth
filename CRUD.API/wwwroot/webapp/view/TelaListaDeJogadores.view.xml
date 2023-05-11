@@ -1,0 +1,67 @@
+<mvc:View
+   controllerName="sap.ui.api.jogadores.controller.TelaListaDeJogadores"
+   xmlns="sap.m"
+   xmlns:mvc="sap.ui.core.mvc">
+   <Page title="{i18n>homePageTitle}">
+				<content>
+					<Table 
+					id="tabela_jogadores"
+					items="{/jogadores}">
+						<headerToolbar>
+							<OverflowToolbar>
+								<content>
+									<Button press=".aoClicarEmAdicionar" type="Accept" icon="sap-icon://add-employee" text="Adicionar Jogador"></Button>
+									<ToolbarSpacer/>
+									<SearchField maxLength="50" width="30%" placeholder="Buscar" search=".aoDigitar"/>
+								</content>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column
+							width="3.5rem" >
+								<Text text="Id"/>
+							</Column>
+							<Column
+							width="8rem" >
+								<Text text="Nome"/>
+							</Column>
+							<Column 
+							width="8rem">
+								<Text text="Sobrenome"/>
+							</Column>
+							<Column 
+							width="18.0rem">
+								<Text text="E-mail"/>
+							</Column>
+							<Column
+							width="5.5rem"
+							hAlign="Center" > 
+								<Text text="Elo"/>
+							</Column>
+							<Column 
+							hAlign="Center">
+								<Text text="Data de Nascimento"/>
+							</Column>
+							<Column 
+							hAlign="Center">
+								<Text text="Data de Cadastro"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem >
+								<cells>
+									<Text text="{id}"/>
+									<Text text="{nome}"/>
+									<Text text="{sobrenome}"/>
+									<Text text="{email}"/>
+									<Image tooltip="{path: 'elo',formatter:'.formatter.eloLegenda'}" height="32px" src="{path:'elo',formatter:'.formatter.eloImage'}">											
+									</Image>
+									<Text text="{path:'dataNascimento',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
+									<Text text="{path:'dataCriacao',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+</mvc:View>
