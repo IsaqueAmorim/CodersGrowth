@@ -1,6 +1,7 @@
 <mvc:View
 	controllerName="sap.ui.api.jogadores.controller.App"
 	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc"
 	displayBlock="true">
 	<Shell >
@@ -54,11 +55,13 @@
 						<items>
 							<ColumnListItem >
 								<cells>
+									
 									<Text text="{id}"/>
 									<Text text="{nome}"/>
 									<Text text="{sobrenome}"/>
 									<Text text="{email}"/>
-									<Image  height="32px" src="{path:'elo',formatter:'.formatter.eloImage'}"></Image>
+									<Image tooltip="{path: 'elo',formatter:'.formatter.eloLegenda'}" height="32px" src="{path:'elo',formatter:'.formatter.eloImage'}">											
+									</Image>
 									<Text text="{path:'dataNascimento',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
 									<Text text="{path:'dataCriacao',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
 								</cells>

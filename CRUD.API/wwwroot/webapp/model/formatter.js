@@ -16,8 +16,21 @@ sap.ui.define([], function () {
             case 7: return "../assets/GM.svg    "
             case 8: return "../assets/Challenger.svg"
      
-        }
-    }
+        }  
+    },
+    eloLegenda: function (elo) {
+        switch (elo){
+            case 0: return "Ferro"
+            case 1: return "Bronze"
+            case 2: return "Prata"
+            case 3: return "Ouro"
+            case 4: return "Platina"
+            case 5: return "Diamante"
+            case 6: return ".Mestre"
+            case 7: return "Grão Mestre"
+            case 8: return "Desafiante"
+     
+        } 
     }
 
-});
+}});
