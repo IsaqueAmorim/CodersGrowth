@@ -9,7 +9,7 @@ namespace CRUD.Repositorios
 {
     public interface IRepositorioJogadores
     {
-        public void CriarJogador(JogadorModelo jogador);
+        public long CriarJogador(JogadorModelo jogador);
         public JogadorModelo ObterJogadorPorId(long id);
         public List<JogadorModelo> ObterTodosJogadores();
         public void DeletarJogador(long id);

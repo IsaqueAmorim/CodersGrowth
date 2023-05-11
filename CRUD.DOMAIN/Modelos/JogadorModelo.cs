@@ -63,6 +63,17 @@ namespace CRUD.Modelos
         {
 
         }
+        public JogadorModelo(JogadorModelo jogador)
+        {
+            Nome = jogador.Nome;
+            Sobrenome = jogador.Sobrenome;
+            Email = jogador.Email;
+            Apelido = jogador.Apelido;
+            Elo = jogador.Elo;
+            DataNascimento = jogador.DataNascimento;
+            DataCriacao = DateTime.Now;
+
+        }
 
 
 
