@@ -55,21 +55,21 @@ namespace CRUD.API.Controllers
 
         public IActionResult CriarJogador([FromBody] JogadorModelo jogador)
         {
-            JogadorModelo jogadorCriado;
+            
             long id;
             try
             {
-                jogadorCriado = new JogadorModelo(jogador);
+                
                 _validacao.ValidaCriacaoJogadorModelo(jogador);
-                id = _repositorio.CriarJogador(jogadorCriado);
-                jogadorCriado.Id = id;
+                id = _repositorio.CriarJogador(jogador);
+                jogador.Id = id;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return BadRequest();
             }
-            return Created($"/v1/jogadores/{id}", jogadorCriado);
+            return Created($"/v1/jogadores/{id}", jogador);
         }
 
         [HttpPut("{id}")]
