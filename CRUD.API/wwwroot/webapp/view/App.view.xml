@@ -38,13 +38,16 @@
 								<Text text="E-mail"/>
 							</Column>
 							<Column
-							width="5.5rem" > 
+							width="5.5rem"
+							hAlign="Center" > 
 								<Text text="Elo"/>
 							</Column>
-							<Column >
+							<Column 
+							hAlign="Center">
 								<Text text="Data de Nascimento"/>
 							</Column>
-							<Column >
+							<Column 
+							hAlign="Center">
 								<Text text="Data de Cadastro"/>
 							</Column>
 						</columns>
@@ -58,8 +61,6 @@
 									<Image  height="32px" src="{path:'elo',formatter:'.formatter.eloImage'}"></Image>
 									<Text text="{path:'dataNascimento',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
 									<Text text="{path:'dataCriacao',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
-
-
 								</cells>
 							</ColumnListItem>
 						</items>

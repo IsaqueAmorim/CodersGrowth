@@ -64,7 +64,7 @@ namespace CRUD.Servicos
 
         private static bool ValidaDataNascimento(DateTime criacao, DateTime nascimento)
         {
-            if (criacao <= nascimento)
+            if (nascimento >= DateTime.Now)
             {
                 return false;
             }

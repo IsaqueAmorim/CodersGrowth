@@ -9,7 +9,7 @@ namespace CRUD.API.Controllers
         [HttpGet]
         public IActionResult ParaHome()
         {
-            var arquivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "index.html");
+            var arquivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","webapp" ,"index.html");
             return PhysicalFile(arquivo,"text/html");
         }
     }
