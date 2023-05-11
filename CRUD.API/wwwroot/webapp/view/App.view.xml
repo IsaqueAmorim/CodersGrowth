@@ -9,11 +9,14 @@
 			<Page title="{i18n>homePageTitle}">
 				<content>
 					<Table 
+					id="tabela_jogadores"
 					items="{/jogadores}">
 						<headerToolbar>
 							<OverflowToolbar>
 								<content>
-									
+									<Button press=".aoClicarEmAdicionar" type="Accept" icon="sap-icon://add-employee" text="Adicionar Jogador"></Button>
+									<ToolbarSpacer/>
+									<SearchField maxLength="50" width="30%" placeholder="Buscar" search=".aoDigitar"/>
 								</content>
 							</OverflowToolbar>
 						</headerToolbar>
@@ -23,19 +26,19 @@
 								<Text text="Id"/>
 							</Column>
 							<Column
-							width="13rem" >
+							width="8rem" >
 								<Text text="Nome"/>
 							</Column>
 							<Column 
-							width="13rem">
+							width="8rem">
 								<Text text="Sobrenome"/>
 							</Column>
 							<Column 
-							width="13.0rem">
+							width="18.0rem">
 								<Text text="E-mail"/>
 							</Column>
 							<Column
-							width="3.5rem" > 
+							width="5.5rem" > 
 								<Text text="Elo"/>
 							</Column>
 							<Column >
@@ -52,9 +55,10 @@
 									<Text text="{nome}"/>
 									<Text text="{sobrenome}"/>
 									<Text text="{email}"/>
-									<Text text="{elo}"/>
-									<Text text="{dataNascimento}"/>
-									<Text text="{dataCriacao}"/>
+									<Image  height="32px" src="{path:'elo',formatter:'.formatter.eloImage'}"></Image>
+									<Text text="{path:'dataNascimento',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
+									<Text text="{path:'dataCriacao',type:'sap.ui.model.type.Date',formatOptions: {style: 'short', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
+
 
 								</cells>
 							</ColumnListItem>
