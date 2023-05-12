@@ -24,7 +24,7 @@ sap.ui.define([
 		onInit : function(){
 
 			var jsonModelJogador = new JSONModel();
-			fetch("https://localhost:7139/v1/jogadores/",{method: "GET"})
+			fetch("http://localhost:5124/v1/jogadores/",{method: "GET"})
 				.then(response => response.json())
 				.then(response => jsonModelJogador.setData({jogadores : response}))
 			this.getView().setModel(jsonModelJogador);
