@@ -8,7 +8,7 @@ namespace CRUD.Repositorios
         private List<JogadorModelo> listaJogadores = ListaSingleton.ObterInstancia();
         public void AtualizarJogador(JogadorModelo jogadorAtualizado)
         {
-            var jogador = listaJogadores.Find(x => x.Id == jogadorAtualizado.Id);
+            var jogador = listaJogadores.FirstOrDefault(x => x.Id == jogadorAtualizado.Id);
             listaJogadores[listaJogadores.IndexOf(jogador)] = jogadorAtualizado;
         }
 

@@ -23,6 +23,7 @@ namespace CRUD.Infra.Repositorios
 
         public long CriarJogador(JogadorModelo jogador)
         {
+            jogador.DataCriacao = DateTime.Now;
             var id =_conexao.InsertWithInt32Identity<JogadorModelo>(jogador);
 
             return id;

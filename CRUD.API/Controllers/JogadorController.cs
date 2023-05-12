@@ -16,7 +16,7 @@ namespace CRUD.API.Controllers
         {
             _repositorio = repositorio;
             _validacao = validacao;
-        }   
+        }
 
         [HttpGet]
         public IActionResult ObterTodosJogadores()
