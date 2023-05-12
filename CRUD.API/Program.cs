@@ -6,9 +6,20 @@ using CRUD.Servicos;
 using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+//Desabilitando CORS no localhost
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://localhost",
+                                              "http://localhost:8080");
+                      });
+});
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddScoped<IRepositorioJogadores, Link2DBRepositorio>();
 builder.Services.AddScoped<Validacao>();
@@ -17,6 +28,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

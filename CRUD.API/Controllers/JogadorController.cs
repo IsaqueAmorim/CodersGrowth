@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CRUD.API.Controllers
 {
     [ApiController]
-    [Route("v1/jogadores")]
+    [Route("/")]
     public class JogadorController : ControllerBase
     {
         private IRepositorioJogadores _repositorio;
@@ -16,9 +16,14 @@ namespace CRUD.API.Controllers
         {
             _repositorio = repositorio;
             _validacao = validacao;
-        }   
-
+        }
         [HttpGet]
+        public IActionResult ParaHome()
+        {
+            var arquivo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "webapp", "index.html");
+            return PhysicalFile(arquivo, "text/html");
+        }
+        [HttpGet("v1/jogadores")]
         public IActionResult ObterTodosJogadores()
         {
             List<JogadorModelo> listaJogadores;
@@ -34,7 +39,7 @@ namespace CRUD.API.Controllers
             return Ok(listaJogadores);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("v1/jogadores/{id}")]
         public IActionResult ObterJogadorPorId(long id)
         {
             JogadorModelo jogador;
@@ -51,7 +56,7 @@ namespace CRUD.API.Controllers
 
             return Ok(jogador);
         }
-        [HttpPost]
+        [HttpPost("v1/jogadores")]
 
         public IActionResult CriarJogador([FromBody] JogadorModelo jogador)
         {
@@ -72,7 +77,7 @@ namespace CRUD.API.Controllers
             return Created($"/v1/jogadores/{id}", jogador);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("v1/jogadores/{id}")]
         public IActionResult AtualizarJogador([FromBody] JogadorModelo jogador, long id)
         {
             try
@@ -93,7 +98,7 @@ namespace CRUD.API.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("v1/jogadores/{id}")]
         public IActionResult DeletarJogador(long id)
         {
             try

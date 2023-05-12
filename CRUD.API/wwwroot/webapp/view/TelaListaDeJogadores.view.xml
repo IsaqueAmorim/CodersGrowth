@@ -10,41 +10,41 @@
 						<headerToolbar>
 							<OverflowToolbar>
 								<content>
-									<Button press=".aoClicarEmAdicionar" type="Accept" icon="sap-icon://add-employee" text="Adicionar Jogador"></Button>
+									<Button press=".aoClicarEmAdicionar" type="Accept" icon="sap-icon://add-employee" text="{i18n>botaoAdicionarJogador}"></Button>
 									<ToolbarSpacer/>
-									<SearchField maxLength="50" width="30%" placeholder="Buscar" search=".aoDigitar"/>
+									<SearchField maxLength="50" width="30%" placeholder="{i18n>placeholderCampoDeBusca}" search=".aoDigitar"/>
 								</content>
 							</OverflowToolbar>
 						</headerToolbar>
 						<columns>
 							<Column
 							width="3.5rem" >
-								<Text text="Id"/>
+								<Text text="{i18n>colunaId}"/>
 							</Column>
 							<Column
 							width="8rem" >
-								<Text text="Nome"/>
+								<Text text="{i18n>colunaNome}"/>
 							</Column>
 							<Column 
 							width="8rem">
-								<Text text="Sobrenome"/>
+								<Text text="{i18n>colunaSobrenome}"/>
 							</Column>
 							<Column 
 							width="18.0rem">
-								<Text text="E-mail"/>
+								<Text text="{i18n>colunaEmail}"/>
 							</Column>
 							<Column
 							width="5.5rem"
 							hAlign="Center" > 
-								<Text text="Elo"/>
+								<Text text="{i18n>colunaElo}"/>
 							</Column>
 							<Column 
 							hAlign="Center">
-								<Text text="Data de Nascimento"/>
+								<Text text="{i18n>colunaDataNascimento}"/>
 							</Column>
 							<Column 
 							hAlign="Center">
-								<Text text="Data de Cadastro"/>
+								<Text text="{i18n>colunaDataCriacao}"/>
 							</Column>
 						</columns>
 						<items>
