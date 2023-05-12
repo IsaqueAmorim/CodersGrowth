@@ -23,12 +23,17 @@ sap.ui.define([
 		},
 		onInit : function(){
 
+			this.obterDados();
+
+
+		},
+		obterDados: function(){
+
 			var jsonModelJogador = new JSONModel();
 			fetch("http://localhost:5124/v1/jogadores/",{method: "GET"})
 				.then(response => response.json())
 				.then(response => jsonModelJogador.setData({jogadores : response}))
 			this.getView().setModel(jsonModelJogador);
-			
 		}
     });
  });
