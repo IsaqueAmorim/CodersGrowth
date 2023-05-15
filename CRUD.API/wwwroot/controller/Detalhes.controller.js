@@ -2,7 +2,8 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "../model/formatter",
     "sap/ui/model/json/JSONModel",
-], function(Controller, formatter,JSONModel) {
+    "sap/ui/core/routing/History"
+], function(Controller, formatter,JSONModel,History) {
     'use strict';
     
     return Controller.extend("sap.ui.api.jogadores.controller.Detalhes",{
@@ -17,15 +18,27 @@ sap.ui.define([
             
             
             this.obterDados(id);
-          },
+        },
           obterDados: function(id){
 
 			let jsonModelJogador = new JSONModel();
-			fetch("http://localhost:5124/v1/jogadores/" + id)
+			fetch("https://localhost:7139/v1/jogadores/" + id)
 				.then(response => response.json())
 				.then(response => jsonModelJogador.setData({jogador : response}))
 			this.getView().setModel(jsonModelJogador);
-		}
+		},
+        aoClicarVoltar: function(oEvent){
+            let historico = History.getInstance();
+            let paginaAnterior = historico.getPreviousHash();
+
+            if(paginaAnterior == undefined){
+                window.history.go(-1);
+            }else{
+                let rota = this.getOwnerComponent().getRouter();
+                rota.navTo("");
+            }
+
+        }
        
 
     });
