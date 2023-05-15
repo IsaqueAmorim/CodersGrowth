@@ -9,7 +9,8 @@ sap.ui.define([
 
         formatter: formatter,
         onInit: function() {
-
+            var rota = this.getOwnerComponent().getRouter();
+        rota.getRoute("tabelaDePets").attachMatched(this.aoCoincidirRota, this);
         },
         aoCoincidirRota: function (evento) {
             var parametros = evento.getParameters();
