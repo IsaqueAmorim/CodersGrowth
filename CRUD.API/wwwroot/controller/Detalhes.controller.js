@@ -10,11 +10,12 @@ sap.ui.define([
         formatter: formatter,
         onInit: function() {
             var rota = this.getOwnerComponent().getRouter();
-        rota.getRoute("tabelaDePets").attachMatched(this.aoCoincidirRota, this);
+            rota.getRoute("detalhes").attachMatched(this.aoCoincidirRota, this);
         },
         aoCoincidirRota: function (evento) {
-            var parametros = evento.getParameters();
-            var id = parametros.arguments.id;
+            var id = evento.getParameter("arguments").id;
+            
+            
             this.obterDados(id);
           },
           obterDados: function(id){
