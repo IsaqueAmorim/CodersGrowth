@@ -1,0 +1,39 @@
+<mvc:View xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.layout" xmlns:uxap="sap.uxap" 
+xmlns:mvc="sap.ui.core.mvc"
+controllerName="sap.ui.api.jogadores.controller.Detalhes"
+xmlns="sap.m" 
+>
+    
+    <Page  >
+        <headerContent>
+            <Button  text="Voltar" icon="sap-icon://nav-back" />
+            <ToolbarSpacer />
+            <Title text="{i18n>Detalhes.titulo}" textAlign="Initial"></Title>
+            <ToolbarSpacer />
+            <Button text="Editar" icon="sap-icon://edit" type="Attention"/>
+            <Button type="Negative" icon="sap-icon://delete" text="Deletar"/>
+            
+        </headerContent>
+
+       <VBox >
+            <form:SimpleForm class="" layout="ResponsiveLayout" editable="false" width="60%" >
+                <form:content  >
+                    <Label design="Bold" vAlign="Middle" text="Id"/>
+                    <Input editable="false" value="{id}"/>
+                    <Label design="Bold" vAlign="Middle" text="Nome"/>
+                    <Input editable="false" value="{nome}"/>
+                    <Label design="Bold"  text="Sobrenome"/>
+                    <Input editable="false" value="Amorim"/>
+                    <Label design="Bold"  text="E-mail"/>
+                    <Input editable="false" value="Isaque Amorim"/>
+                    <Label design="Bold"  text="Elo"/>
+                    <Input editable="false" value="Grão Mestre"/>
+                    <Label design="Bold"  text="Data de Nascimento"/>
+                    <Input editable="false" value="13/08/2003"/>
+                    <Label design="Bold"  text="Data de Cadastro"/>
+                    <Input editable="false" value="19/08/2022"/>
+                </form:content>
+            </form:SimpleForm>
+       </VBox>
+    </Page>
+</mvc:View>

@@ -10,14 +10,14 @@ sap.ui.define([
         formatter : formatter,
         aoDigitar: function (oEvent) {
 			
-			var filtro = [];
-			var buscar = oEvent.getParameter("query");
+			let filtro = [];
+			let buscar = oEvent.getParameter("query");
 			if(buscar){
 				filtro.push(new Filter("nome", FilterOperator.Contains, buscar));
 			}
 
-			var tabela = this.byId("tabela_jogadores")
-			var items = tabela.getBinding("items");
+			let tabela = this.byId("tabela_jogadores")
+			let items = tabela.getBinding("items");
 			items.filter(filtro);
 			
 		},
@@ -29,11 +29,18 @@ sap.ui.define([
 		},
 		obterDados: function(){
 
-			var jsonModelJogador = new JSONModel();
+			let jsonModelJogador = new JSONModel();
 			fetch("http://localhost:5124/v1/jogadores/",{method: "GET"})
 				.then(response => response.json())
 				.then(response => jsonModelJogador.setData({jogadores : response}))
 			this.getView().setModel(jsonModelJogador);
-		}
+		},
+		aoClicarNaLinha : function (EventoDeClique){
+			let rota = this.getOwnerComponent().getRouter();
+			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty("id")
+			rota.navTo("detalhes", {id: idDaLinha});
+		},
+
     });
  });
+ 
