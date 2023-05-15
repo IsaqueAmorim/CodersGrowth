@@ -4,7 +4,7 @@ controllerName="sap.ui.api.jogadores.controller.Detalhes"
 xmlns="sap.m" 
 >
     
-    <Page  >
+    <Page binding="{/jogador}"  >
         <headerContent>
             <Button  text="Voltar" icon="sap-icon://nav-back" />
             <ToolbarSpacer />
@@ -12,7 +12,6 @@ xmlns="sap.m"
             <ToolbarSpacer />
             <Button text="Editar" icon="sap-icon://edit" type="Attention"/>
             <Button type="Negative" icon="sap-icon://delete" text="Deletar"/>
-            
         </headerContent>
 
        <VBox >
