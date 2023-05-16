@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
  ], function (Controller,formatter,Filter,FilterOperator,JSONModel) {
     "use strict";
-    return Controller.extend("sap.ui.api.jogadores", {
+    return Controller.extend("sap.ui.api.jogadores.controller.TelaListaDeJogadores", {
         formatter : formatter,
         aoDigitar: function (oEvent) {
 			
@@ -40,7 +40,10 @@ sap.ui.define([
 			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty("id")
 			rota.navTo("detalhes", {id: idDaLinha});
 		},
-
+		aoClicarEmAdicionar: function(){
+			let rota = this.getOwnerComponent().getRouter();
+			rota.navTo("cadastro")
+		}
     });
  });
  
