@@ -5,8 +5,6 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("sap.ui.api.jogadores.controller.App", {
-		
-		
 
 	});
 

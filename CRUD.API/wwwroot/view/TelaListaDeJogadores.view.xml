@@ -48,7 +48,7 @@
 							</Column>
 						</columns>
 						<items>
-							<ColumnListItem >
+							<ColumnListItem type="Navigation" press=".aoClicarNaLinha">
 								<cells>
 									<Text text="{id}"/>
 									<Text text="{nome}"/>
