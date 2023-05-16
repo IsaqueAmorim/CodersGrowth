@@ -1,14 +1,14 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "../model/formatter",
+    "../model/Formatador",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/routing/History"
-], function(Controller, formatter,JSONModel,History) {
+], function(Controller, Formatador,JSONModel,History) {
     'use strict';
     
     return Controller.extend("sap.ui.api.jogadores.controller.Detalhes",{
 
-        formatter: formatter,
+        formatter: Formatador,
         onInit: function() {
             var rota = this.getOwnerComponent().getRouter();
             rota.getRoute("detalhes").attachMatched(this.aoCoincidirRota, this);
