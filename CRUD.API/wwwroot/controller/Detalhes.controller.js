@@ -21,11 +21,12 @@ sap.ui.define([
         },
           obterDados: function(id){
 
-			let jsonModelJogador = new JSONModel();
+		
 			fetch("https://localhost:7139/v1/jogadores/" + id)
-				.then(response => response.json())
-				.then(response => jsonModelJogador.setData({jogador : response}))
-			this.getView().setModel(jsonModelJogador);
+                .then(resposta => {
+                    let dadosJogador = resposta.json();
+                    this.getView().setModel(new JSONModel({jogador : dadosJogador}));
+                })
 		},
         aoClicarVoltar: function(oEvent){
             let historico = History.getInstance();
