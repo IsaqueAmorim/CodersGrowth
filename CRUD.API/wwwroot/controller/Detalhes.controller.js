@@ -3,12 +3,13 @@ sap.ui.define([
     "../model/formatter",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/routing/History"
-], function(Controller, formatter,JSONModel,History) {
+    
+], function(Controller, Formatador,JSONModel,Historico) {
     'use strict';
     
     return Controller.extend("sap.ui.api.jogadores.controller.Detalhes",{
 
-        formatter: formatter,
+        formatter: Formatador,
         onInit: function() {
             var rota = this.getOwnerComponent().getRouter();
             rota.getRoute("detalhes").attachMatched(this.aoCoincidirRota, this);
@@ -28,17 +29,19 @@ sap.ui.define([
 			this.getView().setModel(jsonModelJogador);
 		},
         aoClicarVoltar: function(oEvent){
-            let historico = History.getInstance();
+            let historico = Historico.getInstance();
             let paginaAnterior = historico.getPreviousHash();
 
             if(paginaAnterior == undefined){
-                window.history.go(-1);
-            }else{
                 let rota = this.getOwnerComponent().getRouter();
-                rota.navTo("");
+                rota.navTo("home");
+            }else{
+               
+                window.history.go(-1);
             }
+        },
+       
 
-        }
        
 
     });
