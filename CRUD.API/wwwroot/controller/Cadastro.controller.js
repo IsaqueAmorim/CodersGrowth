@@ -9,6 +9,13 @@ sap.ui.define([
         onInit: function() {
             let JogadorModelo = new JSONModel({});
             this.getView().setModel(JogadorModelo,"jogador");
+
+            var rota = this.getOwnerComponent().getRouter();
+           
+            rota    
+                .getRoute("cadastro")
+                .attachMatched(this.aoCoincidirRotas, this);
+           
             
 
         },
@@ -48,6 +55,11 @@ sap.ui.define([
                 }
             });
         },
+        aoCoincidirRotas: function(){
+
+            this.limparCampos();
+        }
+        ,
         aoClicarVoltar: function(){
             let historico = Historico.getInstance();
             let paginaAnterior = historico.getPreviousHash();
@@ -74,6 +86,39 @@ sap.ui.define([
 
             return json;
                  
-        }
+        },
+        aoClicarCancelar: function() {
+
+            let pacoteTraducoes = 
+            this.getOwnerComponent()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("Cadastro.MensagemCancelar");
+
+            MensagemDeTela.alert(pacoteTraducoes, {
+                actions :[MensagemDeTela.Action.YES,MensagemDeTela.Action.NO],
+                onClose : (acao) => {
+                    if(acao == MensagemDeTela.Action.YES){
+                        this.aoClicarVoltar();
+                    }
+                }
+            });
+
+            
+        },
+        limparCampos: function() {
+            var nome = this.byId("campoNome");
+            var sobrenome = this.byId("campoSobrenome");
+            var apelido = this.byId("campoApelido");
+            var email = this.byId("campoEmail");
+            var elo = this.byId("selecionarElo");
+            var dataNascimento = this.byId("MostrarSeletor");
+            nome?.setValue("");
+            sobrenome?.setValue("");
+            apelido?.setValue("");
+            email?.setValue("");
+            dataNascimento?.setValue("");
+            elo?.setSelectedKey("");
+         }
     });
 });

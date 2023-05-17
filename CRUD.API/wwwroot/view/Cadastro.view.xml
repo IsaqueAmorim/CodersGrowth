@@ -10,7 +10,7 @@ xmlns="sap.m" >
             <Title text="{i18n>Cadastro.Titulo}" textAlign="Initial"></Title>
             <ToolbarSpacer />
             <Button press=".aoClicarSalvar" text="{i18n>page.Salvar}" icon="sap-icon://add-employee" type="Accept"/>
-            <Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>page.Cancelar}"/>
+            <Button press=".aoClicarCancelar" type="Reject" icon="sap-icon://sys-cancel" text="{i18n>page.Cancelar}"/>
         </headerContent>
 
         <VBox >
@@ -19,15 +19,15 @@ xmlns="sap.m" >
 
                     
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaNome}"/>
-                    <Input value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
+                    <Input id="campoNome" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaSobrenome}"/>
-                    <Input value="{jogador>/sobrenome}" type="Text" maxLength="40" required="true"/>
-                        <Label design="Bold"  text="{i18n>colunaApelido}"/>
-                            <Input value="{jogador>/apelido}" type="Email" maxLength="256" required="true"/>
+                    <Input id="campoSobrenome" value="{jogador>/sobrenome}" type="Text" maxLength="40" required="true"/>
+                    <Label  design="Bold"  text="{i18n>colunaApelido}"/>
+                    <Input id="campoApelido" value="{jogador>/apelido}" type="Email" maxLength="256" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaEmail}"/>
-                    <Input value="{jogador>/email}" type="Email" maxLength="256" required="true"/>
+                    <Input id="campoEmail" value="{jogador>/email}" type="Email" maxLength="256" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaElo}"/>
-                    <Select required="true" id="selecionarElo" selectedKey="{jogador>/elo}">
+                    <Select  required="true" id="selecionarElo" selectedKey="{jogador>/elo}">
                         <items>
                             <core:Item text="" key="" />
                             <core:Item text="Ferro" key="0" />
