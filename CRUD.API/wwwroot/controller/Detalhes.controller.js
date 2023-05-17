@@ -1,9 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "../model/Formatador",
+    "../model/formatter",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/routing/History"
-], function(Controller, Formatador,JSONModel,History) {
+    
+], function(Controller, Formatador,JSONModel,Historico) {
     'use strict';
     
     return Controller.extend("sap.ui.api.jogadores.controller.Detalhes",{
@@ -21,25 +22,26 @@ sap.ui.define([
         },
           obterDados: function(id){
 
-		
+			let jsonModelJogador = new JSONModel();
 			fetch("https://localhost:7139/v1/jogadores/" + id)
-                .then(resposta => {
-                    let dadosJogador = resposta.json();
-                    this.getView().setModel(new JSONModel({jogador : dadosJogador}));
-                })
+				.then(response => response.json())
+				.then(response => jsonModelJogador.setData({jogador : response}))
+			this.getView().setModel(jsonModelJogador);
 		},
         aoClicarVoltar: function(oEvent){
-            let historico = History.getInstance();
+            let historico = Historico.getInstance();
             let paginaAnterior = historico.getPreviousHash();
 
             if(paginaAnterior == undefined){
-                window.history.go(-1);
-            }else{
                 let rota = this.getOwnerComponent().getRouter();
-                rota.navTo("");
+                rota.navTo("home");
+            }else{
+               
+                window.history.go(-1);
             }
+        },
+       
 
-        }
        
 
     });
