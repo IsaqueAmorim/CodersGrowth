@@ -2,10 +2,12 @@ sap.ui.define([
   "sap/ui/core/mvc/Controller",
   "sap/ui/model/json/JSONModel",
   "sap/m/MessageBox",
-  "sap/ui/core/routing/History"
-], function(Controller,JSONModel,MensagemDeTela,Historico) {
+  "sap/ui/core/routing/History",
+  "../services/validacao.js"
+], function(Controller,JSONModel,MensagemDeTela,Historico, Validacao) {
     'use strict';
     return Controller.extend("sap.ui.api.jogadores.controller.Cadastro",{
+        validacao: Validacao,
         onInit: function() {
             let JogadorModelo = new JSONModel({});
             this.getView().setModel(JogadorModelo,"jogador");
@@ -58,6 +60,7 @@ sap.ui.define([
         aoCoincidirRotas: function(){
 
             this.limparCampos();
+            this.limitarData();
         }
         ,
         aoClicarVoltar: function(){
@@ -119,6 +122,11 @@ sap.ui.define([
             email?.setValue("");
             dataNascimento?.setValue("");
             elo?.setSelectedKey("");
-         }
+        },
+        limitarData: function() {
+            let inputData = this.getView().byId("MostrarSeletor")
+            inputData?.setMaxDate(new Date());
+            inputData?.setMinDate(new Date(1950,1,1))
+        }
     });
 });

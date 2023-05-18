@@ -19,7 +19,7 @@ xmlns="sap.m" >
 
                     
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaNome}"/>
-                    <Input id="campoNome" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
+                    <Input id="campoNome" change=".validarCampos" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaSobrenome}"/>
                     <Input id="campoSobrenome" value="{jogador>/sobrenome}" type="Text" maxLength="40" required="true"/>
                     <Label  design="Bold"  text="{i18n>colunaApelido}"/>
@@ -57,7 +57,8 @@ xmlns="sap.m" >
                     change=".aoAlterar"
                     valueFormat="yyyy-MM-ddTHH:mm:ss.mmm"
                     displayFormat="dd/MM/yyyy"
-                    placeholder="{i18n>Cadastro.BotaoData}"/>
+                    placeholder="{i18n>Cadastro.BotaoData}"
+                    maxDate=""/>
                     
                 </form:content>
             </form:SimpleForm>
