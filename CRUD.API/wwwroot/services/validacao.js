@@ -9,11 +9,13 @@ sap.ui.define([], function() {
             let regex = /\S+@\S+\.\S+/;
         
             if(email.length === 0){
-                return "O campo email não pode ser vazio!"
+                return false
             }
             else if(regex.test(email)){
-                return "Email inválido! Padrão esperado (exemplo@exemplo.com)."
+                return false
             }
+
+            return true;
         },
         validaCamposDeTexto: function(texto){
         
@@ -23,6 +25,9 @@ sap.ui.define([], function() {
             }else if(regex.test(texto)){
                 return "Digite apenas uma palavra, sem numeros e sem caracteres especiais"
             }
+        },
+        teste: function(){
+            this.getView().
         }
         
     }

@@ -61,6 +61,7 @@ sap.ui.define([
 
             this.limparCampos();
             this.limitarData();
+            
         }
         ,
         aoClicarVoltar: function(){
