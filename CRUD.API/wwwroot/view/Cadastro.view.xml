@@ -9,7 +9,7 @@ xmlns="sap.m" >
             <ToolbarSpacer />
             <Title text="{i18n>Cadastro.Titulo}" textAlign="Initial"></Title>
             <ToolbarSpacer />
-            <Button press=".aoClicarSalvar" text="{i18n>page.Salvar}" icon="sap-icon://add-employee" type="Accept"/>
+            <Button id="BotaoSalvar" press=".aoClicarSalvar" text="{i18n>page.Salvar}" icon="sap-icon://add-employee" type="Accept"/>
             <Button press=".aoClicarCancelar" type="Reject" icon="sap-icon://sys-cancel" text="{i18n>page.Cancelar}"/>
         </headerContent>
 
@@ -19,15 +19,15 @@ xmlns="sap.m" >
 
                     
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaNome}"/>
-                    <Input id="campoNome" change=".validarCampos" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
+                    <Input id="campoNome"  liveChange=".validarCampos" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaSobrenome}"/>
-                    <Input id="campoSobrenome" value="{jogador>/sobrenome}" type="Text" maxLength="40" required="true"/>
+                    <Input id="campoSobrenome" liveChange=".validarCampos" value="{jogador>/sobrenome}" type="Text" maxLength="40" required="true"/>
                     <Label  design="Bold"  text="{i18n>colunaApelido}"/>
-                    <Input id="campoApelido" value="{jogador>/apelido}" type="Email" maxLength="256" required="true"/>
+                    <Input id="campoApelido" liveChange=".validarCampos" value="{jogador>/apelido}" type="Email" maxLength="256" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaEmail}"/>
-                    <Input id="campoEmail" value="{jogador>/email}" type="Email" maxLength="256" required="true"/>
+                    <Input id="campoEmail" liveChange=".validarCampos" value="{jogador>/email}" type="Email" maxLength="256" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaElo}"/>
-                    <Select  required="true" id="selecionarElo" selectedKey="{jogador>/elo}">
+                    <Select change=".validarCampos" required="true" id="campoElo" selectedKey="{jogador>/elo}">
                         <items>
                             <core:Item text="" key="" />
                             <core:Item text="Ferro" key="0" />
@@ -52,13 +52,14 @@ xmlns="sap.m" >
                     
                     <DatePicker 
                     value="{jogador>/dataNascimento}"
-                    id="MostrarSeletor" 
+                    id="campoData" 
                     hideInput="true"
-                    change=".aoAlterar"
+                    change=".validarCampos"
                     valueFormat="yyyy-MM-ddTHH:mm:ss.mmm"
                     displayFormat="dd/MM/yyyy"
-                    placeholder="{i18n>Cadastro.BotaoData}"
-                    maxDate=""/>
+                    required="true"
+                     
+                    placeholder="{i18n>Cadastro.BotaoData}"/>
                     
                 </form:content>
             </form:SimpleForm>

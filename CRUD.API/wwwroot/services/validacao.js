@@ -6,7 +6,7 @@ sap.ui.define([], function() {
     return {
         validaEmail: function(email){
 
-            let regex = /\S+@\S+\.\S+/;
+            const regex = /\S+@\S+\.\S+/;
         
             if(email.length === 0){
                 return false
@@ -19,16 +19,28 @@ sap.ui.define([], function() {
         },
         validaCamposDeTexto: function(texto){
         
-            let regex = new RegExp("^[a-zA-Z\u00C0-\u017F´]+$")
+            const regex = new RegExp("^[a-zA-Z\u00C0-\u017F´]+$")
             if(texto.length === 0){
-                return "O campo não pode ser vazio!"
+               return false;
             }else if(regex.test(texto)){
-                return "Digite apenas uma palavra, sem numeros e sem caracteres especiais"
+                return false;
             }
+            return true;
         },
-        teste: function(){
-            this.getView().
+        validaElo(elo){
+            const regex = new RegExp('^[0-8]+$');
+
+            if(regex.test(elo)){
+                return false;
+            }
+            return true;
+        },
+        validaDataNascimento(data){  
+            let dataConvertida = new Date(data)
+            if(dataConvertida != "Invalid Date" && dataConvertida < new Date()) {
+                return false;
+            }
+            return true;
         }
-        
     }
 });
