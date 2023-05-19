@@ -29,7 +29,7 @@ xmlns="sap.m" >
                     <Label design="Bold"  text="{i18n>colunaElo}"/>
                     <Select change=".validarCampos" required="true" id="campoElo" selectedKey="{jogador>/elo}">
                         <items>
-                            <core:Item text="" key="" />
+                            
                             <core:Item text="Ferro" key="0" />
                             <core:Item text="Bronze" key="1" />
                             <core:Item text="Prata" key="2" />
@@ -54,7 +54,7 @@ xmlns="sap.m" >
                     value="{jogador>/dataNascimento}"
                     id="campoData" 
                     hideInput="true"
-                    change=".validarCampos"
+                    change=".validarSelect"
                     valueFormat="yyyy-MM-ddTHH:mm:ss.mmm"
                     displayFormat="dd/MM/yyyy"
                     required="true"

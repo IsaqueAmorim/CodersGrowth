@@ -5,4 +5,4 @@
 **/Properties/
 **/obj/
 **/node_modules/
-
+**/.vscode/

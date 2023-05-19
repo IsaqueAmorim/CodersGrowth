@@ -12,7 +12,7 @@ sap.ui.define([
     const sobrenomeInputId = "campoSobrenome";
     const apelidoInputId = "campoApelido";
     const emailInputId = "campoEmail";
-    const eloSeletorId = "campoElo"
+    const eloSeletorId = "campoElo";
     const dataSeletor = "campoData"
     const botaoSalvarId = "BotaoSalvar"
 
@@ -20,10 +20,11 @@ sap.ui.define([
     const i18n_SobrenomeErro = "Cadastro.Mensagem.Erro.Sobrenome";
     const i18n_EmailErro = "Cadastro.Mensagem.Erro.Email";
     const i18n_ApelidoErro = "Cadastro.Mensagem.Erro.Apelido";
-    const i18n_EloErro = "Cadastro.Mensagem.Erro.Elo"
-    const i18n_DataErro = "Cadastro.Mensagem.Erro.Data"
-
-
+    const i18n_EloErro = "Cadastro.Mensagem.Erro.Elo";
+    const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
+    const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
+    
+    let validado = false;
     
 
     return Controller.extend("sap.ui.api.jogadores.controller.Cadastro",{
@@ -56,22 +57,27 @@ sap.ui.define([
             .then(resposta => {
                 
                 if(resposta.status === 201){
-                   this.mostrarCaixaDeMensagem("Cadastro.MensagemSucesso")
+                   this.mostrarCaixaDeMensagem(i18n_CadastroSucesso,[MensagemDeTela.Action.OK],MensagemDeTela.success,true)
                    
+                }else if(resposta.status === 400){
+                    this.mostrarCaixaDeMensagem(i18n_CadastroExistente,[MensagemDeTela.Action.OK],MensagemDeTela.error,false)
                 }
             });
         },
-        mostrarCaixaDeMensagem: function(i18nMensagem){  
+        mostrarCaixaDeMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
             let pacoteTraducoes = 
             this.getOwnerComponent()
             .getModel("i18n")
             .getResourceBundle()
             .getText(i18nMensagem);
 
-            MensagemDeTela.success(pacoteTraducoes,{
-                actions: [MensagemDeTela.Action.OK],
-                onClose : () => {                 
-                   this.aoClicarVoltar();
+            TipoMensagem(pacoteTraducoes,{
+                actions: Acao,
+                onClose : () => {       
+                    if(redirecionar === true)   {
+                        
+                        this.aoClicarVoltar();
+                    }       
                 }
             });
         },
@@ -158,47 +164,24 @@ sap.ui.define([
             let botaoSalvar = this.obterCampo(botaoSalvarId);
 
            //Validando Nome
-            let validacaoNome = this.exibirErroInput(
-                nome,
-                this.obterTexto(i18n_NomeErro),
-                Validacao.validaCamposDeTexto(nome.getValue()));
+            let validacaoNome = this.exibirErroInput(nome,this.obterTexto(i18n_NomeErro),Validacao.validaCamposDeTexto(nome.getValue()));
 
             //Validando Sobrenome
-            let validacaoSobrenome = this.exibirErroInput(
-                sobrenome,
-                this.obterTexto(i18n_SobrenomeErro),
-                Validacao.validaCamposDeTexto(sobrenome.getValue()));
+            let validacaoSobrenome = this.exibirErroInput(sobrenome,this.obterTexto(i18n_SobrenomeErro),Validacao.validaCamposDeTexto(sobrenome.getValue()));
 
             //Validando Apelido
-            let validacaoApelido = this.exibirErroInput(apelido,
-                this.obterTexto(i18n_ApelidoErro),
-                Validacao.validaCamposDeTexto(apelido.getValue()));
+            let validacaoApelido = this.exibirErroInput(apelido,this.obterTexto(i18n_ApelidoErro),Validacao.validaCamposDeTexto(apelido.getValue()));
 
             //Validando Email
-            let validacaoEmail = this.exibirErroInput(
-                email,
-                this.obterTexto(i18n_EmailErro),
-                Validacao.validaEmail(email.getValue()));
+            let validacaoEmail = this.exibirErroInput(email,this.obterTexto(i18n_EmailErro),Validacao.validaEmail(email.getValue()));
 
             //Validando Elo
-            let validacaoElo = this.exibirErroInput(
-                elo,
-                this.obterTexto(i18n_EloErro),
-                Validacao.validaElo(elo.getSelectedKey()));
+            let validacaoElo = this.exibirErroInput(elo,this.obterTexto(i18n_EloErro),Validacao.validaElo(elo.getSelectedKey()));
 
             //Validando Data
-            let validacaoData = this.exibirErroInput(dataNascimento,
-            this.obterTexto(i18n_DataErro),
-            Validacao.validaDataNascimento(dataNascimento.getValue()));
+            let validacaoData = this.exibirErroInput(dataNascimento,this.obterTexto(i18n_DataErro),Validacao.validaDataNascimento(dataNascimento.getValue()));
             
-            if(
-                validacaoNome && 
-                validacaoSobrenome && 
-                validacaoApelido && 
-                validacaoElo && 
-                validacaoEmail &&
-                validacaoData
-            ){
+            if( validacaoNome && validacaoSobrenome && validacaoApelido && validacaoElo && validacaoEmail &&validacaoData){
                 botaoSalvar.setEnabled(true);
             }else{
                 botaoSalvar.setEnabled(false);
