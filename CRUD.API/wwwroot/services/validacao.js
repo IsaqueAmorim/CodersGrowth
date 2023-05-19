@@ -6,7 +6,7 @@ sap.ui.define([], function() {
     return {
         validaEmail: function(email){
 
-            const regex = /\S+@\S+\.\S+/;
+            const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
         
             if(email.length === 0){
                 return false

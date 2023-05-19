@@ -23,6 +23,7 @@ sap.ui.define([
     const i18n_EloErro = "Cadastro.Mensagem.Erro.Elo";
     const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
     const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
+    const i18n_DataErro = "Cadastro.Mensagem.Erro.Data";
     
     let validado = false;
     
