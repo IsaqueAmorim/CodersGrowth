@@ -1,9 +1,48 @@
 /* ================================================
 ============ SERVIÇO DE VALIDAÇÕES ===============*/
-sap.ui.define([], function() {
+sap.ui.define([
+    'sap/ui/core/library',
+], function(Library) {
     'use strict';
+
+    const i18n_NomeErro = "Cadastro.Mensagem.Erro.Nome";
+    const i18n_SobrenomeErro = "Cadastro.Mensagem.Erro.Sobrenome";
+    const i18n_EmailErro = "Cadastro.Mensagem.Erro.Email";
+    const i18n_ApelidoErro = "Cadastro.Mensagem.Erro.Apelido";
+    const i18n_EloErro = "Cadastro.Mensagem.Erro.Elo";
+    const i18n_DataErro = "Cadastro.Mensagem.Erro.Data";
+
+    let i18nLocal;
+   
     
     return {
+        
+        validarCampos: function(array){
+
+            let validado = [];
+            array.forEach(campo => {
+                
+                
+
+                if(this.validarUnidade(campo)){
+
+                    campo.input.setValueStateText(i18nLocal.getText(campo.erro));
+                    campo.input.setValueState(Library.ValueState.Error);
+                    validado.push(false);
+                }else{
+                    campo.input.setValueState(Library.ValueState.None);
+                    validado.push(true);
+                }           
+                
+            });
+           
+            if(validado.includes(false)){ 
+                return false;
+            }else{
+                return true;
+            }
+            
+        },
         validaEmail: function(email){
 
             const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
@@ -41,6 +80,39 @@ sap.ui.define([], function() {
                 return false;
             }
             return true;
+        },
+        validarUnidade: function(campo){
+            
+            switch (campo.tipo) {
+
+                case this.Tipos.TEXTO:
+                    return this.validaCamposDeTexto(campo.input.getValue());
+                case this.Tipos.EMAIL:
+                    return this.validaEmail(campo.input.getValue());
+                case this.Tipos.ELO:
+                    return this.validaElo(campo.input.getSelectedKey());
+                case this.Tipos.NASCIMENTO:
+                return this.validaDataNascimento(campo.input.getValue());
+                    
+            }
+        },
+        obterI18n: function(i18n){
+            i18nLocal = i18n
+            
+        },
+        Tipos:{
+            TEXTO : 0,
+            EMAIL: 1,
+            ELO:2,
+            NASCIMENTO:3
+        },
+        Erro:{
+            NOME :i18n_NomeErro,
+            SOBRENOME: i18n_SobrenomeErro,
+            APELIDO:i18n_ApelidoErro,
+            EMAIL:i18n_EmailErro,
+            NASCIMENTO:i18n_DataErro,
+            ELO : i18n_EloErro
         }
     }
 });

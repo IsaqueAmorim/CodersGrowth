@@ -19,15 +19,15 @@ xmlns="sap.m" >
 
                     
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaNome}"/>
-                    <Input id="campoNome"  liveChange=".validarCampos" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
+                    <Input id="campoNome"  liveChange=".executarValidacao" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaSobrenome}"/>
-                    <Input id="campoSobrenome" liveChange=".validarCampos" value="{jogador>/sobrenome}" type="Text" maxLength="40" required="true"/>
+                    <Input id="campoSobrenome" liveChange=".executarValidacao" value="{jogador>/sobrenome}" type="Text" maxLength="40" required="true"/>
                     <Label  design="Bold"  text="{i18n>colunaApelido}"/>
-                    <Input id="campoApelido" liveChange=".validarCampos" value="{jogador>/apelido}" type="Email" maxLength="256" required="true"/>
+                    <Input id="campoApelido" liveChange=".executarValidacao" value="{jogador>/apelido}" type="Email" maxLength="256" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaEmail}"/>
-                    <Input id="campoEmail" liveChange=".validarCampos" value="{jogador>/email}" type="Email" maxLength="256" required="true"/>
+                    <Input id="campoEmail" liveChange=".executarValidacao" value="{jogador>/email}" type="Email" maxLength="256" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaElo}"/>
-                    <Select change=".validarCampos" required="true" id="campoElo" selectedKey="{jogador>/elo}">
+                    <Select change=".executarValidacao" required="true" id="campoElo" selectedKey="{jogador>/elo}">
                         <items>
                             
                             <core:Item text="Ferro" key="0" />

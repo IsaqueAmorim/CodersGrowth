@@ -16,23 +16,18 @@ sap.ui.define([
     const dataSeletor = "campoData"
     const botaoSalvarId = "BotaoSalvar"
 
-    const i18n_NomeErro = "Cadastro.Mensagem.Erro.Nome";
-    const i18n_SobrenomeErro = "Cadastro.Mensagem.Erro.Sobrenome";
-    const i18n_EmailErro = "Cadastro.Mensagem.Erro.Email";
-    const i18n_ApelidoErro = "Cadastro.Mensagem.Erro.Apelido";
-    const i18n_EloErro = "Cadastro.Mensagem.Erro.Elo";
     const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
     const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
-    const i18n_DataErro = "Cadastro.Mensagem.Erro.Data";
-    
-    let validado = false;
-    
 
     return Controller.extend("sap.ui.api.jogadores.controller.Cadastro",{
         
         onInit: function() {
             let JogadorModelo = new JSONModel({});
             this.getView().setModel(JogadorModelo,"jogador");
+
+            const i18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+           
+            Validacao.obterI18n(i18n)
 
             var rota = this.getOwnerComponent().getRouter();
            
@@ -155,34 +150,12 @@ sap.ui.define([
             inputData?.setMaxDate(new Date());
             inputData?.setMinDate(new Date(1950,1,1))
         },
-        validarCampos: function () {
-            let nome = this.obterCampo(nomeIdInputId);
-            let sobrenome = this.obterCampo(sobrenomeInputId);
-            let apelido = this.obterCampo(apelidoInputId);
-            let email = this.obterCampo(emailInputId);
-            let elo = this.obterCampo(eloSeletorId);
-            let dataNascimento = this.obterCampo(dataSeletor);
+        executarValidacao: function () {
+       
             let botaoSalvar = this.obterCampo(botaoSalvarId);
+            const inputs = this.obterInputsDaTela();
 
-           //Validando Nome
-            let validacaoNome = this.exibirErroInput(nome,this.obterTexto(i18n_NomeErro),Validacao.validaCamposDeTexto(nome.getValue()));
-
-            //Validando Sobrenome
-            let validacaoSobrenome = this.exibirErroInput(sobrenome,this.obterTexto(i18n_SobrenomeErro),Validacao.validaCamposDeTexto(sobrenome.getValue()));
-
-            //Validando Apelido
-            let validacaoApelido = this.exibirErroInput(apelido,this.obterTexto(i18n_ApelidoErro),Validacao.validaCamposDeTexto(apelido.getValue()));
-
-            //Validando Email
-            let validacaoEmail = this.exibirErroInput(email,this.obterTexto(i18n_EmailErro),Validacao.validaEmail(email.getValue()));
-
-            //Validando Elo
-            let validacaoElo = this.exibirErroInput(elo,this.obterTexto(i18n_EloErro),Validacao.validaElo(elo.getSelectedKey()));
-
-            //Validando Data
-            let validacaoData = this.exibirErroInput(dataNascimento,this.obterTexto(i18n_DataErro),Validacao.validaDataNascimento(dataNascimento.getValue()));
-            
-            if( validacaoNome && validacaoSobrenome && validacaoApelido && validacaoElo && validacaoEmail &&validacaoData){
+            if(Validacao.validarCampos(inputs)){
                 botaoSalvar.setEnabled(true);
             }else{
                 botaoSalvar.setEnabled(false);
@@ -191,16 +164,6 @@ sap.ui.define([
         },
         obterCampo: function (idCampo) {
             return this.getView().byId(idCampo);
-        },
-        exibirErroInput: function (campo,mensagemErro,bool) {
-            if(bool){
-                campo.setValueStateText(mensagemErro);
-                campo.setValueState(Library.ValueState.Error);
-                return false;
-            }else{
-                campo.setValueState(Library.ValueState.None);
-                return true;
-            }
         },
         obterTexto: function(i18nMensagem) {
             
@@ -225,6 +188,48 @@ sap.ui.define([
             dataNascimento.setValueState(Library.ValueState.None);
            
 
+        },
+        obterInputsDaTela: function(){
+            let nome = this.obterCampo(nomeIdInputId);
+            let sobrenome = this.obterCampo(sobrenomeInputId);
+            let apelido = this.obterCampo(apelidoInputId);
+            let email = this.obterCampo(emailInputId);
+            let elo = this.obterCampo(eloSeletorId);
+            let dataNascimento = this.obterCampo(dataSeletor);
+            
+
+            return [
+                {
+                    input: nome,
+                    tipo: Validacao.Tipos.TEXTO,
+                    erro: Validacao.Erro.NOME
+                },
+                {
+                    input: sobrenome,
+                    tipo: Validacao.Tipos.TEXTO,
+                    erro: Validacao.Erro.SOBRENOME
+                },
+                {
+                    input: apelido,
+                    tipo: Validacao.Tipos.TEXTO,
+                    erro: Validacao.Erro.APELIDO
+                },
+                {
+                    input: email,
+                    tipo: Validacao.Tipos.EMAIL,
+                    erro: Validacao.Erro.EMAIL
+                },
+                {
+                    input: elo,
+                    tipo: Validacao.Tipos.ELO,
+                    erro: Validacao.Erro.ELO
+                },
+                {
+                    input: dataNascimento,
+                    tipo: Validacao.Tipos.NASCIMENTO,
+                    erro: Validacao.Erro.NASCIMENTO
+                }   
+            ]
         }
     });
 });
