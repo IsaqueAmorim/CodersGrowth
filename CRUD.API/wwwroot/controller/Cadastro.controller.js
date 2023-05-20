@@ -1,23 +1,43 @@
-sap.ui.define([
+    sap.ui.define([
   "sap/ui/core/mvc/Controller",
   "sap/ui/model/json/JSONModel",
   "sap/m/MessageBox",
   "sap/ui/core/routing/History",
   "../services/validacao",
   'sap/ui/core/library',
-], function(Controller,JSONModel,MensagemDeTela,Historico, Validacao,Library) {
+  "../repositorios/Repositorio"
+], function(Controller,JSONModel,MensagemDeTela,Historico, Validacao,Library,Repo) {
     'use strict';
 
-    const nomeIdInputId = "campoNome";
+    // ======== CAMPOS ============
+    const nomeInputId = "campoNome";
     const sobrenomeInputId = "campoSobrenome";
     const apelidoInputId = "campoApelido";
     const emailInputId = "campoEmail";
     const eloSeletorId = "campoElo";
     const dataSeletor = "campoData"
+    const dataBotao = "botaoData"
     const botaoSalvarId = "BotaoSalvar"
 
+    // ============ TRADUÇÕES ============
     const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
     const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
+    const i18n_MensagemConfirmarCancelar = "Cadastro.MensagemCancelar"
+
+    // ============= ROTAS ==============
+    const rotaHome = "home";
+    const rotaEdicao = "edicao";
+    const rotaDetalhes = "detalhes";
+    const rotaCadastro = "cadastro";
+
+    // =============== CÓDIGOS ===========
+    const codigoOK = 200;
+    const codigoNoContent = 204;
+    const codigoFalhaNaRequisicao = 400;
+    const codigoCriado = 201;
+
+    let operacao;
+    let idJogador;
 
     return Controller.extend("sap.ui.api.jogadores.controller.Cadastro",{
         
@@ -29,36 +49,68 @@ sap.ui.define([
            
             Validacao.obterI18n(i18n)
 
-            var rota = this.getOwnerComponent().getRouter();
+            let rota = this.getOwnerComponent().getRouter();
            
             rota    
-                .getRoute("cadastro")
-                .attachMatched(this.aoCoincidirRotas, this);
+                .getRoute(rotaCadastro)
+                .attachMatched(this.aoCoincidirRotaCadastro, this);
+
+            rota    
+            .getRoute(rotaEdicao)
+            .attachMatched(this.aoCoincidirRotaEdicao, this)
+
         },
         abrirSeletorData: function(Evento){
-            this.obterCampo(dataSeletor).openBy(Evento.getSource().getDomRef());
-        },
+            this._obterCampo(dataSeletor).openBy(Evento.getSource().getDomRef());
+            },
         aoAlterar: function(Evento){
            let data = Evento.getParameter("value")
-           this.obterCampo("BotaoData").data("text", data);
+           this._obterCampo(dataBotao).data("text", data);
         },
-        aoClicarSalvar: function(Event){
-           
-            let json = this.criarModelo();
+        aoClicarSalvar: async function(){
 
-            fetch("https://localhost:7139/v1/jogadores",
-            {method:'POST',
-            headers: {"Content-Type": "application/json"},
-            body:JSON.stringify(json)})
-            .then(resposta => {
+            if(operacao == this.Operacao.CADASTRAR){
+                let json = this.criarModelo();
+
+                debugger
+                let resposta = await Repo.criar(json);
+
+                if(resposta === codigoCriado){
+
+                    this.mostrarCaixaDeMensagem(
+
+                        i18n_CadastroSucesso,
+                        [MensagemDeTela.Action.OK],
+                        MensagemDeTela.success,true)
+                    
+                    }else{
+
+                        this.mostrarCaixaDeMensagem(
+
+                            i18n_CadastroExistente,
+                            [MensagemDeTela.Action.OK],
+                            MensagemDeTela.error,false)
+                    }
+
+            }else if(operacao == this.Operacao.EDITAR){
+                let jogadorAtualizado = this.criarModelo();
                 
-                if(resposta.status === 201){
-                   this.mostrarCaixaDeMensagem(i18n_CadastroSucesso,[MensagemDeTela.Action.OK],MensagemDeTela.success,true)
-                   
-                }else if(resposta.status === 400){
-                    this.mostrarCaixaDeMensagem(i18n_CadastroExistente,[MensagemDeTela.Action.OK],MensagemDeTela.error,false)
+                const resposta = await Repo.atualizar(jogadorAtualizado,idJogador);
+
+                if(resposta === codigoOK){
+                    this.mostrarCaixaDeMensagem(
+                        i18n_CadastroSucesso,
+                        [MensagemDeTela.Action.OK],
+                        MensagemDeTela.success,true)
+            
+                }else{
+                    this.mostrarCaixaDeMensagem(
+                    i18n_CadastroExistente,
+                    [MensagemDeTela.Action.OK],
+                    MensagemDeTela.error,false)
                 }
-            });
+            }
+            
         },
         mostrarCaixaDeMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
             let pacoteTraducoes = 
@@ -72,17 +124,30 @@ sap.ui.define([
                 onClose : () => {       
                     if(redirecionar === true)   {
                         
-                        this.aoClicarVoltar();
+                        let rota = this.getOwnerComponent().getRouter();
+                        rota.navTo(rotaHome);
                     }       
                 }
             });
         },
-        aoCoincidirRotas: function(){
+        aoCoincidirRotaCadastro: function(){
 
             this.limparCampos();
             this.limitarData();
-            this.limparValidacao();
-            this.obterCampo(botaoSalvarId).setEnabled(false);
+            this._limparValidacao();
+            this._obterCampo(botaoSalvarId).setEnabled(false);
+            operacao = this.Operacao.CADASTRAR;
+            
+        },
+        aoCoincidirRotaEdicao: async function (evento){
+            
+            var id = evento.getParameter("arguments").id;
+            let dadosJogador = await this.obterDados(id);     
+            this.preencherFormulario(dadosJogador);
+            operacao = this.Operacao.EDITAR;
+            idJogador = id;
+            this.definirComoEditavel();
+
             
         },
         aoClicarVoltar: function(){
@@ -91,7 +156,7 @@ sap.ui.define([
 
             if(paginaAnterior == undefined){
                 let rota = this.getOwnerComponent().getRouter();
-                rota.navTo("home");
+                rota.navTo(rotaHome);
             }else{
                
                 window.history.go(-1);
@@ -114,13 +179,9 @@ sap.ui.define([
         },
         aoClicarCancelar: function() {
 
-            let pacoteTraducoes = 
-            this.getOwnerComponent()
-            .getModel("i18n")
-            .getResourceBundle()
-            .getText("Cadastro.MensagemCancelar");
+            const mensagem = this._obterTraducao(i18n_MensagemConfirmarCancelar);
 
-            MensagemDeTela.alert(pacoteTraducoes, {
+            MensagemDeTela.alert(mensagem, {
                 actions :[MensagemDeTela.Action.YES,MensagemDeTela.Action.NO],
                 onClose : (acao) => {
                     if(acao == MensagemDeTela.Action.YES){
@@ -132,28 +193,24 @@ sap.ui.define([
             
         },
         limparCampos: function() {
-            var nome = this.byId(nomeIdInputId);
-            var sobrenome = this.byId(sobrenomeInputId);
-            var apelido = this.byId(apelidoInputId);
-            var email = this.byId(emailInputId);
-            var elo = this.byId(eloSeletorId);
-            var dataNascimento = this.byId(dataSeletor);
-            nome?.setValue("");
-            sobrenome?.setValue("");
-            apelido?.setValue("");
-            email?.setValue("");
-            dataNascimento?.setValue("");
-            elo?.setSelectedKey("");
+            
+            const campo = this.obterCampos();
+            campo.nome?.setValue("");
+            campo.sobrenome?.setValue("");
+            campo.apelido?.setValue("");
+            campo.email?.setValue("");
+            campo.dataNascimento?.setValue("");
+            campo.elo?.setSelectedKey("");
         },
         limitarData: function() {
-            let inputData = this.obterCampo(dataSeletor)
+            let inputData = this._obterCampo(dataSeletor)
             inputData?.setMaxDate(new Date());
             inputData?.setMinDate(new Date(1950,1,1))
         },
         executarValidacao: function () {
        
-            let botaoSalvar = this.obterCampo(botaoSalvarId);
-            const inputs = this.obterInputsDaTela();
+            let botaoSalvar = this._obterCampo(botaoSalvarId);
+            const inputs = this._definirDadosParaValidar();
 
             if(Validacao.validarCampos(inputs)){
                 botaoSalvar.setEnabled(true);
@@ -162,74 +219,115 @@ sap.ui.define([
             }
 
         },
-        obterCampo: function (idCampo) {
+        _obterCampo: function (idCampo) {
             return this.getView().byId(idCampo);
         },
-        obterTexto: function(i18nMensagem) {
+        _obterTraducao: function(i18nMensagem) {
             
             return this.getOwnerComponent()
             .getModel("i18n")
             .getResourceBundle()
             .getText(i18nMensagem);
         },
-        limparValidacao: function () {
-            let nome = this.obterCampo(nomeIdInputId);
-            let sobrenome = this.obterCampo(sobrenomeInputId);
-            let apelido = this.obterCampo(apelidoInputId);
-            let email = this.obterCampo(emailInputId);
-            let elo = this.obterCampo(eloSeletorId);
-            let dataNascimento = this.obterCampo(dataSeletor);
+        _limparValidacao: function () {
+           
+            const campo = this.obterCampos();
        
-            nome.setValueState(Library.ValueState.None);
-            sobrenome.setValueState(Library.ValueState.None);
-            apelido.setValueState(Library.ValueState.None);
-            email.setValueState(Library.ValueState.None);
-            elo.setValueState(Library.ValueState.None);
-            dataNascimento.setValueState(Library.ValueState.None);
+            campo.nome.setValueState(Library.ValueState.None);
+            campo.sobrenome.setValueState(Library.ValueState.None);
+            campo.apelido.setValueState(Library.ValueState.None);
+            campo.email.setValueState(Library.ValueState.None);
+            campo.elo.setValueState(Library.ValueState.None);
+            campo.dataNascimento.setValueState(Library.ValueState.None);
            
 
         },
-        obterInputsDaTela: function(){
-            let nome = this.obterCampo(nomeIdInputId);
-            let sobrenome = this.obterCampo(sobrenomeInputId);
-            let apelido = this.obterCampo(apelidoInputId);
-            let email = this.obterCampo(emailInputId);
-            let elo = this.obterCampo(eloSeletorId);
-            let dataNascimento = this.obterCampo(dataSeletor);
+        _definirDadosParaValidar: function(){
+            let data = this.obterCampos();
             
 
             return [
                 {
-                    input: nome,
+                    input: data.nome,
                     tipo: Validacao.Tipos.TEXTO,
                     erro: Validacao.Erro.NOME
                 },
                 {
-                    input: sobrenome,
+                    input: data.sobrenome,
                     tipo: Validacao.Tipos.TEXTO,
                     erro: Validacao.Erro.SOBRENOME
                 },
                 {
-                    input: apelido,
+                    input: data.apelido,
                     tipo: Validacao.Tipos.TEXTO,
                     erro: Validacao.Erro.APELIDO
                 },
                 {
-                    input: email,
+                    input: data.email,
                     tipo: Validacao.Tipos.EMAIL,
                     erro: Validacao.Erro.EMAIL
                 },
                 {
-                    input: elo,
+                    input: data.elo,
                     tipo: Validacao.Tipos.ELO,
                     erro: Validacao.Erro.ELO
                 },
                 {
-                    input: dataNascimento,
+                    input: data.dataNascimento,
                     tipo: Validacao.Tipos.NASCIMENTO,
                     erro: Validacao.Erro.NASCIMENTO
                 }   
             ]
+        },
+        obterDados: async function(id){
+
+            const resposta = await Repo.obterPorId(id);
+		    return resposta;
+                
+        },
+        preencherFormulario: function(dadosJogador){
+            
+            let dados = this.obterCampos();
+            
+            dados.nome.setValue(dadosJogador.nome);
+            dados.sobrenome.setValue(dadosJogador.sobrenome);
+            dados.apelido.setValue(dadosJogador.apelido);
+            dados.email.setValue(dadosJogador.email);
+            dados.elo.setSelectedKey(dadosJogador.elo.toString());
+            dados.dataNascimento.setValue(dadosJogador.dataNascimento);
+
+        },
+        definirComoEditavel: function(){
+            let inputs = this.obterCampos();
+
+            inputs.nome.setEnabled(true);
+            inputs.sobrenome.setEnabled(true);
+            inputs.email.setEnabled(true);
+            inputs.apelido.setEnabled(true);
+            inputs.elo.setEnabled(true);
+            inputs.dataNascimento.setEnabled(true);
+        },
+        obterCampos: function(){
+            let nome = this._obterCampo(nomeInputId);
+            let sobrenome = this._obterCampo(sobrenomeInputId);
+            let apelido = this._obterCampo(apelidoInputId);
+            let email = this._obterCampo(emailInputId);
+            let elo = this._obterCampo(eloSeletorId);
+            let dataNascimento = this._obterCampo(dataSeletor);
+
+            return {
+                nome: nome,
+                sobrenome: sobrenome,
+                apelido: apelido,
+                email: email,
+                elo: elo,
+                dataNascimento: dataNascimento
+            }
+        },
+        Operacao:{
+            CADASTRAR:0,
+            EDITAR:1
         }
+
     });
 });

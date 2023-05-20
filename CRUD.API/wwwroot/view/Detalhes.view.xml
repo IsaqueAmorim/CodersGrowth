@@ -10,15 +10,15 @@ xmlns="sap.m"
             <ToolbarSpacer />
             <Title text="{i18n>Detalhes.titulo}" textAlign="Initial"></Title>
             <ToolbarSpacer />
-            <Button text="{i18n>page.Editar}" icon="sap-icon://edit" type="Attention"/>
-            <Button type="Negative" icon="sap-icon://delete" text="{i18n>page.Deletar}"/>
+            <Button press=".aoClicarEditar" text="{i18n>page.Editar}" icon="sap-icon://edit" type="Attention"/>
+            <Button press=".aoClicarDeletar" type="Negative" icon="sap-icon://delete" text="{i18n>page.Deletar}"/>
         </headerContent>
 
        <VBox >
             <form:SimpleForm class="" layout="ResponsiveLayout" editable="false" width="60%" >
                 <form:content  >
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaId}"/>
-                    <Input editable="false" value="{id}"/>
+                    <Input id="campoId" editable="false" value="{id}"/>
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaNome}"/>
                     <Input editable="false" value="{nome}"/>
                     <Label design="Bold" text="{i18n>colunaSobrenome}"/>

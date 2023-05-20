@@ -78,19 +78,21 @@ namespace CRUD.API.Controllers
             try
             {
                
-                _validacao.ValidaCriacaoJogadorModelo(jogador);
+                var jogadorDesatualizado = _repositorio.ObterJogadorPorId(id);
+                //_validacao.ValidaCriacaoJogadorModelo(jogador);
                 jogador.Id = id;
+                jogador.DataCriacao = jogadorDesatualizado.DataCriacao;
                  _repositorio.AtualizarJogador(jogador);
 
             }
             catch (Exception ex)
-            {
+            {   
                 
                 Console.WriteLine(ex);
                 return BadRequest();
             }
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -104,7 +106,7 @@ namespace CRUD.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok();
+            return NoContent();
         }
     }
 }

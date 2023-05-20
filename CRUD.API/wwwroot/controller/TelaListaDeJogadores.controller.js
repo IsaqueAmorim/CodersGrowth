@@ -4,11 +4,21 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/json/JSONModel",
- ], function (Controller,formatter,Filter,FilterOperator,JSONModel) {
+	"../repositorios/Repositorio"
+ ], function (Controller,formatter,Filter,FilterOperator,JSONModel,Repo) {
     "use strict";
+
+	// ======== ROTAS ==========
+	const rotaDetalhes = "detalhes";
+    const rotaEdicao = "edicao";
+    const rotaHome = "home";
+	const rotaCadastro = "cadastro";
+
+	const idLinha = "id";
+
     return Controller.extend("sap.ui.api.jogadores.controller.TelaListaDeJogadores", {
         formatter : formatter,
-        aoDigitar: function (oEvent) {
+        _aoDigitar: function (oEvent) {
 			
 			let filtro = [];
 			let buscar = oEvent.getParameter("query");
@@ -23,26 +33,31 @@ sap.ui.define([
 		},
 		onInit : function(){
 
-			this.obterDados();
-
+			this._obterDados();
+			let rota = this.getOwnerComponent().getRouter();
+           
+            rota    
+            .getRoute(rotaHome)
+            .attachMatched(this._aoCoincidirRota, this);
 
 		},
-		obterDados: function(){
+		_obterDados: async function(){
+			
+			const resposta = await Repo.obterTodos();
+			this.getView().setModel(new JSONModel({jogadores: resposta}));
 
-			let jsonModelJogador = new JSONModel();
-			fetch("https://localhost:7139/v1/jogadores/",{method: "GET"})
-				.then(response => response.json())
-				.then(response => jsonModelJogador.setData({jogadores : response}))
-			this.getView().setModel(jsonModelJogador);
 		},
 		aoClicarNaLinha : function (EventoDeClique){
 			let rota = this.getOwnerComponent().getRouter();
-			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty("id")
-			rota.navTo("detalhes", {id: idDaLinha});
+			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty(idLinha);
+			rota.navTo(rotaDetalhes, {id: idDaLinha});
 		},
 		aoClicarEmAdicionar: function(){
 			let rota = this.getOwnerComponent().getRouter();
-			rota.navTo("cadastro")
+			rota.navTo(rotaCadastro)
+		},
+		_aoCoincidirRota: function(){
+			this._obterDados();
 		}
     });
  });

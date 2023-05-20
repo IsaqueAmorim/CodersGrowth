@@ -8,7 +8,7 @@ namespace CRUD.DOMAIN.Constantes
 {
     public static class ConstantesConfig
     {
-        public const string BANCO_PADRAO = "ConexaoDB";
+        public const string BANCO_PADRAO = "ConexaoMeuPC";
         public const string BANCO_ALTERNATIVO = "ConexaoBD";
     }
 }
