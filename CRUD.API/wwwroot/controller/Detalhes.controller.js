@@ -33,14 +33,14 @@ sap.ui.define([
         formatter: Formatador,
         onInit: function() {
             var rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(rotaDetalhes).attachMatched(this.aoCoincidirRota, this);
+            rota.getRoute(rotaDetalhes).attachMatched(this._aoCoincidirRota, this);
         },
-        aoCoincidirRota: function (evento) {
+        _aoCoincidirRota: function (evento) {
             
             var id = evento.getParameter("arguments").id;
-            this.obterDados(id);
+            this._obterDados(id);
         },
-        obterDados: async function(id){
+        _obterDados: async function(id){
 
             const resposta = await Repo.obterPorId(id);
 		    this.getView().setModel(new JSONModel({jogador: resposta}));
@@ -65,19 +65,19 @@ sap.ui.define([
         },
         aoClicarDeletar: function (){
 
-            this.mostrarCaixaDeMensagem(
+            this._mostrarMensagem(
                 i18n_mensagemConfirmarDeletar,
                 [MessageBox.Action.YES,MessageBox.Action.NO],
                 MessageBox.warning
             )
         
         },
-        mostrarCaixaDeMensagem: async function(i18nMensagem,Acao,TipoMensagem){ 
+        _mostrarMensagem: async function(i18nMensagem,Acao,TipoMensagem){ 
             
             let rota = this.getOwnerComponent().getRouter();
             let idJogador = this.getView().byId(campoId).getValue();
             
-            TipoMensagem(this.obterTraducao(i18nMensagem),{
+            TipoMensagem(this._obterTraducao(i18nMensagem),{
                 actions: Acao,
                 
                 onClose :async  (acao) => {     
@@ -86,9 +86,9 @@ sap.ui.define([
 
                         const resposta = await Repo.deletar(idJogador)
 
-                        if(resposta == codigoOK){
+                        if(resposta == codigoNoContent){
 
-                            MessageBox.success(this.obterTraducao(i18n_mensagemDeletado),{
+                            MessageBox.success(this._obterTraducao(i18n_mensagemDeletado),{
                                 actions: [MessageBox.Action.OK],
                                 onClose: function(){
                                    rota.navTo(rotaHome)
@@ -96,7 +96,7 @@ sap.ui.define([
                             })
 
                         }else{
-                            MessageBox.error(this.obterTraducao(i18n_mensagemFalahaDeletar),{
+                            MessageBox.error(this._obterTraducao(i18n_mensagemFalahaDeletar),{
                                 actions: [MessageBox.Action.OK],
                                 onClose: function(){
                                    
@@ -107,7 +107,7 @@ sap.ui.define([
                 }   
             })                        
         },
-        obterTraducao: function(i18nMensagem){
+        _obterTraducao: function(i18nMensagem){
             let pacoteTraducoes = 
             this.getOwnerComponent()
             .getModel("i18n")

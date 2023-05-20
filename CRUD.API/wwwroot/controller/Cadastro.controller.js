@@ -53,11 +53,11 @@
            
             rota    
                 .getRoute(rotaCadastro)
-                .attachMatched(this.aoCoincidirRotaCadastro, this);
+                .attachMatched(this._aoCoincidirRotaCadastro, this);
 
             rota    
             .getRoute(rotaEdicao)
-            .attachMatched(this.aoCoincidirRotaEdicao, this)
+            .attachMatched(this._aoCoincidirRotaEdicao, this)
 
         },
         abrirSeletorData: function(Evento){
@@ -70,14 +70,14 @@
         aoClicarSalvar: async function(){
 
             if(operacao == this.Operacao.CADASTRAR){
-                let json = this.criarModelo();
+                let json = this._criarModelo();
 
                 debugger
                 let resposta = await Repo.criar(json);
 
                 if(resposta === codigoCriado){
 
-                    this.mostrarCaixaDeMensagem(
+                    this._mostrarMensagem(
 
                         i18n_CadastroSucesso,
                         [MensagemDeTela.Action.OK],
@@ -85,7 +85,7 @@
                     
                     }else{
 
-                        this.mostrarCaixaDeMensagem(
+                        this._mostrarMensagem(
 
                             i18n_CadastroExistente,
                             [MensagemDeTela.Action.OK],
@@ -93,18 +93,18 @@
                     }
 
             }else if(operacao == this.Operacao.EDITAR){
-                let jogadorAtualizado = this.criarModelo();
+                let jogadorAtualizado = this._criarModelo();
                 
                 const resposta = await Repo.atualizar(jogadorAtualizado,idJogador);
 
-                if(resposta === codigoOK){
-                    this.mostrarCaixaDeMensagem(
+                if(resposta === codigoNoContent){
+                    this._mostrarMensagem(
                         i18n_CadastroSucesso,
                         [MensagemDeTela.Action.OK],
                         MensagemDeTela.success,true)
             
                 }else{
-                    this.mostrarCaixaDeMensagem(
+                    this._mostrarMensagem(
                     i18n_CadastroExistente,
                     [MensagemDeTela.Action.OK],
                     MensagemDeTela.error,false)
@@ -112,7 +112,7 @@
             }
             
         },
-        mostrarCaixaDeMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
+        _mostrarMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
             let pacoteTraducoes = 
             this.getOwnerComponent()
             .getModel("i18n")
@@ -130,23 +130,23 @@
                 }
             });
         },
-        aoCoincidirRotaCadastro: function(){
+        _aoCoincidirRotaCadastro: function(){
 
-            this.limparCampos();
-            this.limitarData();
+            this._limparCampos();
+            this._limitarData();
             this._limparValidacao();
             this._obterCampo(botaoSalvarId).setEnabled(false);
             operacao = this.Operacao.CADASTRAR;
             
         },
-        aoCoincidirRotaEdicao: async function (evento){
+        _aoCoincidirRotaEdicao: async function (evento){
             
             var id = evento.getParameter("arguments").id;
-            let dadosJogador = await this.obterDados(id);     
-            this.preencherFormulario(dadosJogador);
+            let dadosJogador = await this._obterDados(id);     
+            this._preencherFormulario(dadosJogador);
             operacao = this.Operacao.EDITAR;
             idJogador = id;
-            this.definirComoEditavel();
+            
 
             
         },
@@ -162,7 +162,7 @@
                 window.history.go(-1);
             }
         },
-        criarModelo: function(){
+        _criarModelo: function(){
             let modelo = this.getView().getModel("jogador").getData();
             
             let json = {
@@ -192,9 +192,9 @@
 
             
         },
-        limparCampos: function() {
+        _limparCampos: function() {
             
-            const campo = this.obterCampos();
+            const campo = this._obterCampos();
             campo.nome?.setValue("");
             campo.sobrenome?.setValue("");
             campo.apelido?.setValue("");
@@ -202,7 +202,7 @@
             campo.dataNascimento?.setValue("");
             campo.elo?.setSelectedKey("");
         },
-        limitarData: function() {
+        _limitarData: function() {
             let inputData = this._obterCampo(dataSeletor)
             inputData?.setMaxDate(new Date());
             inputData?.setMinDate(new Date(1950,1,1))
@@ -231,7 +231,7 @@
         },
         _limparValidacao: function () {
            
-            const campo = this.obterCampos();
+            const campo = this._obterCampos();
        
             campo.nome.setValueState(Library.ValueState.None);
             campo.sobrenome.setValueState(Library.ValueState.None);
@@ -243,7 +243,7 @@
 
         },
         _definirDadosParaValidar: function(){
-            let data = this.obterCampos();
+            let data = this._obterCampos();
             
 
             return [
@@ -268,26 +268,26 @@
                     erro: Validacao.Erro.EMAIL
                 },
                 {
-                    input: data.elo,
-                    tipo: Validacao.Tipos.ELO,
-                    erro: Validacao.Erro.ELO
-                },
-                {
                     input: data.dataNascimento,
                     tipo: Validacao.Tipos.NASCIMENTO,
                     erro: Validacao.Erro.NASCIMENTO
-                }   
+                },
+                {
+                    input: data.elo,
+                    tipo: Validacao.Tipos.ELO,
+                    erro: Validacao.Erro.ELO
+                } 
             ]
         },
-        obterDados: async function(id){
+        _obterDados: async function(id){
 
             const resposta = await Repo.obterPorId(id);
 		    return resposta;
                 
         },
-        preencherFormulario: function(dadosJogador){
+        _preencherFormulario: function(dadosJogador){
             
-            let dados = this.obterCampos();
+            let dados = this._obterCampos();
             
             dados.nome.setValue(dadosJogador.nome);
             dados.sobrenome.setValue(dadosJogador.sobrenome);
@@ -297,17 +297,7 @@
             dados.dataNascimento.setValue(dadosJogador.dataNascimento);
 
         },
-        definirComoEditavel: function(){
-            let inputs = this.obterCampos();
-
-            inputs.nome.setEnabled(true);
-            inputs.sobrenome.setEnabled(true);
-            inputs.email.setEnabled(true);
-            inputs.apelido.setEnabled(true);
-            inputs.elo.setEnabled(true);
-            inputs.dataNascimento.setEnabled(true);
-        },
-        obterCampos: function(){
+        _obterCampos: function(){
             let nome = this._obterCampo(nomeInputId);
             let sobrenome = this._obterCampo(sobrenomeInputId);
             let apelido = this._obterCampo(apelidoInputId);
@@ -327,7 +317,6 @@
         Operacao:{
             CADASTRAR:0,
             EDITAR:1
-        }
-
+        },         
     });
 });

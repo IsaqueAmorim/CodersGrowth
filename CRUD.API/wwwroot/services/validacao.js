@@ -13,6 +13,7 @@ sap.ui.define([
     const i18n_DataErro = "Cadastro.Mensagem.Erro.Data";
 
     let i18nLocal;
+    
    
     
     return {
@@ -20,6 +21,7 @@ sap.ui.define([
         validarCampos: function(array){
 
             let validado = [];
+            
             array.forEach(campo => {
                 
                 
@@ -66,7 +68,7 @@ sap.ui.define([
             }
             return true;
         },
-        validaElo(elo){
+        _validaElo(elo){
             const regex = new RegExp('^[0-8]+$');
 
             if(regex.test(elo)){
@@ -91,10 +93,12 @@ sap.ui.define([
                     return this._validarEmail(campo.input.getValue());
                 case this.Tipos.NASCIMENTO:
                 return this._validarDataNascimento(campo.input.getValue());
+                case this.Tipos.ELO:
+                    return this._validaElo(campo.input.getSelectedKey());
                     
             }
         },
-        _obterI18n: function(i18n){
+        obterI18n: function(i18n){
             i18nLocal = i18n
             
         },

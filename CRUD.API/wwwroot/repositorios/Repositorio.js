@@ -88,7 +88,7 @@ sap.ui.define([], function() {
 
             const resposta = fetch(baseUrl+id,config).then(resposta => {
 
-                if(resposta.status === sucessoOk){
+                if(resposta.status === sucessoSemConteudo){
         
                     return resposta.status;
 
@@ -109,7 +109,7 @@ sap.ui.define([], function() {
 
             const resposta = await fetch(baseUrl+id,config).then(resposta => {
 
-                if(resposta.status ===  sucessoOk){
+                if(resposta.status ===  sucessoSemConteudo){
         
                     return resposta.status;
 

@@ -27,7 +27,7 @@ xmlns="sap.m" >
                     <Label design="Bold"  text="{i18n>colunaEmail}"/>
                     <Input id="campoEmail" liveChange=".executarValidacao" value="{jogador>/email}" type="Email" maxLength="256" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaElo}"/>
-                    <Select change=".executarValidacao" required="true" id="campoElo" selectedKey="{jogador>/elo}">
+                    <Select change="" forceSelection="true" required="true" id="campoElo" selectedKey="{jogador>/elo}">
                         <items>
                             
                             <core:Item text="Ferro" key="0" />
@@ -54,7 +54,7 @@ xmlns="sap.m" >
                     value="{jogador>/dataNascimento}"
                     id="campoData" 
                     hideInput="true"
-                    change=".validarSelect"
+                    change=".executarValidacao"
                     valueFormat="yyyy-MM-ddTHH:mm:ss.mmm"
                     displayFormat="dd/MM/yyyy"
                     required="true"
