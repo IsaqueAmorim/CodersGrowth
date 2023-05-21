@@ -24,6 +24,9 @@
     const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
     const i18n_MensagemConfirmarCancelar = "Cadastro.MensagemCancelar"
 
+    const i18n_MensagemSucessoEditar = "Cadastro.Mensagem.Sucesso.Editado";
+    const i18n_MensagemErroEditar = "Cadastro.Mensagem.Erro.Editar";
+
     // ============= ROTAS ==============
     const rotaHome = "home";
     const rotaEdicao = "edicao";
@@ -99,13 +102,13 @@
 
                 if(resposta === codigoNoContent){
                     this._mostrarMensagem(
-                        i18n_CadastroSucesso,
+                        i18n_MensagemSucessoEditar,
                         [MensagemDeTela.Action.OK],
                         MensagemDeTela.success,true)
             
                 }else{
                     this._mostrarMensagem(
-                    i18n_CadastroExistente,
+                    i18n_MensagemErroEditar,
                     [MensagemDeTela.Action.OK],
                     MensagemDeTela.error,false)
                 }
