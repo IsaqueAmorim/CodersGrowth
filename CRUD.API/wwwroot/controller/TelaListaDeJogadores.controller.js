@@ -8,7 +8,9 @@ sap.ui.define([
  ], function (Controller,formatter,Filter,FilterOperator,JSONModel,Repo) {
     "use strict";
 
-    return Controller.extend("sap.ui.api.jogadores.controller.TelaListaDeJogadores", {
+	const enderecoController = "sap.ui.api.jogadores.controller.TelaListaDeJogadores";
+
+    return Controller.extend(enderecoController, {
         formatter : formatter,
         _aoDigitar: function (oEvent) {
 
@@ -54,9 +56,7 @@ sap.ui.define([
 			let rota = this.getOwnerComponent().getRouter();
 			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty(idLinha);
 			rota.navTo(rotaDetalhes, {id: idDaLinha});
-    		
-    		
-			
+	
 		},
 		aoClicarEmAdicionar: function(){
 			const rotaCadastro = "cadastro";

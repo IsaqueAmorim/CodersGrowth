@@ -3,11 +3,10 @@ sap.ui.define([], function() {
 
     const baseUrl = "https://localhost:7139/v1/jogadores/"
 
-    // ======== STATUS DA REQUISIÇÃO ========
     const sucessoOk = 200;
     const sucessoSemConteudo = 204;
     const sucessoCriado = 201;
-    const erroNaRequisicao = 400;
+   
     
     
     return {

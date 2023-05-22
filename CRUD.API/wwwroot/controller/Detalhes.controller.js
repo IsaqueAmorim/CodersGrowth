@@ -2,42 +2,32 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "../model/formatter",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/routing/History",
+    "../controller/ControllerBase",
     "sap/m/MessageBox",
     "../repositorios/Repositorio"
     
-], function(Controller, Formatador,JSONModel,Historico,MessageBox,Repo) {
+], function(Controller, Formatador,JSONModel,ControllerBase,MessageBox,Repo) {
     'use strict';
-
-    const urlBase = "https://localhost:7139/v1/jogadores/";
-    // ========= ROTAS ============
-    const rotaDetalhes = "detalhes";
-    const rotaEdicao = "edicao";
+    
     const rotaHome = "home";
-
-    // ========= MENSAGENS DE TELA ===========
-    const i18n_mensagemDeletado = "Detalhes.Mensagem.Sucesso.Deletar";
-    const i18n_mensagemConfirmarDeletar = "Detalhes.Mensagem.Confirmar.Remover";
-    const i18n_mensagemFalahaDeletar = "Detalhes.Mensagem.Erro.Deletar";
-
-    // ========= CAMPOS ==========
     const campoId = "campoId";
 
-    // ====== CÓDIGOS DE RESPOSTA ======
-    const codigoOK = 200;
-    const codigoNoContent = 204;
-    const codigoFalhaNaRequisicao = 400;
-    
-    return Controller.extend("sap.ui.api.jogadores.controller.Detalhes",{
+ 
+    const enderecoController = "sap.ui.api.jogadores.controller.Detalhes";
+    return Controller.extend(enderecoController,{
 
         formatter: Formatador,
         onInit: function() {
+            const rotaDetalhes = "detalhes";
+
             var rota = this.getOwnerComponent().getRouter();
             rota.getRoute(rotaDetalhes).attachMatched(this._aoCoincidirRota, this);
         },
         _aoCoincidirRota: function (evento) {
             
-            var id = evento.getParameter("arguments").id;
+            const parametroArguments = "arguments";
+            
+            var id = evento.getParameter(parametroArguments).id;
             this._obterDados(id);
         },
         _obterDados: async function(id){
@@ -46,24 +36,20 @@ sap.ui.define([
 		    this.getView().setModel(new JSONModel({jogador: resposta}));
 		},
         aoClicarVoltar: function(){
-            let historico = Historico.getInstance();
-            let paginaAnterior = historico.getPreviousHash();
-
-            if(paginaAnterior == undefined){
-                let rota = this.getOwnerComponent().getRouter();
-                rota.navTo(rotaHome);
-            }else{
-               
-                window.history.go(-1);
-            }
+            
+            let rota = this.getOwnerComponent().getRouter();
+           ControllerBase.aoClicarVoltar(rota);
         },
         aoClicarEditar: function (){
+
+            const rotaEdicao = "edicao";
  
             let rota = this.getOwnerComponent().getRouter();
             let idJogador = this.getView().byId(campoId).getValue();
 			rota.navTo(rotaEdicao, {id: idJogador});
         },
         aoClicarDeletar: function (){
+            const i18n_mensagemConfirmarDeletar = "Detalhes.Mensagem.Confirmar.Remover";
 
             this._mostrarMensagem(
                 i18n_mensagemConfirmarDeletar,
@@ -73,6 +59,10 @@ sap.ui.define([
         
         },
         _mostrarMensagem: async function(i18nMensagem,Acao,TipoMensagem){ 
+
+            const i18n_mensagemDeletado = "Detalhes.Mensagem.Sucesso.Deletar";
+            const i18n_mensagemFalahaDeletar = "Detalhes.Mensagem.Erro.Deletar";
+            const codigoNoContent = 204;
             
             let rota = this.getOwnerComponent().getRouter();
             let idJogador = this.getView().byId(campoId).getValue();
@@ -108,9 +98,12 @@ sap.ui.define([
             })                        
         },
         _obterTraducao: function(i18nMensagem){
+
+            const i18n_ptBR = "i18n";
+
             let pacoteTraducoes = 
             this.getOwnerComponent()
-            .getModel("i18n")
+            .getModel(i18n_ptBR)
             .getResourceBundle()
             .getText(i18nMensagem);
 
