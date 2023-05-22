@@ -8,8 +8,6 @@ sap.ui.define([
  ], function (Controller,formatter,Filter,FilterOperator,JSONModel,Repo) {
     "use strict";
 
-	
-
     return Controller.extend("sap.ui.api.jogadores.controller.TelaListaDeJogadores", {
         formatter : formatter,
         _aoDigitar: function (oEvent) {
@@ -49,8 +47,10 @@ sap.ui.define([
 
 		},
 		aoClicarNaLinha : function (EventoDeClique){
+
 			const idLinha = "id";
 			const rotaDetalhes = "detalhes";
+
 			let rota = this.getOwnerComponent().getRouter();
 			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty(idLinha);
 			rota.navTo(rotaDetalhes, {id: idDaLinha});
