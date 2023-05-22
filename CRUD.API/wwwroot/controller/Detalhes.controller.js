@@ -36,7 +36,7 @@ sap.ui.define([
 		    this.getView().setModel(new JSONModel({jogador: resposta}));
 		},
         aoClicarVoltar: function(){
-            
+
             let rota = this.getOwnerComponent().getRouter();
            ControllerBase.aoClicarVoltar(rota);
         },
@@ -99,15 +99,7 @@ sap.ui.define([
         },
         _obterTraducao: function(i18nMensagem){
 
-            const i18n_ptBR = "i18n";
-
-            let pacoteTraducoes = 
-            this.getOwnerComponent()
-            .getModel(i18n_ptBR)
-            .getResourceBundle()
-            .getText(i18nMensagem);
-
-            return pacoteTraducoes;
+            return ControllerBase.obterTraducao(i18nMensagem);
 
             
 

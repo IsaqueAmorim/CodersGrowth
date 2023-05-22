@@ -2,26 +2,14 @@
   "sap/ui/core/mvc/Controller",
   "sap/ui/model/json/JSONModel",
   "sap/m/MessageBox",
-  "sap/ui/core/routing/History",
+  "../controller/ControllerBase",
   "../services/validacao",
   'sap/ui/core/library',
   "../repositorios/Repositorio"
-], function(Controller,JSONModel,MensagemDeTela,Historico, Validacao,Library,Repo) {
+], function(Controller,JSONModel,MensagemDeTela,ControllerBase, Validacao,Library,Repo) {
     'use strict';
 
-   
-
-    
     const dataSeletor = "campoData"
-    
-
-    const rotaHome = "home";
-    const rotaEdicao = "edicao";
-    const rotaDetalhes = "detalhes";
-    const rotaCadastro = "cadastro";
-    const codigoNoContent = 204;
-    const codigoCriado = 201;
-
     let operacao;
     let idJogador;
 
@@ -30,10 +18,13 @@
     return Controller.extend(enderecoController,{
         
         onInit: function() {
-            const nomeJogadorModel = "jogador"
-            const arquivoI18n = "i18n"
-            let JogadorModelo = new JSONModel({});
 
+            const nomeJogadorModel = "jogador";
+            const arquivoI18n = "i18n";
+            const rotaEdicao = "edicao";
+            const rotaCadastro = "cadastro";
+
+            let JogadorModelo = new JSONModel({});
             this.getView().setModel(JogadorModelo,nomeJogadorModel);
 
             const i18n = this.getOwnerComponent().getModel(arquivoI18n).getResourceBundle();
@@ -66,6 +57,7 @@
             if(operacao == this.Operacao.CADASTRAR){
                 const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
                 const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
+                const codigoCriado = 201;
                 
                 let json = this._criarModelo();
 
@@ -91,6 +83,7 @@
 
                 const i18n_MensagemSucessoEditar = "Cadastro.Mensagem.Sucesso.Editado";
                 const i18n_MensagemErroEditar = "Cadastro.Mensagem.Erro.Editar";
+                const codigoNoContent = 204;
                 
                 let jogadorAtualizado = this._criarModelo();
                 const resposta = await Repo.atualizar(jogadorAtualizado,idJogador);
@@ -111,6 +104,7 @@
             
         },
         _mostrarMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
+            const rotaHome = "home";
 
             let pacoteTraducoes = _obterTraducaoTraducao(i18nMensagem);
 
@@ -120,6 +114,7 @@
                     if(redirecionar === true)   {
                         
                         let rota = this.getOwnerComponent().getRouter();
+                        //Trocar para voltar a detalhes!
                         rota.navTo(rotaHome);
                     }       
                 }
@@ -145,20 +140,11 @@
             operacao = this.Operacao.EDITAR;
             idJogador = id;
             
-
-            
         },
         aoClicarVoltar: function(){
-            let historico = Historico.getInstance();
-            let paginaAnterior = historico.getPreviousHash();
 
-            if(paginaAnterior == undefined){
-                let rota = this.getOwnerComponent().getRouter();
-                rota.navTo(rotaHome);
-            }else{
-               
-                window.history.go(-1);
-            }
+            const rota = this.getOwnerComponent().getRouter();
+            ControllerBase.navegarParaPaginaAnterior(rota);
         },
         _criarModelo: function(){
             const modeloJogador = "jogador"
@@ -226,12 +212,7 @@
             return this.getView().byId(idCampo);
         },
         _obterTraducao: function(i18nMensagem) {
-            const arquivoI18n = "i18n"
-
-            return this.getOwnerComponent()
-            .getModel(arquivoI18n)
-            .getResourceBundle()
-            .getText(i18nMensagem);
+            return ControllerBase.obterTraducao(i18nMensagem);
         },
         _limparValidacao: function () {
            
@@ -248,7 +229,6 @@
         },
         _definirDadosParaValidar: function(){
             let data = this._obterCampos();
-            
 
             return [
                 {
