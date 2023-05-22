@@ -8,30 +8,31 @@ sap.ui.define([
  ], function (Controller,formatter,Filter,FilterOperator,JSONModel,Repo) {
     "use strict";
 
-	// ======== ROTAS ==========
-	const rotaDetalhes = "detalhes";
-    const rotaEdicao = "edicao";
-    const rotaHome = "home";
-	const rotaCadastro = "cadastro";
-
-	const idLinha = "id";
+	
 
     return Controller.extend("sap.ui.api.jogadores.controller.TelaListaDeJogadores", {
         formatter : formatter,
         _aoDigitar: function (oEvent) {
+
+			const parametroQuery = "query";
+			const filtrarPorNome = "nome";
+			const id_TabelaJogadores = "tabela_jogadores";
+			const itensDaTabela = "items";
 			
 			let filtro = [];
-			let buscar = oEvent.getParameter("query");
+			let buscar = oEvent.getParameter(parametroQuery);
 			if(buscar){
-				filtro.push(new Filter("nome", FilterOperator.Contains, buscar));
+				filtro.push(new Filter(filtrarPorNome, FilterOperator.Contains, buscar));
 			}
 
-			let tabela = this.byId("tabela_jogadores")
-			let items = tabela.getBinding("items");
+			let tabela = this.byId(id_TabelaJogadores)
+			let items = tabela.getBinding(itensDaTabela);
 			items.filter(filtro);
 			
 		},
 		onInit : function(){
+
+			const rotaHome = "home";
 
 			this._obterDados();
 			let rota = this.getOwnerComponent().getRouter();
@@ -48,11 +49,17 @@ sap.ui.define([
 
 		},
 		aoClicarNaLinha : function (EventoDeClique){
+			const idLinha = "id";
+			const rotaDetalhes = "detalhes";
 			let rota = this.getOwnerComponent().getRouter();
 			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty(idLinha);
 			rota.navTo(rotaDetalhes, {id: idDaLinha});
+    		
+    		
+			
 		},
 		aoClicarEmAdicionar: function(){
+			const rotaCadastro = "cadastro";
 			let rota = this.getOwnerComponent().getRouter();
 			rota.navTo(rotaCadastro)
 		},
