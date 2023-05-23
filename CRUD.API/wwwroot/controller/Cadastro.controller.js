@@ -45,62 +45,68 @@
             this._obterCampo(dataSeletor).openBy(Evento.getSource().getDomRef());
             },
         aoAlterar: function(Evento){
-            const dataBotao = "botaoData"
-            const parametroValue = "value"
-            const propriedadeText = "text"
-
-           let data = Evento.getParameter(parametroValue);
-           this._obterCampo(dataBotao).data(propriedadeText, data);
+           ControllerBase.processarEvento(() => {
+               
+               const dataBotao = "botaoData"
+               const parametroValue = "value"
+               const propriedadeText = "text"
+    
+              let data = Evento.getParameter(parametroValue);
+              this._obterCampo(dataBotao).data(propriedadeText, data);
+           })
         },
         aoClicarSalvar: async function(){
-           
-            if(operacao == this.Operacao.CADASTRAR){
-                const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
-                const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
-                const codigoCriado = 201;
-                
-                let json = this._criarModelo();
+            ControllerBase.processarEvento(async () => {
 
-                let resposta = await Repo.criar(json);
-                if(resposta === codigoCriado){
-
-                    this._mostrarMensagem(
-
-                        i18n_CadastroSucesso,
-                        [MensagemDeTela.Action.OK],
-                        MensagemDeTela.success,true)
+                if(operacao == this.Operacao.CADASTRAR){
+                    const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
+                    const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
+                    const codigoCriado = 201;
                     
-                    }else{
-
+                    let json = this._criarModelo();
+    
+                    let resposta = await Repo.criar(json);
+                    if(resposta === codigoCriado){
+    
                         this._mostrarMensagem(
-
-                            i18n_CadastroExistente,
+    
+                            i18n_CadastroSucesso,
                             [MensagemDeTela.Action.OK],
-                            MensagemDeTela.error,false)
-                    }
-
-            }else if(operacao == this.Operacao.EDITAR){
-
-                const i18n_MensagemSucessoEditar = "Cadastro.Mensagem.Sucesso.Editado";
-                const i18n_MensagemErroEditar = "Cadastro.Mensagem.Erro.Editar";
-                const codigoNoContent = 204;
+                            MensagemDeTela.success,true)
+                        
+                        }else{
+    
+                            this._mostrarMensagem(
+    
+                                i18n_CadastroExistente,
+                                [MensagemDeTela.Action.OK],
+                                MensagemDeTela.error,false)
+                        }
+    
+                }else if(operacao == this.Operacao.EDITAR){
+    
+                    const i18n_MensagemSucessoEditar = "Cadastro.Mensagem.Sucesso.Editado";
+                    const i18n_MensagemErroEditar = "Cadastro.Mensagem.Erro.Editar";
+                    const codigoNoContent = 204;
+                    
+                    let jogadorAtualizado = this._criarModelo();
+                    const resposta = await Repo.atualizar(jogadorAtualizado,idJogador);
                 
-                let jogadorAtualizado = this._criarModelo();
-                const resposta = await Repo.atualizar(jogadorAtualizado,idJogador);
-            
-                if(resposta === codigoNoContent){
-                    this._mostrarMensagem(
-                        i18n_MensagemSucessoEditar,
+                    if(resposta === codigoNoContent){
+                        this._mostrarMensagem(
+                            i18n_MensagemSucessoEditar,
+                            [MensagemDeTela.Action.OK],
+                            MensagemDeTela.success,true)
+                
+                    }else{
+                        this._mostrarMensagem(
+                        i18n_MensagemErroEditar,
                         [MensagemDeTela.Action.OK],
-                        MensagemDeTela.success,true)
-            
-                }else{
-                    this._mostrarMensagem(
-                    i18n_MensagemErroEditar,
-                    [MensagemDeTela.Action.OK],
-                    MensagemDeTela.error,false)
+                        MensagemDeTela.error,false)
+                    }
                 }
-            }
+            })
+            
             
         },
         _mostrarMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
@@ -121,30 +127,38 @@
             });
         },
         _aoCoincidirRotaCadastro: function(){
-            const botaoSalvarId = "BotaoSalvar"
+            ControllerBase.processarEvento(() =>{
+                const botaoSalvarId = "BotaoSalvar"
 
-            this._limparCampos();
-            this._limitarData();
-            this._limparValidacao();
-            this._obterCampo(botaoSalvarId).setEnabled(false);
-            operacao = this.Operacao.CADASTRAR;
+                this._limparCampos();
+                this._limitarData();
+                this._limparValidacao();
+                this._obterCampo(botaoSalvarId).setEnabled(false);
+                operacao = this.Operacao.CADASTRAR;
+            })
+            
             
         },
         _aoCoincidirRotaEdicao: async function (evento){
             
-            const argumentoDoParametro = "arguments";
+            ControllerBase.processarEvento(async ()=>{
 
-            var id = evento.getParameter(argumentoDoParametro).id;
-            let dadosJogador = await this._obterDados(id);     
-            this._preencherFormulario(dadosJogador);
-            operacao = this.Operacao.EDITAR;
-            idJogador = id;
+                const argumentoDoParametro = "arguments";
+    
+                var id = evento.getParameter(argumentoDoParametro).id;
+                let dadosJogador = await this._obterDados(id);     
+                this._preencherFormulario(dadosJogador);
+                operacao = this.Operacao.EDITAR;
+                idJogador = id;
+            })
             
         },
         aoClicarVoltar: function(){
+            ControllerBase.processarEvento(()=>{
 
-            const rota = this.getOwnerComponent().getRouter();
-            ControllerBase.navegarParaPaginaAnterior(rota);
+                const rota = this.getOwnerComponent().getRouter();
+                ControllerBase.navegarParaPaginaAnterior(rota);
+            })
         },
         _criarModelo: function(){
             const modeloJogador = "jogador"
@@ -163,17 +177,20 @@
                  
         },
         aoClicarCancelar: function() {
-            const i18n_MensagemConfirmarCancelar = "Cadastro.MensagemCancelar"
-            const mensagem = this._obterTraducao(i18n_MensagemConfirmarCancelar);
+            ControllerBase.processarEvento(()=>{
 
-            MensagemDeTela.alert(mensagem, {
-                actions :[MensagemDeTela.Action.YES,MensagemDeTela.Action.NO],
-                onClose : (acao) => {
-                    if(acao == MensagemDeTela.Action.YES){
-                        this.aoClicarVoltar();
+                const i18n_MensagemConfirmarCancelar = "Cadastro.MensagemCancelar"
+                const mensagem = this._obterTraducao(i18n_MensagemConfirmarCancelar);
+    
+                MensagemDeTela.alert(mensagem, {
+                    actions :[MensagemDeTela.Action.YES,MensagemDeTela.Action.NO],
+                    onClose : (acao) => {
+                        if(acao == MensagemDeTela.Action.YES){
+                            this.aoClicarVoltar();
+                        }
                     }
-                }
-            });
+                });
+            })
 
             
         },

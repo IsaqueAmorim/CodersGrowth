@@ -1,8 +1,11 @@
 sap.ui.define([
+    "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
-], function(History) {
+    "sap/m/MessageBox",
+], function(Controller,History,MessageBox) {
     
-    return {
+     const enderecoController = "sap.ui.api.jogadores.controller.ControllerBase";
+    return Controller.extend( enderecoController,{
         navegarParaHome: function(rota) {
 
             const rotaHome = "home"
@@ -29,6 +32,19 @@ sap.ui.define([
             .getModel(arquivoI18n)
             .getResourceBundle()
             .getText(i18nMensagem);
+        },
+        processarEvento: function(action){
+            const tipoDaPromise = "catch",
+                tipoBuscado = "function";
+              try {
+                      var promise = action();
+                      if(promise && typeof(promise[tipoDaPromise]) == tipoBuscado){
+                              promise.catch(error => MessageBox.error(error.message));
+                      }
+              } catch (error) {
+                      MessageBox.error(error.message);
+              }
         }
-    }
+
+    })
 });

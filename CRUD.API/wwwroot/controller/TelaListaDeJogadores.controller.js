@@ -1,18 +1,19 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    
+	"../controller/ControllerBase",
     "../model/formatter",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/json/JSONModel",
-	"../repositorios/Repositorio"
- ], function (Controller,formatter,Filter,FilterOperator,JSONModel,Repo) {
+	"../repositorios/Repositorio",
+ ], function (ControllerBase,formatter,Filter,FilterOperator,JSONModel,Repo) {
     "use strict";
 
 	const enderecoController = "sap.ui.api.jogadores.controller.TelaListaDeJogadores";
 
-    return Controller.extend(enderecoController, {
+    return ControllerBase.extend(enderecoController, {
         formatter : formatter,
-        _aoDigitar: function (oEvent) {
+        aoDigitar: function (oEvent) {
 
 			const parametroQuery = "query";
 			const filtrarPorNome = "nome";
@@ -49,22 +50,30 @@ sap.ui.define([
 
 		},
 		aoClicarNaLinha : function (EventoDeClique){
+			this.processarEvento(()=>{
 
-			const idLinha = "id";
-			const rotaDetalhes = "detalhes";
-
-			let rota = this.getOwnerComponent().getRouter();
-			let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty(idLinha);
-			rota.navTo(rotaDetalhes, {id: idDaLinha});
+				const idLinha = "id";
+				const rotaDetalhes = "detalhes";
+	
+				let rota = this.getOwnerComponent().getRouter();
+				let idDaLinha = EventoDeClique.getSource().getBindingContext().getProperty(idLinha);
+				rota.navTo(rotaDetalhes, {id: idDaLinha});
+            })
 	
 		},
 		aoClicarEmAdicionar: function(){
-			const rotaCadastro = "cadastro";
-			let rota = this.getOwnerComponent().getRouter();
-			rota.navTo(rotaCadastro)
+			this.processarEvento(()=>{
+
+				const rotaCadastro = "cadastro";
+				let rota = this.getOwnerComponent().getRouter();
+				rota.navTo(rotaCadastro);
+            })
 		},
 		_aoCoincidirRota: function(){
-			this._obterDados();
+			this.processarEvento(()=>{
+
+				this._obterDados();
+            })
 		}
     });
  });

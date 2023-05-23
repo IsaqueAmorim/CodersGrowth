@@ -1,12 +1,11 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "../controller/ControllerBase",
     "../model/formatter",
     "sap/ui/model/json/JSONModel",
-    "../controller/ControllerBase",
     "sap/m/MessageBox",
     "../repositorios/Repositorio"
     
-], function(Controller, Formatador,JSONModel,ControllerBase,MessageBox,Repo) {
+], function(ControllerBase,Formatador,JSONModel,MessageBox,Repo) {
     'use strict';
     
     const rotaHome = "home";
@@ -14,7 +13,7 @@ sap.ui.define([
 
  
     const enderecoController = "sap.ui.api.jogadores.controller.Detalhes";
-    return Controller.extend(enderecoController,{
+    return ControllerBase.extend(enderecoController,{
 
         formatter: Formatador,
         onInit: function() {
@@ -24,11 +23,13 @@ sap.ui.define([
             rota.getRoute(rotaDetalhes).attachMatched(this._aoCoincidirRota, this);
         },
         _aoCoincidirRota: function (evento) {
-            
-            const parametroArguments = "arguments";
-            
-            var id = evento.getParameter(parametroArguments).id;
-            this._obterDados(id);
+            this.processarEvento(()=>{
+
+                const parametroArguments = "arguments";
+                
+                var id = evento.getParameter(parametroArguments).id;
+                this._obterDados(id);
+            })
         },
         _obterDados: async function(id){
 
@@ -36,26 +37,33 @@ sap.ui.define([
 		    this.getView().setModel(new JSONModel({jogador: resposta}));
 		},
         aoClicarVoltar: function(){
+            this.processarEvento(()=>{
 
-            let rota = this.getOwnerComponent().getRouter();
-           ControllerBase.aoClicarVoltar(rota);
+                let rota = this.getOwnerComponent().getRouter();
+               this.aoClicarVoltar(rota);
+            })
         },
         aoClicarEditar: function (){
+            this.processarEvento(()=>{
 
-            const rotaEdicao = "edicao";
- 
-            let rota = this.getOwnerComponent().getRouter();
-            let idJogador = this.getView().byId(campoId).getValue();
-			rota.navTo(rotaEdicao, {id: idJogador});
+                const rotaEdicao = "edicao";
+     
+                let rota = this.getOwnerComponent().getRouter();
+                let idJogador = this.getView().byId(campoId).getValue();
+                rota.navTo(rotaEdicao, {id: idJogador});
+            })
         },
         aoClicarDeletar: function (){
-            const i18n_mensagemConfirmarDeletar = "Detalhes.Mensagem.Confirmar.Remover";
+            this.processarEvento(()=>{
 
-            this._mostrarMensagem(
-                i18n_mensagemConfirmarDeletar,
-                [MessageBox.Action.YES,MessageBox.Action.NO],
-                MessageBox.warning
-            )
+                const i18n_mensagemConfirmarDeletar = "Detalhes.Mensagem.Confirmar.Remover";
+    
+                this._mostrarMensagem(
+                    i18n_mensagemConfirmarDeletar,
+                    [MessageBox.Action.YES,MessageBox.Action.NO],
+                    MessageBox.warning
+                )
+            })
         
         },
         _mostrarMensagem: async function(i18nMensagem,Acao,TipoMensagem){ 
@@ -99,7 +107,7 @@ sap.ui.define([
         },
         _obterTraducao: function(i18nMensagem){
 
-            return ControllerBase.obterTraducao(i18nMensagem);
+            return this.obterTraducao(i18nMensagem);
 
             
 
