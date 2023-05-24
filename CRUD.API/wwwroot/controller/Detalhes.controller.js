@@ -44,6 +44,19 @@ sap.ui.define([
                this.navegarParaHome(rota);
             })
         },
+        aoClicarDeletar: function (){
+            this.processarEvento(()=>{
+
+                const i18n_mensagemConfirmarDeletar = "Detalhes.Mensagem.Confirmar.Remover";
+    
+                this._mostrarMensagem(
+                    i18n_mensagemConfirmarDeletar,
+                    [MessageBox.Action.YES,MessageBox.Action.NO],
+                    MessageBox.warning
+                )
+            })
+        
+        },
         aoClicarEditar: function (){
             this.processarEvento(()=>{
 
