@@ -18,7 +18,7 @@ xmlns="sap.m"
             <form:SimpleForm class="" layout="ResponsiveLayout" editable="false" width="60%" >
                 <form:content  >
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaId}"/>
-                    <Input id="campoId" editable="false" value="{id}"/>
+                    <Input  id="campoId" editable="false" value="{id}"/>
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaNome}"/>
                     <Input editable="false" value="{nome}"/>
                     <Label design="Bold" text="{i18n>colunaSobrenome}"/>

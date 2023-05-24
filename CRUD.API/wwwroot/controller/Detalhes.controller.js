@@ -23,6 +23,7 @@ sap.ui.define([
             rota.getRoute(rotaDetalhes).attachMatched(this._aoCoincidirRota, this);
         },
         _aoCoincidirRota: function (evento) {
+           
             this.processarEvento(()=>{
 
                 const parametroArguments = "arguments";
@@ -40,7 +41,7 @@ sap.ui.define([
             this.processarEvento(()=>{
 
                 let rota = this.getOwnerComponent().getRouter();
-               this.aoClicarVoltar(rota);
+               this.navegarParaHome(rota);
             })
         },
         aoClicarEditar: function (){

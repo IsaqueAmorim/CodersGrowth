@@ -17,7 +17,7 @@ xmlns="sap.m" >
             <form:SimpleForm class="" layout="ResponsiveLayout" editable="false" width="60%" >
                 <form:content  >
 
-                    
+                    <Input id="campoId" visible="false" value="{jogador>/id}"/>
                     <Label design="Bold" vAlign="Middle" text="{i18n>colunaNome}"/>
                     <Input id="campoNome"  liveChange=".executarValidacao" value="{jogador>/nome}" type="Text" maxLength="40" required="true"/>
                     <Label design="Bold"  text="{i18n>colunaSobrenome}"/>

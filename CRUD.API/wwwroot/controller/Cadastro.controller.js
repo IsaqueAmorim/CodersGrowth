@@ -1,12 +1,11 @@
     sap.ui.define([
-  "sap/ui/core/mvc/Controller",
+  "../controller/ControllerBase",
   "sap/ui/model/json/JSONModel",
   "sap/m/MessageBox",
-  "../controller/ControllerBase",
   "../services/validacao",
   'sap/ui/core/library',
   "../repositorios/Repositorio"
-], function(Controller,JSONModel,MensagemDeTela,ControllerBase, Validacao,Library,Repo) {
+], function(ControllerBase,JSONModel,MensagemDeTela,Validacao,Library,Repo) {
     'use strict';
 
     const dataSeletor = "campoData"
@@ -15,7 +14,7 @@
 
     const enderecoController = "sap.ui.api.jogadores.controller.Cadastro";
 
-    return Controller.extend(enderecoController,{
+    return ControllerBase.extend(enderecoController,{
         
         onInit: function() {
 
@@ -45,7 +44,7 @@
             this._obterCampo(dataSeletor).openBy(Evento.getSource().getDomRef());
             },
         aoAlterar: function(Evento){
-           ControllerBase.processarEvento(() => {
+           this.processarEvento(() => {
                
                const dataBotao = "botaoData"
                const parametroValue = "value"
@@ -55,24 +54,27 @@
               this._obterCampo(dataBotao).data(propriedadeText, data);
            })
         },
-        aoClicarSalvar: async function(){
-            ControllerBase.processarEvento(async () => {
+        aoClicarSalvar: async function(evento){
+            
+            const jogadorModelo = this._criarModelo();
+          
+            this.processarEvento(async () => {
 
-                if(operacao == this.Operacao.CADASTRAR){
+                if(jogadorModelo.id == undefined){
                     const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
                     const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
                     const codigoCriado = 201;
                     
                     let json = this._criarModelo();
     
-                    let resposta = await Repo.criar(json);
-                    if(resposta === codigoCriado){
+                    const resposta = await Repo.criar(json);
+                    if(resposta.status === codigoCriado){
     
                         this._mostrarMensagem(
     
                             i18n_CadastroSucesso,
                             [MensagemDeTela.Action.OK],
-                            MensagemDeTela.success,true)
+                            MensagemDeTela.success,resposta.id)
                         
                         }else{
     
@@ -80,54 +82,55 @@
     
                                 i18n_CadastroExistente,
                                 [MensagemDeTela.Action.OK],
-                                MensagemDeTela.error,false)
+                                MensagemDeTela.error,undefined)
                         }
     
-                }else if(operacao == this.Operacao.EDITAR){
+                }else{
     
                     const i18n_MensagemSucessoEditar = "Cadastro.Mensagem.Sucesso.Editado";
                     const i18n_MensagemErroEditar = "Cadastro.Mensagem.Erro.Editar";
                     const codigoNoContent = 204;
                     
                     let jogadorAtualizado = this._criarModelo();
-                    const resposta = await Repo.atualizar(jogadorAtualizado,idJogador);
+                    const resposta = await Repo.atualizar(jogadorAtualizado,jogadorModelo.id);
                 
                     if(resposta === codigoNoContent){
                         this._mostrarMensagem(
                             i18n_MensagemSucessoEditar,
                             [MensagemDeTela.Action.OK],
-                            MensagemDeTela.success,true)
+                            MensagemDeTela.success,jogadorModelo.id);
                 
                     }else{
                         this._mostrarMensagem(
                         i18n_MensagemErroEditar,
                         [MensagemDeTela.Action.OK],
-                        MensagemDeTela.error,false)
+                        MensagemDeTela.error,undefined);
                     }
                 }
             })
             
             
         },
-        _mostrarMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
-            const rotaHome = "home";
-
-            let pacoteTraducoes = _obterTraducaoTraducao(i18nMensagem);
+        _mostrarMensagem: function(i18nMensagem,Acao,TipoMensagem,id){ 
+            const campoId = "campoId";
+            const rotaDetalhes = "detalhes"
+            
+            let idJogador = this._obterCampo(campoId).getValue();
+            let pacoteTraducoes = this._obterTraducao(i18nMensagem);
 
             TipoMensagem(pacoteTraducoes,{
                 actions: Acao,
-                onClose : () => {       
-                    if(redirecionar === true)   {
+                onClose : (action) => {       
+                    if(id !== undefined)   {
                         
-                        let rota = this.getOwnerComponent().getRouter();
-                        //Trocar para voltar a detalhes!
-                        rota.navTo(rotaHome);
-                    }       
+                        let rota = this.getOwnerComponent().getRouter(); 
+                        rota.navTo(rotaDetalhes, {id:id});
+                    }    
                 }
             });
         },
         _aoCoincidirRotaCadastro: function(){
-            ControllerBase.processarEvento(() =>{
+            this.processarEvento(() =>{
                 const botaoSalvarId = "BotaoSalvar"
 
                 this._limparCampos();
@@ -141,7 +144,7 @@
         },
         _aoCoincidirRotaEdicao: async function (evento){
             
-            ControllerBase.processarEvento(async ()=>{
+            this.processarEvento(async ()=>{
 
                 const argumentoDoParametro = "arguments";
     
@@ -154,17 +157,19 @@
             
         },
         aoClicarVoltar: function(){
-            ControllerBase.processarEvento(()=>{
+            this.processarEvento(()=>{
 
                 const rota = this.getOwnerComponent().getRouter();
-                ControllerBase.navegarParaPaginaAnterior(rota);
+                this.navegarParaPaginaAnterior(rota);
             })
         },
         _criarModelo: function(){
-            const modeloJogador = "jogador"
+              
+           const modeloJogador = "jogador";
 
             let modelo = this.getView().getModel(modeloJogador).getData();
             let json = {
+                id: modelo.id,
                 nome : modelo.nome,
                 sobrenome:modelo.sobrenome,
                 apelido: modelo.apelido,
@@ -177,7 +182,7 @@
                  
         },
         aoClicarCancelar: function() {
-            ControllerBase.processarEvento(()=>{
+            this.processarEvento(()=>{
 
                 const i18n_MensagemConfirmarCancelar = "Cadastro.MensagemCancelar"
                 const mensagem = this._obterTraducao(i18n_MensagemConfirmarCancelar);
@@ -229,7 +234,7 @@
             return this.getView().byId(idCampo);
         },
         _obterTraducao: function(i18nMensagem) {
-            return ControllerBase.obterTraducao(i18nMensagem);
+            return this.obterTraducao(i18nMensagem);
         },
         _limparValidacao: function () {
            
@@ -290,6 +295,7 @@
             
             let dados = this._obterCampos();
             
+            dados.id.setValue(dadosJogador.id);
             dados.nome.setValue(dadosJogador.nome);
             dados.sobrenome.setValue(dadosJogador.sobrenome);
             dados.apelido.setValue(dadosJogador.apelido);
@@ -299,12 +305,14 @@
 
         },
         _obterCampos: function(){
+            const idInput = "campoId"
             const nomeInputId = "campoNome";
             const sobrenomeInputId = "campoSobrenome";
             const apelidoInputId = "campoApelido";
             const emailInputId = "campoEmail";
             const eloSeletorId = "campoElo";
-            
+
+            let id = this._obterCampo(idInput);
             let nome = this._obterCampo(nomeInputId);
             let sobrenome = this._obterCampo(sobrenomeInputId);
             let apelido = this._obterCampo(apelidoInputId);
@@ -313,6 +321,7 @@
             let dataNascimento = this._obterCampo(dataSeletor);
 
             return {
+                id: id,
                 nome: nome,
                 sobrenome: sobrenome,
                 apelido: apelido,

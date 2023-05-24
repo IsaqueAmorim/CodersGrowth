@@ -1,7 +1,7 @@
 sap.ui.define([], function() {
     'use strict';
 
-    const baseUrl = "https://localhost:7139/v1/jogadores/"
+    const baseUrl = "https://localhost:5001/v1/jogadores/"
 
     const sucessoOk = 200;
     const sucessoSemConteudo = 204;
@@ -66,8 +66,14 @@ sap.ui.define([], function() {
             
             const resposta = fetch(baseUrl,config).then(async (resposta) => {
                 if(resposta.status === sucessoCriado ){
-        
-                    return resposta.status;
+                    
+                    debugger
+                    let json = await resposta.json()
+                    
+                    return {
+                        status : resposta.status,
+                        id: json.id
+                    };
 
                 }else{
 
@@ -110,7 +116,9 @@ sap.ui.define([], function() {
 
                 if(resposta.status ===  sucessoSemConteudo){
         
-                    return resposta.status;
+                    return  resposta.status
+                        
+                
 
                 }else{
 
