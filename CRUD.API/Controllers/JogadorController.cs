@@ -79,6 +79,7 @@ namespace CRUD.API.Controllers
             {
                
                 var jogadorDesatualizado = _repositorio.ObterJogadorPorId(id);
+                _validacao.AtualizarJogador(jogador,jogadorDesatualizado);
                 jogador.Id = id;
                 jogador.DataCriacao = jogadorDesatualizado.DataCriacao;
                  _repositorio.AtualizarJogador(jogador);
