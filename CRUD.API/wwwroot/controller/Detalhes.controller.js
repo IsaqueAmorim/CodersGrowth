@@ -54,19 +54,7 @@ sap.ui.define([
                 rota.navTo(rotaEdicao, {id: idJogador});
             })
         },
-        aoClicarDeletar: function (){
-            this.processarEvento(()=>{
-
-                const i18n_mensagemConfirmarDeletar = "Detalhes.Mensagem.Confirmar.Remover";
-    
-                this._mostrarMensagem(
-                    i18n_mensagemConfirmarDeletar,
-                    [MessageBox.Action.YES,MessageBox.Action.NO],
-                    MessageBox.warning
-                )
-            })
-        
-        },
+       
         _mostrarMensagem: async function(i18nMensagem,Acao,TipoMensagem){ 
 
             const i18n_mensagemDeletado = "Detalhes.Mensagem.Sucesso.Deletar";
