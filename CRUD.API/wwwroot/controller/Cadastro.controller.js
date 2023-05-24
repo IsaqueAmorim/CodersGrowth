@@ -1,106 +1,175 @@
-sap.ui.define([
-  "sap/ui/core/mvc/Controller",
+    sap.ui.define([
+  "../controller/ControllerBase",
   "sap/ui/model/json/JSONModel",
   "sap/m/MessageBox",
-  "sap/ui/core/routing/History",
   "../services/validacao",
   'sap/ui/core/library',
-], function(Controller,JSONModel,MensagemDeTela,Historico, Validacao,Library) {
+  "../repositorios/Repositorio"
+], function(ControllerBase,JSONModel,MensagemDeTela,Validacao,Library,Repo) {
     'use strict';
 
-    const nomeIdInputId = "campoNome";
-    const sobrenomeInputId = "campoSobrenome";
-    const apelidoInputId = "campoApelido";
-    const emailInputId = "campoEmail";
-    const eloSeletorId = "campoElo";
     const dataSeletor = "campoData"
-    const botaoSalvarId = "BotaoSalvar"
+    let operacao;
+    let idJogador;
 
-    const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
-    const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
+    const enderecoController = "sap.ui.api.jogadores.controller.Cadastro";
 
-    return Controller.extend("sap.ui.api.jogadores.controller.Cadastro",{
+    return ControllerBase.extend(enderecoController,{
         
         onInit: function() {
-            let JogadorModelo = new JSONModel({});
-            this.getView().setModel(JogadorModelo,"jogador");
 
-            const i18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-           
+            const nomeJogadorModel = "jogador";
+            const arquivoI18n = "i18n";
+            const rotaEdicao = "edicao";
+            const rotaCadastro = "cadastro";
+
+            let JogadorModelo = new JSONModel({});
+            this.getView().setModel(JogadorModelo,nomeJogadorModel);
+
+            const i18n = this.getOwnerComponent().getModel(arquivoI18n).getResourceBundle();
             Validacao.obterI18n(i18n)
 
-            var rota = this.getOwnerComponent().getRouter();
+            let rota = this.getOwnerComponent().getRouter();
            
             rota    
-                .getRoute("cadastro")
-                .attachMatched(this.aoCoincidirRotas, this);
+                .getRoute(rotaCadastro)
+                .attachMatched(this._aoCoincidirRotaCadastro, this);
+
+            rota    
+            .getRoute(rotaEdicao)
+            .attachMatched(this._aoCoincidirRotaEdicao, this)
+
         },
         abrirSeletorData: function(Evento){
-            this.obterCampo(dataSeletor).openBy(Evento.getSource().getDomRef());
-        },
+            this._obterCampo(dataSeletor).openBy(Evento.getSource().getDomRef());
+            },
         aoAlterar: function(Evento){
-           let data = Evento.getParameter("value")
-           this.obterCampo("BotaoData").data("text", data);
+           this.processarEvento(() => {
+               
+               const dataBotao = "botaoData"
+               const parametroValue = "value"
+               const propriedadeText = "text"
+    
+              let data = Evento.getParameter(parametroValue);
+              this._obterCampo(dataBotao).data(propriedadeText, data);
+           })
         },
-        aoClicarSalvar: function(Event){
-           
-            let json = this.criarModelo();
+        aoClicarSalvar: async function(evento){
+            
+            const jogadorModelo = this._criarModelo();
+          
+            this.processarEvento(async () => {
 
-            fetch("https://localhost:7139/v1/jogadores",
-            {method:'POST',
-            headers: {"Content-Type": "application/json"},
-            body:JSON.stringify(json)})
-            .then(resposta => {
+                if(jogadorModelo.id == undefined){
+                    const i18n_CadastroExistente = "Cadastro.Mensagem.Erro.Cadastro";
+                    const i18n_CadastroSucesso = "Cadastro.Mensagem.Sucesso.Cadastro";
+                    const codigoCriado = 201;
+                    
+                    let json = this._criarModelo();
+    
+                    const resposta = await Repo.criar(json);
+                    if(resposta.status === codigoCriado){
+    
+                        this._mostrarMensagem(
+    
+                            i18n_CadastroSucesso,
+                            [MensagemDeTela.Action.OK],
+                            MensagemDeTela.success,resposta.id)
+                        
+                        }else{
+    
+                            this._mostrarMensagem(
+    
+                                i18n_CadastroExistente,
+                                [MensagemDeTela.Action.OK],
+                                MensagemDeTela.error,undefined)
+                        }
+    
+                }else{
+    
+                    const i18n_MensagemSucessoEditar = "Cadastro.Mensagem.Sucesso.Editado";
+                    const i18n_MensagemErroEditar = "Cadastro.Mensagem.Erro.Editar";
+                    const codigoNoContent = 204;
+                    
+                    let jogadorAtualizado = this._criarModelo();
+                    const resposta = await Repo.atualizar(jogadorAtualizado,jogadorModelo.id);
                 
-                if(resposta.status === 201){
-                   this.mostrarCaixaDeMensagem(i18n_CadastroSucesso,[MensagemDeTela.Action.OK],MensagemDeTela.success,true)
-                   
-                }else if(resposta.status === 400){
-                    this.mostrarCaixaDeMensagem(i18n_CadastroExistente,[MensagemDeTela.Action.OK],MensagemDeTela.error,false)
+                    if(resposta === codigoNoContent){
+                        this._mostrarMensagem(
+                            i18n_MensagemSucessoEditar,
+                            [MensagemDeTela.Action.OK],
+                            MensagemDeTela.success,jogadorModelo.id);
+                
+                    }else{
+                        this._mostrarMensagem(
+                        i18n_MensagemErroEditar,
+                        [MensagemDeTela.Action.OK],
+                        MensagemDeTela.error,undefined);
+                    }
                 }
-            });
+            })
+            
+            
         },
-        mostrarCaixaDeMensagem: function(i18nMensagem,Acao,TipoMensagem,redirecionar){  
-            let pacoteTraducoes = 
-            this.getOwnerComponent()
-            .getModel("i18n")
-            .getResourceBundle()
-            .getText(i18nMensagem);
+        _mostrarMensagem: function(i18nMensagem,Acao,TipoMensagem,id){ 
+            const campoId = "campoId";
+            const rotaDetalhes = "detalhes"
+            
+            let idJogador = this._obterCampo(campoId).getValue();
+            let pacoteTraducoes = this._obterTraducao(i18nMensagem);
 
             TipoMensagem(pacoteTraducoes,{
                 actions: Acao,
-                onClose : () => {       
-                    if(redirecionar === true)   {
+                onClose : (action) => {       
+                    if(id !== undefined)   {
                         
-                        this.aoClicarVoltar();
-                    }       
+                        let rota = this.getOwnerComponent().getRouter(); 
+                        rota.navTo(rotaDetalhes, {id:id});
+                    }    
                 }
             });
         },
-        aoCoincidirRotas: function(){
+        _aoCoincidirRotaCadastro: function(){
+            this.processarEvento(() =>{
+                const botaoSalvarId = "BotaoSalvar"
 
-            this.limparCampos();
-            this.limitarData();
-            this.limparValidacao();
-            this.obterCampo(botaoSalvarId).setEnabled(false);
+                this._limparCampos();
+                this._limitarData();
+                this._limparValidacao();
+                this._obterCampo(botaoSalvarId).setEnabled(false);
+                operacao = this.Operacao.CADASTRAR;
+            })
+            
+            
+        },
+        _aoCoincidirRotaEdicao: async function (evento){
+            
+            this.processarEvento(async ()=>{
+
+                const argumentoDoParametro = "arguments";
+    
+                var id = evento.getParameter(argumentoDoParametro).id;
+                let dadosJogador = await this._obterDados(id);     
+                this._preencherFormulario(dadosJogador);
+                operacao = this.Operacao.EDITAR;
+                idJogador = id;
+            })
             
         },
         aoClicarVoltar: function(){
-            let historico = Historico.getInstance();
-            let paginaAnterior = historico.getPreviousHash();
+            this.processarEvento(()=>{
 
-            if(paginaAnterior == undefined){
-                let rota = this.getOwnerComponent().getRouter();
-                rota.navTo("home");
-            }else{
-               
-                window.history.go(-1);
-            }
+                const rota = this.getOwnerComponent().getRouter();
+                this.navegarParaPaginaAnterior(rota);
+            })
         },
-        criarModelo: function(){
-            let modelo = this.getView().getModel("jogador").getData();
-            
+        _criarModelo: function(){
+              
+           const modeloJogador = "jogador";
+
+            let modelo = this.getView().getModel(modeloJogador).getData();
             let json = {
+                id: modelo.id,
                 nome : modelo.nome,
                 sobrenome:modelo.sobrenome,
                 apelido: modelo.apelido,
@@ -113,47 +182,46 @@ sap.ui.define([
                  
         },
         aoClicarCancelar: function() {
+            this.processarEvento(()=>{
 
-            let pacoteTraducoes = 
-            this.getOwnerComponent()
-            .getModel("i18n")
-            .getResourceBundle()
-            .getText("Cadastro.MensagemCancelar");
-
-            MensagemDeTela.alert(pacoteTraducoes, {
-                actions :[MensagemDeTela.Action.YES,MensagemDeTela.Action.NO],
-                onClose : (acao) => {
-                    if(acao == MensagemDeTela.Action.YES){
-                        this.aoClicarVoltar();
+                const i18n_MensagemConfirmarCancelar = "Cadastro.MensagemCancelar"
+                const mensagem = this._obterTraducao(i18n_MensagemConfirmarCancelar);
+    
+                MensagemDeTela.alert(mensagem, {
+                    actions :[MensagemDeTela.Action.YES,MensagemDeTela.Action.NO],
+                    onClose : (acao) => {
+                        if(acao == MensagemDeTela.Action.YES){
+                            this.aoClicarVoltar();
+                        }
                     }
-                }
-            });
+                });
+            })
 
             
         },
-        limparCampos: function() {
-            var nome = this.byId(nomeIdInputId);
-            var sobrenome = this.byId(sobrenomeInputId);
-            var apelido = this.byId(apelidoInputId);
-            var email = this.byId(emailInputId);
-            var elo = this.byId(eloSeletorId);
-            var dataNascimento = this.byId(dataSeletor);
-            nome?.setValue("");
-            sobrenome?.setValue("");
-            apelido?.setValue("");
-            email?.setValue("");
-            dataNascimento?.setValue("");
-            elo?.setSelectedKey("");
+        _limparCampos: function() {
+            
+            const campoVazio = "";
+            const campo = this._obterCampos();
+
+            campo.nome?.setValue(campoVazio);
+            campo.sobrenome?.setValue(campoVazio);
+            campo.apelido?.setValue(campoVazio);
+            campo.email?.setValue(campoVazio);
+            campo.dataNascimento?.setValue(campoVazio);
+            campo.elo?.setSelectedKey(campoVazio);
         },
-        limitarData: function() {
-            let inputData = this.obterCampo(dataSeletor)
+        _limitarData: function() {
+            let inputData = this._obterCampo(dataSeletor)
             inputData?.setMaxDate(new Date());
             inputData?.setMinDate(new Date(1950,1,1))
         },
         executarValidacao: function () {
+            
+            const botaoSalvarId = "BotaoSalvar"
        
-            let botaoSalvar = this.obterCampo(botaoSalvarId);
-            const inputs = this.obterInputsDaTela();
+            let botaoSalvar = this._obterCampo(botaoSalvarId);
+            const inputs = this._definirDadosParaValidar();
 
             if(Validacao.validarCampos(inputs)){
                 botaoSalvar.setEnabled(true);
@@ -162,74 +230,109 @@ sap.ui.define([
             }
 
         },
-        obterCampo: function (idCampo) {
+        _obterCampo: function (idCampo) {
             return this.getView().byId(idCampo);
         },
-        obterTexto: function(i18nMensagem) {
-            
-            return this.getOwnerComponent()
-            .getModel("i18n")
-            .getResourceBundle()
-            .getText(i18nMensagem);
+        _obterTraducao: function(i18nMensagem) {
+            return this.obterTraducao(i18nMensagem);
         },
-        limparValidacao: function () {
-            let nome = this.obterCampo(nomeIdInputId);
-            let sobrenome = this.obterCampo(sobrenomeInputId);
-            let apelido = this.obterCampo(apelidoInputId);
-            let email = this.obterCampo(emailInputId);
-            let elo = this.obterCampo(eloSeletorId);
-            let dataNascimento = this.obterCampo(dataSeletor);
+        _limparValidacao: function () {
+           
+            const campo = this._obterCampos();
        
-            nome.setValueState(Library.ValueState.None);
-            sobrenome.setValueState(Library.ValueState.None);
-            apelido.setValueState(Library.ValueState.None);
-            email.setValueState(Library.ValueState.None);
-            elo.setValueState(Library.ValueState.None);
-            dataNascimento.setValueState(Library.ValueState.None);
+            campo.nome.setValueState(Library.ValueState.None);
+            campo.sobrenome.setValueState(Library.ValueState.None);
+            campo.apelido.setValueState(Library.ValueState.None);
+            campo.email.setValueState(Library.ValueState.None);
+            campo.elo.setValueState(Library.ValueState.None);
+            campo.dataNascimento.setValueState(Library.ValueState.None);
            
 
         },
-        obterInputsDaTela: function(){
-            let nome = this.obterCampo(nomeIdInputId);
-            let sobrenome = this.obterCampo(sobrenomeInputId);
-            let apelido = this.obterCampo(apelidoInputId);
-            let email = this.obterCampo(emailInputId);
-            let elo = this.obterCampo(eloSeletorId);
-            let dataNascimento = this.obterCampo(dataSeletor);
-            
+        _definirDadosParaValidar: function(){
+            let data = this._obterCampos();
 
             return [
                 {
-                    input: nome,
+                    input: data.nome,
                     tipo: Validacao.Tipos.TEXTO,
                     erro: Validacao.Erro.NOME
                 },
                 {
-                    input: sobrenome,
+                    input: data.sobrenome,
                     tipo: Validacao.Tipos.TEXTO,
                     erro: Validacao.Erro.SOBRENOME
                 },
                 {
-                    input: apelido,
+                    input: data.apelido,
                     tipo: Validacao.Tipos.TEXTO,
                     erro: Validacao.Erro.APELIDO
                 },
                 {
-                    input: email,
+                    input: data.email,
                     tipo: Validacao.Tipos.EMAIL,
                     erro: Validacao.Erro.EMAIL
                 },
                 {
-                    input: elo,
-                    tipo: Validacao.Tipos.ELO,
-                    erro: Validacao.Erro.ELO
-                },
-                {
-                    input: dataNascimento,
+                    input: data.dataNascimento,
                     tipo: Validacao.Tipos.NASCIMENTO,
                     erro: Validacao.Erro.NASCIMENTO
-                }   
+                },
+                {
+                    input: data.elo,
+                    tipo: Validacao.Tipos.ELO,
+                    erro: Validacao.Erro.ELO
+                } 
             ]
-        }
+        },
+        _obterDados: async function(id){
+
+            const resposta = await Repo.obterPorId(id);
+		    return resposta;
+                
+        },
+        _preencherFormulario: function(dadosJogador){
+            
+            let dados = this._obterCampos();
+            
+            dados.id.setValue(dadosJogador.id);
+            dados.nome.setValue(dadosJogador.nome);
+            dados.sobrenome.setValue(dadosJogador.sobrenome);
+            dados.apelido.setValue(dadosJogador.apelido);
+            dados.email.setValue(dadosJogador.email);
+            dados.elo.setSelectedKey(dadosJogador.elo.toString());
+            dados.dataNascimento.setValue(dadosJogador.dataNascimento);
+
+        },
+        _obterCampos: function(){
+            const idInput = "campoId"
+            const nomeInputId = "campoNome";
+            const sobrenomeInputId = "campoSobrenome";
+            const apelidoInputId = "campoApelido";
+            const emailInputId = "campoEmail";
+            const eloSeletorId = "campoElo";
+
+            let id = this._obterCampo(idInput);
+            let nome = this._obterCampo(nomeInputId);
+            let sobrenome = this._obterCampo(sobrenomeInputId);
+            let apelido = this._obterCampo(apelidoInputId);
+            let email = this._obterCampo(emailInputId);
+            let elo = this._obterCampo(eloSeletorId);
+            let dataNascimento = this._obterCampo(dataSeletor);
+
+            return {
+                id: id,
+                nome: nome,
+                sobrenome: sobrenome,
+                apelido: apelido,
+                email: email,
+                elo: elo,
+                dataNascimento: dataNascimento
+            }
+        },
+        Operacao:{
+            CADASTRAR:0,
+            EDITAR:1
+        },         
     });
 });

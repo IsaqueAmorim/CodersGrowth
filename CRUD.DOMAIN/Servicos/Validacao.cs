@@ -53,6 +53,58 @@ namespace CRUD.Servicos
             
         }
 
+        public  void AtualizarJogador(JogadorModelo jogadorAtualizado, JogadorModelo jogadorDesatualizado)
+        {
+            string stringBuilder ="";
+            if (jogadorAtualizado.Id != jogadorDesatualizado.Id)
+            {
+                throw new Exception("ERRO: Os Id's não são iguais");
+            }
+            if (jogadorAtualizado.Nome != jogadorDesatualizado.Nome)
+            {
+                if (ValidaString(jogadorAtualizado.Nome) == false)
+                {
+                    stringBuilder += MensagensDeErro.FALHA_NOME_TAMANHO;
+                }
+            }
+            if (jogadorAtualizado.Sobrenome != jogadorDesatualizado.Sobrenome)
+            {
+                if (ValidaString(jogadorAtualizado.Sobrenome) == false)
+                {
+                    stringBuilder += MensagensDeErro.FALHA_SOBRENOME_TAMANHO;
+                }
+            }
+            if (jogadorAtualizado.Apelido != jogadorDesatualizado.Apelido)
+            {
+                if (ValidaString(jogadorAtualizado.Apelido) == false)
+                {
+                    stringBuilder +=MensagensDeErro.FALHA_APELIDO_TAMANHO; 
+                }
+            }
+
+            if (jogadorAtualizado.Email != jogadorDesatualizado.Email)
+            {
+                if (ValidaEmail(jogadorAtualizado.Email) == false)
+                {
+                    stringBuilder +=MensagensDeErro.FALHA_EMAIL_INVALIDO; 
+                }
+            }
+
+            if (jogadorAtualizado.DataNascimento != jogadorDesatualizado.DataNascimento)
+            {
+                if (ValidaDataNascimento(jogadorDesatualizado.DataCriacao, jogadorAtualizado.DataNascimento) == false)
+                {
+                    stringBuilder +=MensagensDeErro.FALHA_DATA_DE_NASCIMENTO_MAIOR_QUE_ATUAL; 
+                }
+            }
+            
+            if(stringBuilder.Length > 0)
+            {
+                throw new Exception(stringBuilder);
+            }
+
+        }
+
         private static bool ValidaString(string data)
         {
             if (data.Length == 0) return false;
@@ -64,7 +116,7 @@ namespace CRUD.Servicos
 
         private static bool ValidaDataNascimento(DateTime criacao, DateTime nascimento)
         {
-            if (nascimento >= DateTime.Now)
+            if (nascimento >= criacao)
             {
                 return false;
             }

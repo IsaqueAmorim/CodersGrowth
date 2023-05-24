@@ -13,6 +13,7 @@ sap.ui.define([
     const i18n_DataErro = "Cadastro.Mensagem.Erro.Data";
 
     let i18nLocal;
+    
    
     
     return {
@@ -20,11 +21,12 @@ sap.ui.define([
         validarCampos: function(array){
 
             let validado = [];
+            
             array.forEach(campo => {
                 
                 
 
-                if(this.validarUnidade(campo)){
+                if(this._validarIndividual(campo)){
 
                     campo.input.setValueStateText(i18nLocal.getText(campo.erro));
                     campo.input.setValueState(Library.ValueState.Error);
@@ -43,7 +45,7 @@ sap.ui.define([
             }
             
         },
-        validaEmail: function(email){
+        _validarEmail: function(email){
 
             const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
         
@@ -56,7 +58,7 @@ sap.ui.define([
 
             return true;
         },
-        validaCamposDeTexto: function(texto){
+        _validarTexto: function(texto){
         
             const regex = new RegExp("^[a-zA-Z\u00C0-\u017F´]+$")
             if(texto.length === 0){
@@ -66,7 +68,7 @@ sap.ui.define([
             }
             return true;
         },
-        validaElo(elo){
+        _validaElo(elo){
             const regex = new RegExp('^[0-8]+$');
 
             if(regex.test(elo)){
@@ -74,25 +76,25 @@ sap.ui.define([
             }
             return true;
         },
-        validaDataNascimento(data){  
+        _validarDataNascimento(data){  
             let dataConvertida = new Date(data)
             if(dataConvertida != "Invalid Date" && dataConvertida < new Date()) {
                 return false;
             }
             return true;
         },
-        validarUnidade: function(campo){
+        _validarIndividual: function(campo){
             
             switch (campo.tipo) {
 
                 case this.Tipos.TEXTO:
-                    return this.validaCamposDeTexto(campo.input.getValue());
+                    return this._validarTexto(campo.input.getValue());
                 case this.Tipos.EMAIL:
-                    return this.validaEmail(campo.input.getValue());
-                case this.Tipos.ELO:
-                    return this.validaElo(campo.input.getSelectedKey());
+                    return this._validarEmail(campo.input.getValue());
                 case this.Tipos.NASCIMENTO:
-                return this.validaDataNascimento(campo.input.getValue());
+                return this._validarDataNascimento(campo.input.getValue());
+                case this.Tipos.ELO:
+                    return this._validaElo(campo.input.getSelectedKey());
                     
             }
         },

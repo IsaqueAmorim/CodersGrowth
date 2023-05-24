@@ -1,48 +1,105 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "../controller/ControllerBase",
     "../model/formatter",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/routing/History"
+    "sap/m/MessageBox",
+    "../repositorios/Repositorio"
     
-], function(Controller, Formatador,JSONModel,Historico) {
+], function(ControllerBase,Formatador,JSONModel,MessageBox,Repo) {
     'use strict';
     
-    return Controller.extend("sap.ui.api.jogadores.controller.Detalhes",{
+    const rotaHome = "home";
+    const campoId = "campoId";
+
+ 
+    const enderecoController = "sap.ui.api.jogadores.controller.Detalhes";
+    return ControllerBase.extend(enderecoController,{
 
         formatter: Formatador,
         onInit: function() {
+            const rotaDetalhes = "detalhes";
+
             var rota = this.getOwnerComponent().getRouter();
-            rota.getRoute("detalhes").attachMatched(this.aoCoincidirRota, this);
+            rota.getRoute(rotaDetalhes).attachMatched(this._aoCoincidirRota, this);
         },
-        aoCoincidirRota: function (evento) {
-            var id = evento.getParameter("arguments").id;
-            
-            
-            this.obterDados(id);
-        },
-          obterDados: function(id){
+        _aoCoincidirRota: function (evento) {
+           
+            this.processarEvento(()=>{
 
-			let jsonModelJogador = new JSONModel();
-			fetch("https://localhost:7139/v1/jogadores/" + id)
-				.then(response => response.json())
-				.then(response => jsonModelJogador.setData({jogador : response}))
-			this.getView().setModel(jsonModelJogador);
+                const parametroArguments = "arguments";
+                
+                var id = evento.getParameter(parametroArguments).id;
+                this._obterDados(id);
+            })
+        },
+        _obterDados: async function(id){
+
+            const resposta = await Repo.obterPorId(id);
+		    this.getView().setModel(new JSONModel({jogador: resposta}));
 		},
-        aoClicarVoltar: function(oEvent){
-            let historico = Historico.getInstance();
-            let paginaAnterior = historico.getPreviousHash();
+        aoClicarVoltar: function(){
+            this.processarEvento(()=>{
 
-            if(paginaAnterior == undefined){
                 let rota = this.getOwnerComponent().getRouter();
-                rota.navTo("home");
-            }else{
-               
-                window.history.go(-1);
-            }
+               this.navegarParaHome(rota);
+            })
+        },
+        aoClicarEditar: function (){
+            this.processarEvento(()=>{
+
+                const rotaEdicao = "edicao";
+     
+                let rota = this.getOwnerComponent().getRouter();
+                let idJogador = this.getView().byId(campoId).getValue();
+                rota.navTo(rotaEdicao, {id: idJogador});
+            })
         },
        
+        _mostrarMensagem: async function(i18nMensagem,Acao,TipoMensagem){ 
 
-       
+            const i18n_mensagemDeletado = "Detalhes.Mensagem.Sucesso.Deletar";
+            const i18n_mensagemFalahaDeletar = "Detalhes.Mensagem.Erro.Deletar";
+            const codigoNoContent = 204;
+            
+            let rota = this.getOwnerComponent().getRouter();
+            let idJogador = this.getView().byId(campoId).getValue();
+            
+            TipoMensagem(this._obterTraducao(i18nMensagem),{
+                actions: Acao,
+                
+                onClose :async  (acao) => {     
 
-    });
+                    if(acao === MessageBox.Action.YES){
+
+                        const resposta = await Repo.deletar(idJogador)
+
+                        if(resposta == codigoNoContent){
+
+                            MessageBox.success(this._obterTraducao(i18n_mensagemDeletado),{
+                                actions: [MessageBox.Action.OK],
+                                onClose: function(){
+                                   rota.navTo(rotaHome)
+                                }
+                            })
+
+                        }else{
+                            MessageBox.error(this._obterTraducao(i18n_mensagemFalahaDeletar),{
+                                actions: [MessageBox.Action.OK],
+                                onClose: function(){
+                                   
+                                }
+                            })
+                        }       
+                    }
+                }   
+            })                        
+        },
+        _obterTraducao: function(i18nMensagem){
+
+            return this.obterTraducao(i18nMensagem);
+
+            
+
+        }
+    })
 });

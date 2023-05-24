@@ -30,6 +30,10 @@
 								<Text text="{i18n>colunaSobrenome}"/>
 							</Column>
 							<Column 
+							width="8rem">
+								<Text text="{i18n>colunaApelido}"/>
+							</Column>
+							<Column 
 							width="18.0rem">
 								<Text text="{i18n>colunaEmail}"/>
 							</Column>
@@ -53,6 +57,7 @@
 									<Text text="{id}"/>
 									<Text text="{nome}"/>
 									<Text text="{sobrenome}"/>
+									<Text text="{apelido}"/>
 									<Text text="{email}"/>
 									<Image tooltip="{path: 'elo',formatter:'.formatter.eloLegenda'}" height="32px" src="{path:'elo',formatter:'.formatter.eloImage'}">											
 									</Image>
